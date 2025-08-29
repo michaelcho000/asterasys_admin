@@ -1,0 +1,926 @@
+{
+  "blog": [
+    {
+      "keyword": "쿨페이즈",
+      "blogType": "병원블로그",
+      "totalCount": 18,
+      "totalComments": 2,
+      "totalReplies": 0,
+      "totalPosts": 38,
+      "category": "고주파",
+      "rank": 9,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogType": "병원블로그",
+      "totalCount": 93,
+      "totalComments": 224,
+      "totalReplies": 32,
+      "totalPosts": 203,
+      "category": "고주파",
+      "rank": 4,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogType": "병원블로그",
+      "totalCount": 26,
+      "totalComments": 40,
+      "totalReplies": 0,
+      "totalPosts": 106,
+      "category": "고주파",
+      "rank": 8,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogType": "병원블로그",
+      "totalCount": 146,
+      "totalComments": 349,
+      "totalReplies": 1,
+      "totalPosts": 299,
+      "category": "고주파",
+      "rank": 3,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogType": "병원블로그",
+      "totalCount": 56,
+      "totalComments": 284,
+      "totalReplies": 18,
+      "totalPosts": 175,
+      "category": "고주파",
+      "rank": 5,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogType": "병원블로그",
+      "totalCount": 58,
+      "totalComments": 187,
+      "totalReplies": 3,
+      "totalPosts": 122,
+      "category": "고주파",
+      "rank": 7,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogType": "병원블로그",
+      "totalCount": 163,
+      "totalComments": 231,
+      "totalReplies": 20,
+      "totalPosts": 928,
+      "category": "고주파",
+      "rank": 2,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogType": "병원블로그",
+      "totalCount": 73,
+      "totalComments": 71,
+      "totalReplies": 11,
+      "totalPosts": 139,
+      "category": "고주파",
+      "rank": 6,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogType": "병원블로그",
+      "totalCount": 131,
+      "totalComments": 259,
+      "totalReplies": 3,
+      "totalPosts": 941,
+      "category": "고주파",
+      "rank": 1,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogType": "병원블로그",
+      "totalCount": 34,
+      "totalComments": 71,
+      "totalReplies": 4,
+      "totalPosts": 63,
+      "category": "초음파",
+      "rank": 6,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogType": "병원블로그",
+      "totalCount": 8,
+      "totalComments": 2,
+      "totalReplies": 0,
+      "totalPosts": 13,
+      "category": "초음파",
+      "rank": 8,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogType": "병원블로그",
+      "totalCount": 7,
+      "totalComments": 37,
+      "totalReplies": 2,
+      "totalPosts": 13,
+      "category": "초음파",
+      "rank": 9,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogType": "병원블로그",
+      "totalCount": 7,
+      "totalComments": 11,
+      "totalReplies": 0,
+      "totalPosts": 31,
+      "category": "초음파",
+      "rank": 7,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogType": "병원블로그",
+      "totalCount": 187,
+      "totalComments": 416,
+      "totalReplies": 11,
+      "totalPosts": 904,
+      "category": "초음파",
+      "rank": 1,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogType": "병원블로그",
+      "totalCount": 200,
+      "totalComments": 394,
+      "totalReplies": 14,
+      "totalPosts": 904,
+      "category": "초음파",
+      "rank": 2,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogType": "병원블로그",
+      "totalCount": 34,
+      "totalComments": 97,
+      "totalReplies": 2,
+      "totalPosts": 91,
+      "category": "초음파",
+      "rank": 3,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogType": "병원블로그",
+      "totalCount": 26,
+      "totalComments": 29,
+      "totalReplies": 0,
+      "totalPosts": 88,
+      "category": "초음파",
+      "rank": 5,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogType": "병원블로그",
+      "totalCount": 32,
+      "totalComments": 235,
+      "totalReplies": 9,
+      "totalPosts": 91,
+      "category": "초음파",
+      "rank": 4,
+      "source": "blog_rank"
+    }
+  ],
+  "cafe": [
+    {
+      "keyword": "써마지",
+      "group": "고주파",
+      "totalPosts": 544,
+      "totalComments": 3477,
+      "totalReplies": 934,
+      "totalViews": 40201,
+      "rank": 1,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "group": "초음파",
+      "totalPosts": 531,
+      "totalComments": 2885,
+      "totalReplies": 696,
+      "totalViews": 31264,
+      "rank": 1,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "인모드",
+      "group": "고주파",
+      "totalPosts": 328,
+      "totalComments": 1731,
+      "totalReplies": 472,
+      "totalViews": 26515,
+      "rank": 2,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "group": "초음파",
+      "totalPosts": 256,
+      "totalComments": 1722,
+      "totalReplies": 469,
+      "totalViews": 23319,
+      "rank": 2,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "group": "고주파",
+      "totalPosts": 239,
+      "totalComments": 941,
+      "totalReplies": 185,
+      "totalViews": 20994,
+      "rank": 3,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "group": "초음파",
+      "totalPosts": 202,
+      "totalComments": 1530,
+      "totalReplies": 210,
+      "totalViews": 12948,
+      "rank": 4,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "group": "고주파",
+      "totalPosts": 220,
+      "totalComments": 1670,
+      "totalReplies": 232,
+      "totalViews": 12558,
+      "rank": 4,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "group": "초음파",
+      "totalPosts": 230,
+      "totalComments": 1813,
+      "totalReplies": 252,
+      "totalViews": 9899,
+      "rank": 3,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "group": "초음파",
+      "totalPosts": 100,
+      "totalComments": 134,
+      "totalReplies": 13,
+      "totalViews": 8321,
+      "rank": 5,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "group": "고주파",
+      "totalPosts": 67,
+      "totalComments": 548,
+      "totalReplies": 153,
+      "totalViews": 5543,
+      "rank": 6,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "group": "고주파",
+      "totalPosts": 42,
+      "totalComments": 238,
+      "totalReplies": 93,
+      "totalViews": 5448,
+      "rank": 8,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "group": "고주파",
+      "totalPosts": 77,
+      "totalComments": 532,
+      "totalReplies": 141,
+      "totalViews": 5032,
+      "rank": 5,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "세르프",
+      "group": "고주파",
+      "totalPosts": 42,
+      "totalComments": 255,
+      "totalReplies": 77,
+      "totalViews": 4929,
+      "rank": 7,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "group": "초음파",
+      "totalPosts": 22,
+      "totalComments": 98,
+      "totalReplies": 47,
+      "totalViews": 3082,
+      "rank": 8,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "브이로",
+      "group": "초음파",
+      "totalPosts": 37,
+      "totalComments": 336,
+      "totalReplies": 55,
+      "totalViews": 2971,
+      "rank": 6,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "group": "고주파",
+      "totalPosts": 26,
+      "totalComments": 159,
+      "totalReplies": 54,
+      "totalViews": 2068,
+      "rank": 9,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "group": "초음파",
+      "totalPosts": 23,
+      "totalComments": 121,
+      "totalReplies": 25,
+      "totalViews": 1009,
+      "rank": 7,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "group": "초음파",
+      "totalPosts": 1,
+      "totalComments": 4,
+      "totalReplies": 0,
+      "totalViews": 9,
+      "rank": 9,
+      "source": "cafe_rank"
+    }
+  ],
+  "traffic": [
+    {
+      "keyword": "써마지",
+      "group": "고주파",
+      "monthlySearchVolume": 544,
+      "searchRank": 1,
+      "source": "traffic"
+    },
+    {
+      "keyword": "울쎄라",
+      "group": "초음파",
+      "monthlySearchVolume": 531,
+      "searchRank": 1,
+      "source": "traffic"
+    },
+    {
+      "keyword": "인모드",
+      "group": "고주파",
+      "monthlySearchVolume": 328,
+      "searchRank": 2,
+      "source": "traffic"
+    },
+    {
+      "keyword": "슈링크",
+      "group": "초음파",
+      "monthlySearchVolume": 256,
+      "searchRank": 2,
+      "source": "traffic"
+    },
+    {
+      "keyword": "덴서티",
+      "group": "고주파",
+      "monthlySearchVolume": 239,
+      "searchRank": 3,
+      "source": "traffic"
+    },
+    {
+      "keyword": "쿨소닉",
+      "group": "초음파",
+      "monthlySearchVolume": 230,
+      "searchRank": 3,
+      "source": "traffic"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "group": "고주파",
+      "monthlySearchVolume": 220,
+      "searchRank": 4,
+      "source": "traffic"
+    },
+    {
+      "keyword": "리프테라",
+      "group": "초음파",
+      "monthlySearchVolume": 202,
+      "searchRank": 4,
+      "source": "traffic"
+    },
+    {
+      "keyword": "리니어지",
+      "group": "초음파",
+      "monthlySearchVolume": 100,
+      "searchRank": 5,
+      "source": "traffic"
+    },
+    {
+      "keyword": "올리지오",
+      "group": "고주파",
+      "monthlySearchVolume": 77,
+      "searchRank": 5,
+      "source": "traffic"
+    },
+    {
+      "keyword": "튠페이스",
+      "group": "고주파",
+      "monthlySearchVolume": 67,
+      "searchRank": 6,
+      "source": "traffic"
+    },
+    {
+      "keyword": "세르프",
+      "group": "고주파",
+      "monthlySearchVolume": 42,
+      "searchRank": 7,
+      "source": "traffic"
+    },
+    {
+      "keyword": "텐써마",
+      "group": "고주파",
+      "monthlySearchVolume": 42,
+      "searchRank": 8,
+      "source": "traffic"
+    },
+    {
+      "keyword": "브이로",
+      "group": "초음파",
+      "monthlySearchVolume": 37,
+      "searchRank": 6,
+      "source": "traffic"
+    },
+    {
+      "keyword": "볼뉴머",
+      "group": "고주파",
+      "monthlySearchVolume": 26,
+      "searchRank": 9,
+      "source": "traffic"
+    },
+    {
+      "keyword": "텐쎄라",
+      "group": "초음파",
+      "monthlySearchVolume": 23,
+      "searchRank": 7,
+      "source": "traffic"
+    },
+    {
+      "keyword": "튠라이너",
+      "group": "초음파",
+      "monthlySearchVolume": 22,
+      "searchRank": 8,
+      "source": "traffic"
+    },
+    {
+      "keyword": "리니어펌",
+      "group": "초음파",
+      "monthlySearchVolume": 1,
+      "searchRank": 9,
+      "source": "traffic"
+    }
+  ],
+  "sales": [
+    {
+      "keyword": "슈링크",
+      "group": "초음파",
+      "sales": 1732,
+      "source": "sales"
+    },
+    {
+      "keyword": "올리지오",
+      "group": "고주파",
+      "sales": 1032,
+      "source": "sales"
+    },
+    {
+      "keyword": "텐써마",
+      "group": "고주파",
+      "sales": 568,
+      "source": "sales"
+    },
+    {
+      "keyword": "볼뉴머",
+      "group": "고주파",
+      "sales": 543,
+      "source": "sales"
+    },
+    {
+      "keyword": "덴서티",
+      "group": "고주파",
+      "sales": 502,
+      "source": "sales"
+    },
+    {
+      "keyword": "리프테라",
+      "group": "초음파",
+      "sales": 492,
+      "source": "sales"
+    },
+    {
+      "keyword": "브이로",
+      "group": "초음파",
+      "sales": 443,
+      "source": "sales"
+    },
+    {
+      "keyword": "텐쎄라",
+      "group": "초음파",
+      "sales": 416,
+      "source": "sales"
+    },
+    {
+      "keyword": "리니어펌",
+      "group": "초음파",
+      "sales": 402,
+      "source": "sales"
+    },
+    {
+      "keyword": "리니어지",
+      "group": "초음파",
+      "sales": 398,
+      "source": "sales"
+    },
+    {
+      "keyword": "세르프",
+      "group": "고주파",
+      "sales": 381,
+      "source": "sales"
+    },
+    {
+      "keyword": "튠라이너",
+      "group": "초음파",
+      "sales": 325,
+      "source": "sales"
+    },
+    {
+      "keyword": "튠페이스",
+      "group": "고주파",
+      "sales": 325,
+      "source": "sales"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "group": "고주파",
+      "sales": 159,
+      "source": "sales"
+    },
+    {
+      "keyword": "쿨소닉",
+      "group": "초음파",
+      "sales": 23,
+      "source": "sales"
+    }
+  ],
+  "news": [
+    {
+      "keyword": "써마지",
+      "group": "고주파",
+      "totalPosts": 544,
+      "rank": 1,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "group": "초음파",
+      "totalPosts": 531,
+      "rank": 1,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "인모드",
+      "group": "고주파",
+      "totalPosts": 328,
+      "rank": 2,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "group": "초음파",
+      "totalPosts": 256,
+      "rank": 2,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "group": "고주파",
+      "totalPosts": 239,
+      "rank": 3,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "group": "초음파",
+      "totalPosts": 230,
+      "rank": 3,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "group": "고주파",
+      "totalPosts": 220,
+      "rank": 4,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "group": "초음파",
+      "totalPosts": 202,
+      "rank": 4,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "group": "초음파",
+      "totalPosts": 100,
+      "rank": 5,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "group": "고주파",
+      "totalPosts": 77,
+      "rank": 5,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "group": "고주파",
+      "totalPosts": 67,
+      "rank": 6,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "세르프",
+      "group": "고주파",
+      "totalPosts": 42,
+      "rank": 7,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "group": "고주파",
+      "totalPosts": 42,
+      "rank": 8,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "브이로",
+      "group": "초음파",
+      "totalPosts": 37,
+      "rank": 6,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "group": "고주파",
+      "totalPosts": 26,
+      "rank": 9,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "group": "초음파",
+      "totalPosts": 23,
+      "rank": 7,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "group": "초음파",
+      "totalPosts": 22,
+      "rank": 8,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "group": "초음파",
+      "totalPosts": 1,
+      "rank": 9,
+      "source": "news_rank"
+    }
+  ],
+  "blogUsers": [
+    {
+      "keyword": "올리지오",
+      "blogName": "닥터에버스",
+      "url": "https://blog.naver.com/hmo1221",
+      "totalPosts": 24,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogName": "메디컬트렌드뉴스",
+      "url": "https://blog.naver.com/jbpqciey984961",
+      "totalPosts": 22,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogName": "닥터에버스",
+      "url": "https://blog.naver.com/eunparis21",
+      "totalPosts": 21,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/daplan1",
+      "totalPosts": 14,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/chris7060",
+      "totalPosts": 10,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/sarigomtang87",
+      "totalPosts": 9,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogName": "미클리닉 피부관리",
+      "url": "https://blog.naver.com/aplaceeef73",
+      "totalPosts": 8,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogName": "♥️ 높은 재방문율, 브릴린의원 ♥️",
+      "url": "https://blog.naver.com/vote10967",
+      "totalPosts": 8,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/zosqjfk01",
+      "totalPosts": 8,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/bigmindty",
+      "totalPosts": 7,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogName": "닥터에버스",
+      "url": "https://blog.naver.com/akrtls",
+      "totalPosts": 7,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/trek_2",
+      "totalPosts": 6,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogName": "아름다움을 전하는 리샤인의원",
+      "url": "https://blog.naver.com/reveal8228",
+      "totalPosts": 5,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "blogName": "유어힐의원",
+      "url": "https://blog.naver.com/flexifble14306",
+      "totalPosts": 4,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogName": "유앤영피부과, YOU&YOUNG SKIN",
+      "url": "https://blog.naver.com/youryoungskin",
+      "totalPosts": 3,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogName": "튠클리닉",
+      "url": "https://blog.naver.com/basket_1088",
+      "totalPosts": 2,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogName": "에이블룸클리닉",
+      "url": "https://blog.naver.com/kid192197",
+      "totalPosts": 2,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogName": "세라성형외과",
+      "url": "https://blog.naver.com/rush4492",
+      "totalPosts": 2,
+      "rank": 1,
+      "source": "blog_user_rank"
+    }
+  ],
+  "youtubeContents": [
+    {
+      "category": "리프테라",
+      "hospitalName": "스위츠",
+      "url": "https://www.youtube.com/watch?v=iTonMF_BpqM",
+      "uploadDate": "8/12",
+      "source": "youtube_contents"
+    },
+    {
+      "category": "쿨페이즈",
+      "hospitalName": "스위츠",
+      "url": "https://www.youtube.com/watch?v=rfvVIbvYlto",
+      "uploadDate": "8/12",
+      "source": "youtube_contents"
+    },
+    {
+      "category": "쿨소닉",
+      "hospitalName": "스위츠",
+      "url": "https://www.youtube.com/watch?v=ecPwTy22o2o",
+      "uploadDate": "8/12",
+      "source": "youtube_contents"
+    }
+  ],
+  "youtubeComments": [
+    {
+      "category": "리프테라",
+      "channel": "아이엠지나",
+      "link": "https://youtube.com/shorts/XRgFgddSP-0?si=1w2Z5fjZsStiPVbM",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    },
+    {
+      "category": "쿨페이즈",
+      "channel": "아이엠지나",
+      "link": "https://youtube.com/shorts/XRgFgddSP-0?si=1w2Z5fjZsStiPVbM",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    },
+    {
+      "category": "쿨소닉",
+      "channel": "아이엠지나",
+      "link": "https://youtube.com/shorts/XRgFgddSP-0?si=1w2Z5fjZsStiPVbM",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    }
+  ],
+  "processedAt": "2025-08-29T09:39:11.806Z",
+  "dataMonth": "2025-08"
+}
