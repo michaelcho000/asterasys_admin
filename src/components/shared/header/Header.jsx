@@ -175,8 +175,7 @@ const Header = () => {
                         </div>
                         {/* <!--! [Start] nxl-lavel-mega-menu-wrapper !--> */}
                         <div className="nxl-lavel-mega-menu-wrapper d-flex gap-3">
-                            <HeaderDropDownModal />
-                            <MegaMenu />
+                            {/* Dropdown menus removed for cleaner interface */}
                         </div>
                     </div>
                 </div>

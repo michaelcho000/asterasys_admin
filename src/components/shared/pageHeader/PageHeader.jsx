@@ -10,8 +10,8 @@ const PageHeader = ({ children }) => {
     let folderName = ""
     let fileName = ""
     if (pathName === "/") {
-        folderName = "Dashboard"
-        fileName = "Dashboard"
+        folderName = "📊 마케팅 성과 개요"
+        fileName = "Asterasys Marketing Intelligence"
     } else {
         folderName = pathName.split("/")[1]
         fileName = pathName.split("/")[2]
@@ -23,7 +23,7 @@ const PageHeader = ({ children }) => {
                     <h5 className="m-b-10 text-capitalize">{folderName}</h5>
                 </div>
                 <ul className="breadcrumb">
-                    <li className="breadcrumb-item"><Link href="/">Home</Link></li>
+                    <li className="breadcrumb-item"><Link href="/">Asterasys</Link></li>
                     <li className="breadcrumb-item text-capitalize">{fileName}</li>
                 </ul>
             </div>

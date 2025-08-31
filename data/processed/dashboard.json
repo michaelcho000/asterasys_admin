@@ -922,7 +922,7 @@
         "source": "youtube_comments"
       }
     ],
-    "processedAt": "2025-08-29T09:39:11.806Z",
+    "processedAt": "2025-08-30T15:50:09.343Z",
     "dataMonth": "2025-08"
   },
   "kpis": {
@@ -1384,7 +1384,7 @@
         "priority": 26
       }
     ],
-    "processedAt": "2025-08-29T09:39:11.809Z"
+    "processedAt": "2025-08-30T15:50:09.346Z"
   },
   "channels": {
     "blog": {
@@ -2367,7 +2367,7 @@
     }
   },
   "meta": {
-    "processedAt": "2025-08-29T09:39:11.810Z",
+    "processedAt": "2025-08-30T15:50:09.347Z",
     "dataMonth": "2025-08",
     "version": "1.0.0"
   }

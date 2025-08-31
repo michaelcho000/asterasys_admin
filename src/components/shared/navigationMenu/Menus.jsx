@@ -1,7 +1,7 @@
 'use client'
 import React, { Fragment, useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
-import { menuList } from "@/utils/fackData/menuList";
+import { asterasysMenuList as menuList } from "@/utils/fackData/asterasysMenuList";
 import getIcon from "@/utils/getIcon";
 import { usePathname } from "next/navigation";
 import Link from "next/link";

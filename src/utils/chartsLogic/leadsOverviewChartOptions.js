@@ -2,9 +2,9 @@ export const leadsOverviewChartOptions = {
     dataLabels: {
         enabled: !1
     },
-    series: [20, 15, 10, 18, 10, 15, 16, 14, 10],
-    labels: ["New", "Contacted", "Qualified", "Working", "Customer", "Proposal", "Leads", "Prograss", "Others"],
-    colors: ["#3454d1", "#1565c0", "#1976d2", "#1e88e5", "#2196f3", "#42a5f5", "#64b5f6", "#90caf9", "#aad6fa"],
+    series: [60, 25, 15], // 병원자체 60%, 자사운영 25%, 체험단 15%
+    labels: ["병원 자체 블로그", "Asterasys 운영", "체험단 캠페인"],
+    colors: ["#3454d1", "#f59e0b", "#10b981"],
     stroke: {
         width: 0, lineCap: "round"
     },
@@ -56,7 +56,7 @@ export const leadsOverviewChartOptions = {
     tooltip: {
         y: {
             formatter: function (e) {
-                return +e + "K"
+                return +e + "%"
             }
         },
         style: {

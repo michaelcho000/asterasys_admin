@@ -8,8 +8,8 @@ import SettingSideBarProvider from "@/contentApi/settingSideBarProvider";
 import ThemeCustomizer from "@/components/shared/ThemeCustomizer";
 
 export const metadata = {
-  title: "Duralux | Dashboard",
-  description: "Duralux is a admin Dashboard create for multipurpose,",
+  title: "Asterasys Marketing KPI Dashboard",
+  description: "Professional medical device marketing intelligence dashboard for RF/HIFU market analysis - 2025년 8월 실제 데이터 기반",
 };
 
 export default function RootLayout({ children }) {
