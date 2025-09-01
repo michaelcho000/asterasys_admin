@@ -29,7 +29,8 @@
     "email:dev": "email dev --dir src/emails",
     "stripe:listen": "stripe listen --forward-to localhost:3000/api/webhooks/stripe",
     "process-data": "node scripts/processData.js",
-    "ingest": "npm run process-data"
+    "ingest": "npm run process-data",
+    "youtube:process": "node scripts/processYoutubeData.cjs"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
