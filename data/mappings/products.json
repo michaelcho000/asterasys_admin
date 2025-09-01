@@ -1,0 +1,218 @@
+{
+  "products": {
+    "쿨페이즈": {
+      "name": "쿨페이즈",
+      "name_en": "CoolPhase",
+      "category": "RF",
+      "category_en": "고주파",
+      "brand": "asterasys",
+      "color": "#FF6B6B",
+      "priority": 1
+    },
+    "쿨소닉": {
+      "name": "쿨소닉",
+      "name_en": "CoolSonic", 
+      "category": "HIFU",
+      "category_en": "초음파",
+      "brand": "asterasys",
+      "color": "#4ECDC4",
+      "priority": 2
+    },
+    "리프테라": {
+      "name": "리프테라",
+      "name_en": "Liftera",
+      "category": "HIFU", 
+      "category_en": "초음파",
+      "brand": "asterasys",
+      "color": "#45B7D1",
+      "priority": 3
+    },
+    "써마지": {
+      "name": "써마지",
+      "name_en": "Thermage",
+      "category": "RF",
+      "category_en": "고주파", 
+      "brand": "competitor",
+      "color": "#FFA07A",
+      "priority": 10
+    },
+    "인모드": {
+      "name": "인모드",
+      "name_en": "InMode",
+      "category": "RF",
+      "category_en": "고주파",
+      "brand": "competitor", 
+      "color": "#98D8C8",
+      "priority": 11
+    },
+    "덴서티": {
+      "name": "덴서티",
+      "name_en": "Density",
+      "category": "RF",
+      "category_en": "고주파",
+      "brand": "competitor",
+      "color": "#F7DC6F",
+      "priority": 12
+    },
+    "올리지오": {
+      "name": "올리지오", 
+      "name_en": "Oligo",
+      "category": "RF",
+      "category_en": "고주파",
+      "brand": "competitor",
+      "color": "#BB8FCE",
+      "priority": 13
+    },
+    "볼뉴머": {
+      "name": "볼뉴머",
+      "name_en": "Volnumer", 
+      "category": "RF",
+      "category_en": "고주파",
+      "brand": "competitor",
+      "color": "#85C1E9",
+      "priority": 14
+    },
+    "튠페이스": {
+      "name": "튠페이스",
+      "name_en": "TuneFace",
+      "category": "RF", 
+      "category_en": "고주파",
+      "brand": "competitor",
+      "color": "#F8C471",
+      "priority": 15
+    },
+    "텐써마": {
+      "name": "텐써마",
+      "name_en": "Tenstherm",
+      "category": "RF",
+      "category_en": "고주파",
+      "brand": "competitor",
+      "color": "#A3E4DB",
+      "priority": 16
+    },
+    "세르프": {
+      "name": "세르프",
+      "name_en": "Serf",
+      "category": "RF",
+      "category_en": "고주파", 
+      "brand": "competitor",
+      "color": "#D7BDE2",
+      "priority": 17
+    },
+    "울쎄라": {
+      "name": "울쎄라",
+      "name_en": "Ulthera",
+      "category": "HIFU",
+      "category_en": "초음파",
+      "brand": "competitor",
+      "color": "#FADBD8",
+      "priority": 20
+    },
+    "슈링크": {
+      "name": "슈링크", 
+      "name_en": "Shrink",
+      "category": "HIFU",
+      "category_en": "초음파",
+      "brand": "competitor",
+      "color": "#D5F4E6",
+      "priority": 21
+    },
+    "리니어지": {
+      "name": "리니어지",
+      "name_en": "Linear-G",
+      "category": "HIFU",
+      "category_en": "초음파",
+      "brand": "competitor", 
+      "color": "#FCF3CF",
+      "priority": 22
+    },
+    "브이로": {
+      "name": "브이로",
+      "name_en": "V-RO",
+      "category": "HIFU",
+      "category_en": "초음파",
+      "brand": "competitor",
+      "color": "#E8DAEF",
+      "priority": 23
+    },
+    "텐쎄라": {
+      "name": "텐쎄라",
+      "name_en": "Tensera", 
+      "category": "HIFU",
+      "category_en": "초음파",
+      "brand": "competitor",
+      "color": "#D6EAF8",
+      "priority": 24
+    },
+    "튠라이너": {
+      "name": "튠라이너",
+      "name_en": "TuneLiner",
+      "category": "HIFU",
+      "category_en": "초음파",
+      "brand": "competitor",
+      "color": "#FDEBD0",
+      "priority": 25
+    },
+    "리니어펌": {
+      "name": "리니어펌", 
+      "name_en": "Linear-Firm",
+      "category": "HIFU",
+      "category_en": "초음파",
+      "brand": "competitor",
+      "color": "#EBDEF0",
+      "priority": 26
+    }
+  },
+  "categories": {
+    "RF": {
+      "name": "고주파",
+      "name_en": "RF",
+      "color": "#FF6B6B",
+      "description": "Radio Frequency treatments"
+    },
+    "HIFU": {
+      "name": "초음파", 
+      "name_en": "HIFU",
+      "color": "#4ECDC4",
+      "description": "High-Intensity Focused Ultrasound treatments"
+    }
+  },
+  "channels": {
+    "blog": {
+      "name": "블로그",
+      "name_en": "Blog",
+      "color": "#96CEB4",
+      "types": ["병원블로그", "플레이스블로그", "일반블로그"]
+    },
+    "cafe": {
+      "name": "카페", 
+      "name_en": "Cafe",
+      "color": "#FFEAA7",
+      "metrics": ["발행량", "댓글수", "조회수"]
+    },
+    "news": {
+      "name": "뉴스",
+      "name_en": "News", 
+      "color": "#DDA0DD",
+      "metrics": ["발행량"]
+    },
+    "youtube": {
+      "name": "유튜브",
+      "name_en": "YouTube",
+      "color": "#FF7675",
+      "metrics": ["업로드", "댓글수"]
+    },
+    "search": {
+      "name": "검색",
+      "name_en": "Search",
+      "color": "#A29BFE", 
+      "metrics": ["검색량"]
+    },
+    "sales": {
+      "name": "판매",
+      "name_en": "Sales",
+      "color": "#6C5CE7",
+      "metrics": ["판매량"]
+    }
+  }
+}
