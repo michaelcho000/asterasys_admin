@@ -1,7 +1,7 @@
 
 import { BsEnvelope, BsEnvelopeCheck, BsEnvelopeHeart, BsEnvelopeOpen, BsEnvelopePlus, BsEnvelopeSlash } from "react-icons/bs";
 import { FaBriefcase, FaBuilding, FaCakeCandles, FaCcMastercard, FaCcPaypal, FaCcVisa, FaChrome, FaEdge, FaFacebook, FaFirefoxBrowser, FaHouse, FaInternetExplorer, FaLinkedin, FaLock, FaOctopusDeploy, FaOpera, FaPlane, FaSafari, FaTwitter, FaUmbrellaBeach, FaUsers, FaYoutube } from "react-icons/fa6";
-import { FiActivity, FiAirplay, FiAlertCircle, FiAlertTriangle, FiArchive, FiArrowDown, FiArrowRight, FiArrowUp, FiAtSign, FiAward, FiBarChart, FiBarChart2, FiBell, FiBellOff, FiBluetooth, FiBriefcase, FiCalendar, FiCast, FiCheck, FiCheckCircle, FiChevronDown, FiChevronUp, FiChrome, FiClipboard, FiClock, FiCompass, FiCopy, FiCrosshair, FiDelete, FiDollarSign, FiDownload, FiEdit, FiEye, FiFacebook, FiFigma, FiFileText, FiFramer, FiGitBranch, FiGitCommit, FiGithub, FiGitlab, FiGlobe, FiGrid, FiHelpCircle, FiHome, FiImage, FiInfo, FiInstagram, FiLayers, FiLayout, FiLifeBuoy, FiLightbulb, FiLink, FiLink2, FiLinkedin, FiList, FiLock, FiLogIn, FiMail, FiMapPin, FiMessageCircle, FiMessageSquare, FiMinus, FiMonitor, FiMoon, FiMoreHorizontal, FiMoreVertical, FiPause, FiPhone, FiPieChart, FiPlusSquare, FiPower, FiPrinter, FiRadio, FiRefreshCw, FiRepeat, FiSearch, FiSend, FiSettings, FiShield, FiShoppingBag, FiShoppingCart, FiSliders, FiSmartphone, FiStar, FiSun, FiSunrise, FiSunset, FiTablet, FiTag, FiTarget, FiTrash2, FiTrendingDown, FiTrendingUp, FiTwitter, FiType, FiUmbrella, FiUser, FiUserCheck, FiUserMinus, FiUserPlus, FiUsers, FiVideo, FiX, FiXCircle, FiYoutube, FiZap } from "react-icons/fi";
+import { FiActivity, FiAirplay, FiAlertCircle, FiAlertTriangle, FiArchive, FiArrowDown, FiArrowRight, FiArrowUp, FiAtSign, FiAward, FiBarChart, FiBarChart2, FiBell, FiBellOff, FiBluetooth, FiBriefcase, FiCalendar, FiCast, FiCheck, FiCheckCircle, FiChevronDown, FiChevronUp, FiChrome, FiClipboard, FiClock, FiCompass, FiCopy, FiCrosshair, FiDelete, FiDollarSign, FiDownload, FiEdit, FiEye, FiFacebook, FiFigma, FiFileText, FiFramer, FiGitBranch, FiGitCommit, FiGithub, FiGitlab, FiGlobe, FiGrid, FiHelpCircle, FiHome, FiImage, FiInfo, FiInstagram, FiLayers, FiLayout, FiLifeBuoy, FiLightbulb, FiLink, FiLink2, FiLinkedin, FiList, FiLock, FiLogIn, FiMail, FiMapPin, FiMessageCircle, FiMessageSquare, FiMinus, FiMonitor, FiMoon, FiMoreHorizontal, FiMoreVertical, FiPackage, FiPause, FiPhone, FiPieChart, FiPlusSquare, FiPower, FiPrinter, FiRadio, FiRefreshCw, FiRepeat, FiSearch, FiSend, FiSettings, FiShield, FiShoppingBag, FiShoppingCart, FiSliders, FiSmartphone, FiStar, FiSun, FiSunrise, FiSunset, FiTablet, FiTag, FiTarget, FiTrash2, FiTrendingDown, FiTrendingUp, FiTwitter, FiType, FiUmbrella, FiUser, FiUserCheck, FiUserMinus, FiUserPlus, FiUsers, FiVideo, FiX, FiXCircle, FiYoutube, FiZap } from "react-icons/fi";
 
 const getIcon = (name) => {
     switch (name) {
@@ -303,6 +303,30 @@ const getIcon = (name) => {
             return <FiRadio />
         case "feather-zap":
             return <FiZap />
+
+        // Asterasys specific icons for dashboard menu
+        case "feather-home":
+            return <FiHome />
+        case "feather-trending-up":
+            return <FiTrendingUp />
+        case "feather-activity":
+            return <FiActivity />
+        case "feather-package":
+            return <FiPackage />
+        case "feather-file-text":
+            return <FiFileText />
+        case "feather-download":
+            return <FiDownload />
+        case "feather-bar-chart":
+            return <FiBarChart />
+
+        // Additional marketing intelligence icons
+        case "feather-pie-chart":
+            return <FiPieChart />
+        case "feather-globe":
+            return <FiGlobe />
+        case "feather-target":
+            return <FiTarget />
 
         default:
             // Return a default icon if not found to prevent undefined errors

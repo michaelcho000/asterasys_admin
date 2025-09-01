@@ -46,6 +46,14 @@ npm run clean              # Clean build artifacts and node_modules
 npm run clean:install      # Full clean and reinstall
 ```
 
+### YouTube Data Processing
+```bash
+node scripts/processYouTubeDataNode.js       # Process YouTube JSON to CSV
+node scripts/extractAsterasysChannels.js     # Extract Asterasys channel data
+node scripts/advancedYouTubeAnalysis.js      # Advanced YouTube analytics
+node scripts/generateDetailedReport.js      # Generate quantitative reports
+```
+
 ### Additional Development Commands
 ```bash
 npm run email:dev          # Start email template development server
@@ -55,9 +63,12 @@ npm run stripe:listen      # Listen for Stripe webhooks (requires Stripe CLI)
 ## Architecture Overview
 
 ### Core Data System
-- **CSV Source**: 21 medical device marketing CSV files in `data/raw/`
+- **CSV Source**: 21+ medical device marketing CSV files in `data/raw/`
+- **YouTube Data**: `dataset_youtube-scraper_2025-08-28_09-52-54-390.json` (1,159 videos)
 - **Processing Pipeline**: `scripts/processData.js` converts CSV to JSON
+- **YouTube Processing**: Node.js scripts process YouTube data into analytics
 - **Dynamic API**: `src/app/api/data/files/[filename]/route.js` for runtime data access
+- **YouTube APIs**: 4 specialized YouTube analysis endpoints
 - **Data Hooks**: `src/hooks/useAsterasysData.js` for React data fetching
 
 ### Component Architecture
@@ -75,6 +86,12 @@ npm run stripe:listen      # Listen for Stripe webhooks (requires Stripe CLI)
 - `PaymentRecordChart.jsx` - RF/HIFU market analysis (bar + line chart)
 - `LeadsOverviewChart.jsx` - Channel marketing performance (donut chart)
 - `AsteraysProductPortfolio.jsx` - Product portfolio analysis cards
+
+**YouTube Analysis Components**:
+- `YouTubeInsightsCards.jsx` - KPI cards + 3 product performance cards
+- `YouTubeComprehensiveTable.jsx` - 18-product ranking table with sorting
+- `YouTubeSponsorAdCard.jsx` - Paid advertising campaign analysis
+- `YouTubeAnalysisTable.jsx` - Legacy analysis table component
 
 ### Data Structure
 
@@ -155,15 +172,20 @@ src/app/
 ├── duplicateLayout.js         # Root layout wrapper
 ├── (general)/                 # Route group for authenticated pages
 │   ├── layout.js             # General layout with sidebar
-│   ├── dashboards/analytics/ # Analytics dashboard
-│   ├── customers/            # Customer management (list, create, view)
-│   ├── leads/               # Lead management
-│   ├── payment/             # Payment records
-│   ├── projects/            # Project management
-│   ├── proposal/            # Proposal management
+│   ├── channel/              # Channel performance analysis
+│   │   ├── youtube/          # YouTube analysis dashboard
+│   │   ├── blog/            # Blog analysis
+│   │   ├── cafe/            # Cafe analysis
+│   │   └── news/            # News analysis
+│   ├── market-analysis/     # Market analysis sections
+│   ├── product/             # Product analysis
 │   └── reports/             # Reporting section
 └── api/                     # API routes
-    └── data/files/[filename]/ # Dynamic CSV data API
+    ├── data/files/[filename]/ # Dynamic CSV data API
+    ├── data/youtube-analysis/ # YouTube market analysis
+    ├── data/youtube-channels/ # YouTube channel data
+    ├── data/youtube-products/ # YouTube product data
+    └── data/youtube-sponsor/  # YouTube advertising data
 ```
 
 ### Key Architectural Patterns
@@ -174,10 +196,12 @@ src/app/
 
 ### Data Integration Pattern
 1. CSV files contain real medical device marketing data
-2. Dynamic filename-based API endpoints for data access  
-3. React hooks abstract data fetching logic
-4. Components use actual data instead of mock data
-5. Rankings calculated from 발행량 + 댓글수 합산 (판매량은 참고용만)
+2. YouTube JSON data (1,159 videos) processed into multiple analytics formats
+3. Dynamic filename-based API endpoints for data access  
+4. React hooks abstract data fetching logic
+5. Components use actual data instead of mock data
+6. Rankings calculated from 발행량 + 댓글수 합산 (판매량은 참고용만)
+7. YouTube analysis uses real scraping data with channel URLs and video titles
 
 ## Critical Business Rules
 
@@ -203,11 +227,14 @@ src/app/
 
 ### Key Files to Understand
 - `src/app/page.js` - Main dashboard layout with data source mapping comments
+- `src/app/(general)/channel/youtube/page.js` - YouTube analysis dashboard
 - `src/app/duplicateLayout.js` - Root layout wrapper
 - `src/utils/fackData/asterasysKPIData.js` - Core business data
 - `src/utils/chartsLogic/` - Chart configurations  
 - `scripts/processData.js` - CSV to JSON processing pipeline
+- `scripts/processYouTubeDataNode.js` - YouTube data processing
 - `data/raw/asterasys_total_data - *.csv` - Source data files
+- `data/processed/youtube/` - Processed YouTube analytics data
 
 ### Important Development Context
 - **Total Files**: 492 JavaScript/JSX files in the codebase
@@ -230,3 +257,11 @@ This dashboard analyzes the Korean medical device market with focus on:
 - **HIFU (초음파)**: High-intensity focused ultrasound (리프테라, 쿨소닉)
 - Marketing channels: Blog, Cafe, YouTube, News, Search
 - Hospital partnerships and content marketing performance
+
+### YouTube Analysis System
+- **Market Analysis**: 18 medical device brands analyzed from 1,159 real YouTube videos
+- **Asterasys Performance**: 3 products with 11 total videos (0.95% market share)
+- **Channel Intelligence**: Top performing channels per product with real URLs
+- **Content Strategy**: Shorts vs Long-form video analysis
+- **Paid Advertising**: Campaign performance tracking with CPV and ROI metrics
+- **Data Processing**: Automated scripts convert raw YouTube data into actionable insights

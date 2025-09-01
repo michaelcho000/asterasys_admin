@@ -1,0 +1,197 @@
+{
+  "matchedProducts": [
+    {
+      "product": "슈링크",
+      "category": "초음파",
+      "youtubeVideos": 62,
+      "youtubeViews": 1150119,
+      "youtubeLikes": 9821,
+      "youtubeComments": 470,
+      "sales": null,
+      "isAsterasys": false
+    },
+    {
+      "product": "볼뉴머",
+      "category": "고주파",
+      "youtubeVideos": 25,
+      "youtubeViews": 1022450,
+      "youtubeLikes": 314,
+      "youtubeComments": 4,
+      "sales": 543,
+      "isAsterasys": false
+    },
+    {
+      "product": "덴서티",
+      "category": "고주파",
+      "youtubeVideos": 36,
+      "youtubeViews": 499215,
+      "youtubeLikes": 2963,
+      "youtubeComments": 319,
+      "sales": 502,
+      "isAsterasys": false
+    },
+    {
+      "product": "브이로",
+      "category": "초음파",
+      "youtubeVideos": 283,
+      "youtubeViews": 494736,
+      "youtubeLikes": 6356,
+      "youtubeComments": 1284,
+      "sales": 443,
+      "isAsterasys": false
+    },
+    {
+      "product": "세르프",
+      "category": "고주파",
+      "youtubeVideos": 46,
+      "youtubeViews": 109418,
+      "youtubeLikes": 854,
+      "youtubeComments": 95,
+      "sales": 381,
+      "isAsterasys": false
+    },
+    {
+      "product": "올리지오",
+      "category": "고주파",
+      "youtubeVideos": 31,
+      "youtubeViews": 58657,
+      "youtubeLikes": 903,
+      "youtubeComments": 195,
+      "sales": null,
+      "isAsterasys": false
+    },
+    {
+      "product": "쿨소닉",
+      "category": "초음파",
+      "youtubeVideos": 7,
+      "youtubeViews": 20953,
+      "youtubeLikes": 161,
+      "youtubeComments": 58,
+      "sales": 23,
+      "isAsterasys": true
+    },
+    {
+      "product": "텐써마",
+      "category": "고주파",
+      "youtubeVideos": 11,
+      "youtubeViews": 15151,
+      "youtubeLikes": 136,
+      "youtubeComments": 14,
+      "sales": 568,
+      "isAsterasys": false
+    },
+    {
+      "product": "튠페이스",
+      "category": "고주파",
+      "youtubeVideos": 7,
+      "youtubeViews": 7026,
+      "youtubeLikes": 20,
+      "youtubeComments": 34,
+      "sales": 325,
+      "isAsterasys": false
+    },
+    {
+      "product": "쿨페이즈",
+      "category": "고주파",
+      "youtubeVideos": 2,
+      "youtubeViews": 1675,
+      "youtubeLikes": 3,
+      "youtubeComments": 0,
+      "sales": 159,
+      "isAsterasys": true
+    },
+    {
+      "product": "리프테라",
+      "category": "초음파",
+      "youtubeVideos": 2,
+      "youtubeViews": 1532,
+      "youtubeLikes": 5,
+      "youtubeComments": 5,
+      "sales": 492,
+      "isAsterasys": true
+    },
+    {
+      "product": "텐쎄라",
+      "category": "초음파",
+      "youtubeVideos": 2,
+      "youtubeViews": 993,
+      "youtubeLikes": 11,
+      "youtubeComments": 1,
+      "sales": 416,
+      "isAsterasys": false
+    },
+    {
+      "product": "리니어지",
+      "category": "초음파",
+      "youtubeVideos": 3,
+      "youtubeViews": 746,
+      "youtubeLikes": 19,
+      "youtubeComments": 0,
+      "sales": 398,
+      "isAsterasys": false
+    },
+    {
+      "product": "튠라이너",
+      "category": "초음파",
+      "youtubeVideos": 0,
+      "youtubeViews": 0,
+      "youtubeLikes": 0,
+      "youtubeComments": 0,
+      "sales": 325,
+      "isAsterasys": false
+    },
+    {
+      "product": "리니어펌",
+      "category": "초음파",
+      "youtubeVideos": 0,
+      "youtubeViews": 0,
+      "youtubeLikes": 0,
+      "youtubeComments": 0,
+      "sales": 402,
+      "isAsterasys": false
+    }
+  ],
+  "onlyYoutube": [
+    "써마지",
+    "울쎄라",
+    "인모드"
+  ],
+  "asterasysProducts": [
+    {
+      "product": "쿨소닉",
+      "category": "초음파",
+      "youtubeVideos": 7,
+      "youtubeViews": 20953,
+      "youtubeLikes": 161,
+      "youtubeComments": 58,
+      "sales": 23,
+      "isAsterasys": true
+    },
+    {
+      "product": "쿨페이즈",
+      "category": "고주파",
+      "youtubeVideos": 2,
+      "youtubeViews": 1675,
+      "youtubeLikes": 3,
+      "youtubeComments": 0,
+      "sales": 159,
+      "isAsterasys": true
+    },
+    {
+      "product": "리프테라",
+      "category": "초음파",
+      "youtubeVideos": 2,
+      "youtubeViews": 1532,
+      "youtubeLikes": 5,
+      "youtubeComments": 5,
+      "sales": 492,
+      "isAsterasys": true
+    }
+  ],
+  "correlation": null,
+  "summary": {
+    "totalAnalyzable": 15,
+    "asterasysCount": 3,
+    "excludedCount": 3
+  }
+}

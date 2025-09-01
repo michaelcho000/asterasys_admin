@@ -40,7 +40,7 @@ export const asterasysMenuList = [
         id: 2,
         name: "채널 성과",
         path: '#',
-        icon: 'feather-activity',
+        icon: 'feather-bar-chart',
         dropdownMenu: [
             {
                 id: 1,
