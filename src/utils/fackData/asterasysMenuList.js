@@ -20,19 +20,19 @@ export const asterasysMenuList = [
                 id: 1,
                 name: "경쟁사 순위",
                 path: "/market-analysis/rankings",
-                subdropdownMenu: false
+                subdropdownMenu: []
             },
             {
                 id: 2,
                 name: "시장 점유율",
                 path: "/market-analysis/market-share",
-                subdropdownMenu: false
+                subdropdownMenu: []
             },
             {
                 id: 3,
                 name: "기술별 비교",
                 path: "/market-analysis/technology",
-                subdropdownMenu: false
+                subdropdownMenu: []
             }
         ]
     },
@@ -46,31 +46,31 @@ export const asterasysMenuList = [
                 id: 1,
                 name: "블로그 분석",
                 path: "/channel/blog",
-                subdropdownMenu: false
+                subdropdownMenu: []
             },
             {
                 id: 2,
                 name: "카페 분석",
                 path: "/channel/cafe",
-                subdropdownMenu: false
+                subdropdownMenu: []
             },
             {
                 id: 3,
                 name: "뉴스 분석",
                 path: "/channel/news",
-                subdropdownMenu: false
+                subdropdownMenu: []
             },
             {
                 id: 4,
                 name: "유튜브 분석",
                 path: "/channel/youtube",
-                subdropdownMenu: false
+                subdropdownMenu: []
             },
             {
                 id: 5,
                 name: "판매 성과",
                 path: "/channel/sales",
-                subdropdownMenu: false
+                subdropdownMenu: []
             }
         ]
     },
@@ -84,19 +84,19 @@ export const asterasysMenuList = [
                 id: 1,
                 name: "포트폴리오 개요",
                 path: "/product/portfolio",
-                subdropdownMenu: false
+                subdropdownMenu: []
             },
             {
                 id: 2,
                 name: "제품별 성과",
                 path: "/product/performance", 
-                subdropdownMenu: false
+                subdropdownMenu: []
             },
             {
                 id: 3,
                 name: "경쟁 포지션",
                 path: "/product/position",
-                subdropdownMenu: false
+                subdropdownMenu: []
             }
         ]
     },
@@ -110,25 +110,25 @@ export const asterasysMenuList = [
                 id: 1,
                 name: "콘텐츠 운영",
                 path: "/reports/content",
-                subdropdownMenu: false
+                subdropdownMenu: []
             },
             {
                 id: 2,
                 name: "SEO 성과",
                 path: "/reports/seo",
-                subdropdownMenu: false
+                subdropdownMenu: []
             },
             {
                 id: 3,
                 name: "광고 성과",
                 path: "/reports/advertising",
-                subdropdownMenu: false
+                subdropdownMenu: []
             },
             {
                 id: 4,
                 name: "평판 관리",
                 path: "/reports/reputation",
-                subdropdownMenu: false
+                subdropdownMenu: []
             }
         ]
     },
@@ -142,19 +142,19 @@ export const asterasysMenuList = [
                 id: 1,
                 name: "경영진 리포트",
                 path: "/export/executive",
-                subdropdownMenu: false
+                subdropdownMenu: []
             },
             {
                 id: 2,
                 name: "상세 분석 리포트",
                 path: "/export/detailed",
-                subdropdownMenu: false
+                subdropdownMenu: []
             },
             {
                 id: 3,
                 name: "원본 데이터 (CSV)",
                 path: "/export/raw-data",
-                subdropdownMenu: false
+                subdropdownMenu: []
             }
         ]
     }

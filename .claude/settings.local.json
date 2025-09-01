@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git pull:*)",
+      "Bash(npm install)",
+      "Bash(npm run dev:*)",
+      "Bash(npm i:*)",
+      "Bash(npm run:*)",
+      "Bash(grep:*)",
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git config:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(cat:*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "Bash(python:*)",
+      "Bash(where python)",
+      "Bash(C:UserssoccompanyAppDataLocalProgramsPythonPython313python.exe --version)",
+      "Bash(node:*)",
+      "Bash(curl:*)",
+      "Bash(git push:*)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git rm:*)",
+      "Bash(git remote set-url:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
