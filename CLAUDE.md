@@ -41,6 +41,15 @@ npm run test:watch         # Run tests in watch mode
 npm run test:coverage      # Generate coverage report
 npm run format             # Format code with Prettier
 npm run format:check       # Check code formatting
+npm run analyze            # Analyze bundle size
+npm run clean              # Clean build artifacts and node_modules
+npm run clean:install      # Full clean and reinstall
+```
+
+### Additional Development Commands
+```bash
+npm run email:dev          # Start email template development server
+npm run stripe:listen      # Listen for Stripe webhooks (requires Stripe CLI)
 ```
 
 ## Architecture Overview
@@ -139,6 +148,30 @@ DuplicateLayout (main wrapper)
         └── PageHeader + main-content
 ```
 
+### Next.js App Router Structure
+```
+src/app/
+├── page.js                    # Main dashboard (/)
+├── duplicateLayout.js         # Root layout wrapper
+├── (general)/                 # Route group for authenticated pages
+│   ├── layout.js             # General layout with sidebar
+│   ├── dashboards/analytics/ # Analytics dashboard
+│   ├── customers/            # Customer management (list, create, view)
+│   ├── leads/               # Lead management
+│   ├── payment/             # Payment records
+│   ├── projects/            # Project management
+│   ├── proposal/            # Proposal management
+│   └── reports/             # Reporting section
+└── api/                     # API routes
+    └── data/files/[filename]/ # Dynamic CSV data API
+```
+
+### Key Architectural Patterns
+- **File-based Routing**: Next.js 14 App Router with route groups
+- **Component Data Mapping**: Each dashboard component has explicit CSV data sources documented in comments
+- **Mixed Data Strategy**: Combination of static data, API endpoints, and direct CSV processing
+- **Bootstrap + Custom**: Duralux premium template with Asterasys customizations
+
 ### Data Integration Pattern
 1. CSV files contain real medical device marketing data
 2. Dynamic filename-based API endpoints for data access  
@@ -169,10 +202,22 @@ DuplicateLayout (main wrapper)
 ## Development Notes
 
 ### Key Files to Understand
-- `src/app/page.js` - Main dashboard layout
+- `src/app/page.js` - Main dashboard layout with data source mapping comments
+- `src/app/duplicateLayout.js` - Root layout wrapper
 - `src/utils/fackData/asterasysKPIData.js` - Core business data
-- `src/utils/chartsLogic/` - Chart configurations
+- `src/utils/chartsLogic/` - Chart configurations  
+- `scripts/processData.js` - CSV to JSON processing pipeline
 - `data/raw/asterasys_total_data - *.csv` - Source data files
+
+### Important Development Context
+- **Total Files**: 492 JavaScript/JSX files in the codebase
+- **Template Base**: Built on Duralux premium admin template
+- **Authentication**: NextAuth.js with Prisma adapter
+- **Email System**: React Email components for transactional emails
+- **Payment Integration**: Stripe with webhook support
+- **Error Tracking**: Sentry for production error monitoring
+- **Analytics**: Vercel Analytics integration
+- **File Uploads**: UploadThing for file management
 
 ### Custom Hooks
 - `useCardTitleActions()` - Card interaction state management
