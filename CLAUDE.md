@@ -8,6 +8,25 @@ This is the Asterasys Marketing Intelligence Dashboard - a specialized medical d
 
 **Tech Stack**: Next.js 14.2.32, React 18, Bootstrap 5.3.3, ApexCharts, SCSS
 
+## Environment Setup
+
+### Prerequisites
+- Node.js 18+ and npm
+- PostgreSQL database
+- Copy `.env.example` to `.env` and configure:
+  - `DATABASE_URL` for PostgreSQL connection
+  - `NEXTAUTH_SECRET` for authentication
+  - Optional: OAuth providers, email service, analytics
+
+### Initial Setup
+```bash
+npm install                  # Install dependencies
+npm run db:generate         # Generate Prisma client
+npm run db:push             # Setup database schema
+npm run process-data        # Process CSV data files
+npm run dev                 # Start development server
+```
+
 ## Key Commands
 
 ### Development
@@ -31,6 +50,9 @@ npm run ingest               # Alias for process-data
 npm run db:generate          # Generate Prisma client
 npm run db:push             # Push schema to database
 npm run db:migrate          # Run migrations in development
+npm run db:migrate:prod     # Deploy migrations to production
+npm run db:seed             # Seed database with initial data
+npm run db:reset            # Reset database (dev only)
 npm run db:studio           # Open Prisma Studio
 ```
 
@@ -48,10 +70,13 @@ npm run clean:install      # Full clean and reinstall
 
 ### YouTube Data Processing
 ```bash
+npm run youtube:process                       # Process YouTube data (alias)
 node scripts/processYouTubeDataNode.js       # Process YouTube JSON to CSV
 node scripts/extractAsterasysChannels.js     # Extract Asterasys channel data
 node scripts/advancedYouTubeAnalysis.js      # Advanced YouTube analytics
-node scripts/generateDetailedReport.js      # Generate quantitative reports
+node scripts/generateDetailedReport.js       # Generate quantitative reports
+node scripts/analyzeYoutubeSalesCorrelation.js # Analyze YouTube-sales correlation
+node scripts/processYoutubeSalesMatching.js    # Process sales matching data
 ```
 
 ### Additional Development Commands
@@ -182,9 +207,13 @@ src/app/
 │   └── reports/             # Reporting section
 └── api/                     # API routes
     ├── data/files/[filename]/ # Dynamic CSV data API
+    ├── data/channels/         # Marketing channels data
+    ├── data/kpis/             # KPI data endpoints
+    ├── data/top-products/     # Top products data
     ├── data/youtube-analysis/ # YouTube market analysis
     ├── data/youtube-channels/ # YouTube channel data
     ├── data/youtube-products/ # YouTube product data
+    ├── data/youtube-sales-correlation/ # YouTube-sales correlation
     └── data/youtube-sponsor/  # YouTube advertising data
 ```
 
@@ -265,3 +294,35 @@ This dashboard analyzes the Korean medical device market with focus on:
 - **Content Strategy**: Shorts vs Long-form video analysis
 - **Paid Advertising**: Campaign performance tracking with CPV and ROI metrics
 - **Data Processing**: Automated scripts convert raw YouTube data into actionable insights
+
+## Available Sub-Agents
+
+This project includes specialized Claude Code agents in `.claude/agents/` for enhanced development workflows:
+
+### Programming Specialists
+- `@frontend-developer` - React components, responsive design, accessibility
+- `@javascript-pro` - Modern JS/TS, async patterns, Node.js APIs
+- `@backend-architect` - Server architecture, API design, database optimization
+
+### Analysis & Quality
+- `@data-analyst` - Quantitative analysis, statistical insights, visualization recommendations
+- `@code-reviewer` - Code quality, best practices, security analysis
+- `@debugger` - Error diagnosis, performance debugging, troubleshooting
+- `@error-detective` - Deep error analysis, root cause investigation
+
+### Design & Research
+- `@ui-ux-designer` - Interface design, user experience, design systems
+- `@technical-researcher` - Technology research, documentation analysis
+
+### Usage
+```bash
+# Explicit agent invocation
+@frontend-developer "Create responsive dashboard component"
+@data-analyst "Analyze medical device market trends"
+
+# Agents auto-activate based on context and keywords
+# - JavaScript/React issues → @frontend-developer, @javascript-pro
+# - Data analysis tasks → @data-analyst  
+# - Code quality issues → @code-reviewer
+# - Error debugging → @debugger, @error-detective
+```
