@@ -184,7 +184,8 @@ const Header = () => {
                 <div className="header-right ms-auto">
                     <div className="d-flex align-items-center">
                         <SearchModal />
-                        <LanguagesModal />
+                        {/* <!--! [HIDDEN] 언어 설정 버튼 - 나중에 복원 가능 !--> */}
+                        {/* <LanguagesModal /> */}
                         <div className="nxl-h-item d-none d-sm-flex" >
                             <div className="full-screen-switcher">
                                 <span className="nxl-head-link me-0">
@@ -193,16 +194,19 @@ const Header = () => {
                                 </span>
                             </div>
                         </div>
-                        <div className="nxl-h-item dark-light-theme">
+                        {/* <!--! [HIDDEN] 다크모드 버튼 - 나중에 복원 가능 !--> */}
+                        {/* <div className="nxl-h-item dark-light-theme">
                             <div className="nxl-head-link me-0 dark-button" onClick={() => handleThemeMode("dark")}>
                                 <FiMoon size={20} />
                             </div>
                             <div className="nxl-head-link me-0 light-button" onClick={() => handleThemeMode("light")} style={{ display: "none" }}>
                                 <FiSun size={20} />
                             </div>
-                        </div>
-                        <TimesheetsModal />
-                        <NotificationsModal />
+                        </div> */}
+                        {/* <!--! [HIDDEN] Timesheets 버튼 - 나중에 복원 가능 !--> */}
+                        {/* <TimesheetsModal /> */}
+                        {/* <!--! [HIDDEN] 알림 버튼 - 나중에 복원 가능 !--> */}
+                        {/* <NotificationsModal /> */}
                         <ProfileModal />
                     </div>
                 </div>

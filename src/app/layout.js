@@ -24,7 +24,6 @@ export default function RootLayout({ children }) {
             {children}
           </NavigationProvider>
         </SettingSideBarProvider>
-        <ThemeCustomizer />
       </body>
     </html>
   );

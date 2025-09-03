@@ -254,16 +254,18 @@ const NewsProductCategoryRadar = () => {
   const marketShare = parseFloat(data.summary?.marketShare || 4.9)
   const avgMarketingScore = data.summary?.averageMarketingScore || 20
   
-  // Market averages
-  const marketAvgArticles = Math.round(totalArticles / 18) // Average per brand
-  const asterasysAvgArticles = Math.round(asterasysArticles / 3) // Asterasys has 3 products
-  const asterasysVsMarketRatio = marketAvgArticles > 0 ? (asterasysAvgArticles / marketAvgArticles * 100) : 30
+  // Daily average calculations from API
+  const totalDailyAverage = parseFloat(data.summary?.totalDailyAverage || 2.9)
+  const asterasysDailyAverage = parseFloat(data.summary?.asterasysDailyAverage || 3.0)
+  const asterasysVsMarketRatio = parseFloat(data.summary?.asterasysVsMarketRatio || 103.4)
 
   // Progress calculations
   const productsAnalyzedProgress = (totalProducts / 18 * 100).toFixed(0) // 17 out of 18 possible
-  const asterasysShareProgress = Math.min(marketShare * 20, 100).toFixed(0) // Target 5% share
+  // Market share progress: Asterasys actual market share as progress bar
+  const asterasysShareProgress = marketShare.toFixed(1) // 실제 점유율을 그대로 사용 (4.9% = 4.9%)
   const marketingProgress = Math.min(avgMarketingScore * 2, 100).toFixed(0) // Max score around 50
-  const articlesProgress = Math.min((asterasysArticles / 50) * 100, 100).toFixed(0) // Target 50 articles for Asterasys
+  // New daily average based progress calculation
+  const dailyAverageProgress = Math.min(asterasysVsMarketRatio, 100).toFixed(0) // Asterasys vs market average
 
   const kpiData = [
     {
@@ -278,11 +280,11 @@ const NewsProductCategoryRadar = () => {
     },
     {
       id: 2,
-      title: "총 기사 수",
-      total_number: `${totalArticles}건`,
-      progress: `${articlesProgress}%`,
-      progress_info: `Asterasys ${asterasysArticles}건 (${marketShare}%)`,
-      context: `일평균 ${(totalArticles / 30).toFixed(1)}건 발행`,
+      title: "일평균 기사수",
+      total_number: `${totalDailyAverage}건/일`,
+      progress: `${dailyAverageProgress}%`,
+      progress_info: `Asterasys ${asterasysDailyAverage}건/일 (시장대비 ${asterasysVsMarketRatio}%)`,
+      context: `전체 제품 평균 vs Asterasys 평균`,
       icon: "fi fi-rr-document-signed",
       color: "info"
     },
@@ -291,8 +293,8 @@ const NewsProductCategoryRadar = () => {
       title: "Asterasys 점유율",
       total_number: `${marketShare}%`,
       progress: `${asterasysShareProgress}%`,
-      progress_info: `목표 5% 대비 ${(marketShare / 5 * 100).toFixed(0)}% 달성`,
-      context: `시장 평균 대비 ${asterasysVsMarketRatio.toFixed(0)}% 수준`,
+      progress_info: `전체 시장에서 ${asterasysArticles}건 / ${totalArticles}건`,
+      context: `뉴스 시장 내 Asterasys 실제 점유율`,
       icon: "fi fi-rr-chart-pie-alt",
       color: "success"
     },
@@ -378,7 +380,7 @@ const NewsProductCategoryRadar = () => {
             <div key={`rf-all-${index}`} className="col-lg-4 col-md-6 mb-4">
               <div className="card stretch stretch-full">
                 <div className="card-header">
-                  <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex justify-content-between align-items-center w-100">
                     <div className="d-flex align-items-center">
                       <h5 className={`mb-0 ${product.isAsterasys ? 'text-primary' : 'text-dark'}`}>
                         {product.product_name}
@@ -387,8 +389,8 @@ const NewsProductCategoryRadar = () => {
                         <span className="ms-2 badge bg-primary text-white">Asterasys</span>
                       )}
                     </div>
-                    <div className="d-flex gap-2">
-                      <span className="badge bg-dark text-white">#{index + 1}</span>
+                    <div className="d-flex gap-2 ms-auto">
+                      <span className="badge bg-dark text-white">{index + 1}위</span>
                       <span className="badge bg-info text-white">{product.total_articles}건</span>
                     </div>
                   </div>
@@ -414,7 +416,7 @@ const NewsProductCategoryRadar = () => {
             <div key={`hifu-all-${index}`} className="col-lg-4 col-md-6 mb-4">
               <div className="card stretch stretch-full">
                 <div className="card-header">
-                  <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex justify-content-between align-items-center w-100">
                     <div className="d-flex align-items-center">
                       <h5 className={`mb-0 ${product.isAsterasys ? 'text-primary' : 'text-dark'}`}>
                         {product.product_name}
@@ -423,8 +425,8 @@ const NewsProductCategoryRadar = () => {
                         <span className="ms-2 badge bg-primary text-white">Asterasys</span>
                       )}
                     </div>
-                    <div className="d-flex gap-2">
-                      <span className="badge bg-dark text-white">#{index + 1}</span>
+                    <div className="d-flex gap-2 ms-auto">
+                      <span className="badge bg-dark text-white">{index + 1}위</span>
                       <span className="badge bg-info text-white">{product.total_articles}건</span>
                     </div>
                   </div>

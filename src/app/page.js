@@ -46,9 +46,7 @@ import DuplicateLayout from './duplicateLayout'
 const Home = () => {
   return (
     <DuplicateLayout>
-      <PageHeader >
-        <PageHeaderDate />
-      </PageHeader>
+      <PageHeader />
       <div className='main-content'>
         <div className='row'>
           <AsteraysKPIStatistics />

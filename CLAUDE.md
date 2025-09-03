@@ -20,11 +20,21 @@ This is the Asterasys Marketing Intelligence Dashboard - a specialized medical d
 
 ### Initial Setup
 ```bash
-npm install                  # Install dependencies
+# 1. Install dependencies
+npm install
+
+# 2. Setup environment variables
+cp .env.example .env        # Copy and configure DATABASE_URL, NEXTAUTH_SECRET, JWT_SECRET
+
+# 3. Database setup (requires PostgreSQL running)
 npm run db:generate         # Generate Prisma client
-npm run db:push             # Setup database schema
-npm run process-data        # Process CSV data files
-npm run dev                 # Start development server
+npm run db:push             # Push schema to database
+
+# 4. Process CSV data (21 medical device marketing files)
+npm run process-data        # Convert CSV to JSON for dashboard
+
+# 5. Start development server
+npm run dev                 # Available at http://localhost:3000
 ```
 
 ## Key Commands
@@ -41,28 +51,37 @@ npm run type-check            # TypeScript type checking
 
 ### Data Processing
 ```bash
-npm run process-data          # Process CSV files to JSON
+npm run process-data          # Process CSV files to JSON (21 medical device CSV files)
 npm run ingest               # Alias for process-data
+# Output: data/processed/*.json files (dashboard.json, kpis.json, channels.json, raw.json)
 ```
 
 ### Database (Prisma)
 ```bash
-npm run db:generate          # Generate Prisma client
-npm run db:push             # Push schema to database
-npm run db:migrate          # Run migrations in development
+npm run db:generate          # Generate Prisma client (run after schema changes)
+npm run db:push             # Push schema to database (development mode)
+npm run db:migrate          # Create and run migrations (development)
 npm run db:migrate:prod     # Deploy migrations to production
 npm run db:seed             # Seed database with initial data
-npm run db:reset            # Reset database (dev only)
-npm run db:studio           # Open Prisma Studio
+npm run db:reset            # Reset database (WARNING: destroys all data)
+npm run db:studio           # Open Prisma Studio (GUI at localhost:5555)
+
+# Development workflow:
+# 1. Edit schema.prisma
+# 2. npm run db:generate (update client)
+# 3. npm run db:push (apply to dev DB) OR npm run db:migrate (create migration)
 ```
 
 ### Testing & Quality
 ```bash
-npm run test                # Run Jest tests
+npm run test                # Run all Jest tests
 npm run test:watch         # Run tests in watch mode
 npm run test:coverage      # Generate coverage report
+npx jest [test-name]       # Run single test file
+npx jest --testNamePattern="pattern"  # Run specific test by name
 npm run format             # Format code with Prettier
 npm run format:check       # Check code formatting
+npm run type-check         # TypeScript type checking (no strict mode)
 npm run analyze            # Analyze bundle size
 npm run clean              # Clean build artifacts and node_modules
 npm run clean:install      # Full clean and reinstall
@@ -222,6 +241,8 @@ src/app/
 - **Component Data Mapping**: Each dashboard component has explicit CSV data sources documented in comments
 - **Mixed Data Strategy**: Combination of static data, API endpoints, and direct CSV processing
 - **Bootstrap + Custom**: Duralux premium template with Asterasys customizations
+- **Path Aliases**: TypeScript imports use `@/*` (src), `@components/*`, `@utils/*`, `@hooks/*`, `@assets/*`, `@contentApi/*`, `@types/*`
+- **Loose TypeScript**: `strict: false`, `noImplicitAny: false` for rapid development
 
 ### Data Integration Pattern
 1. CSV files contain real medical device marketing data
@@ -257,13 +278,15 @@ src/app/
 ### Key Files to Understand
 - `src/app/page.js` - Main dashboard layout with data source mapping comments
 - `src/app/(general)/channel/youtube/page.js` - YouTube analysis dashboard
-- `src/app/duplicateLayout.js` - Root layout wrapper
-- `src/utils/fackData/asterasysKPIData.js` - Core business data
+- `src/app/duplicateLayout.js` - Root layout wrapper with Bootstrap utilities
+- `src/utils/fackData/asterasysKPIData.js` - Core business data (requires manual updates)
 - `src/utils/chartsLogic/` - Chart configurations  
-- `scripts/processData.js` - CSV to JSON processing pipeline
+- `scripts/processData.js` - CSV to JSON processing pipeline (uses DataProcessor class)
 - `scripts/processYouTubeDataNode.js` - YouTube data processing
-- `data/raw/asterasys_total_data - *.csv` - Source data files
-- `data/processed/youtube/` - Processed YouTube analytics data
+- `src/hooks/useAsterasysData.js` - Custom data fetching hook
+- `prisma/schema.prisma` - Database schema (NextAuth + SaaS models)
+- `data/raw/asterasys_total_data - *.csv` - Source data files (21 files)
+- `data/processed/` - Generated JSON files
 
 ### Important Development Context
 - **Total Files**: 492 JavaScript/JSX files in the codebase

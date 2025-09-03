@@ -152,21 +152,6 @@ const AsteraysKPIStatistics = () => {
     }
     return (
         <>
-            {/* Manual Refresh Button for debugging */}
-            <div className="col-12 mb-3">
-                <button 
-                    className="btn btn-primary btn-sm"
-                    onClick={loadKPIData}
-                    disabled={loading}
-                >
-                    {loading ? 'Loading...' : 'Refresh Data (디버깅용)'}
-                </button>
-                {lastUpdated && (
-                    <span className="ms-2 text-muted small">
-                        Last updated: {lastUpdated}
-                    </span>
-                )}
-            </div>
             
             {loading ? (
                 <div className="col-12">

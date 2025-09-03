@@ -108,26 +108,62 @@ export const asterasysMenuList = [
         dropdownMenu: [
             {
                 id: 1,
-                name: "콘텐츠 운영",
-                path: "/reports/content",
+                name: "병원 블로그 포스팅",
+                path: "/reports/hospital-blog",
                 subdropdownMenu: []
             },
             {
                 id: 2,
-                name: "SEO 성과",
-                path: "/reports/seo",
+                name: "체험단 포스팅",
+                path: "/reports/experience-posts",
                 subdropdownMenu: []
             },
             {
                 id: 3,
-                name: "광고 성과",
-                path: "/reports/advertising",
+                name: "카페 상위노출",
+                path: "/reports/cafe-seo",
                 subdropdownMenu: []
             },
             {
                 id: 4,
-                name: "평판 관리",
-                path: "/reports/reputation",
+                name: "카페 게시글",
+                path: "/reports/cafe-posts",
+                subdropdownMenu: []
+            },
+            {
+                id: 5,
+                name: "카페 댓글",
+                path: "/reports/cafe-comments",
+                subdropdownMenu: []
+            },
+            {
+                id: 6,
+                name: "유튜브 댓글작업",
+                path: "/reports/youtube-comments",
+                subdropdownMenu: []
+            },
+            {
+                id: 7,
+                name: "유튜브 광고",
+                path: "/reports/youtube-ads",
+                subdropdownMenu: []
+            },
+            {
+                id: 8,
+                name: "타게팅 광고",
+                path: "/reports/targeting-ads",
+                subdropdownMenu: []
+            },
+            {
+                id: 9,
+                name: "옥외 광고",
+                path: "/reports/outdoor-ads",
+                subdropdownMenu: []
+            },
+            {
+                id: 10,
+                name: "자동완성 작업",
+                path: "/reports/auto-complete",
                 subdropdownMenu: []
             }
         ]

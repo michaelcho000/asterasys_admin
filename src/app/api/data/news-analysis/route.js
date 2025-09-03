@@ -96,6 +96,23 @@ export async function GET() {
     
     const marketSharePercentage = totalArticles > 0 ? 
       ((asterasysArticles / totalArticles) * 100).toFixed(1) : '0.0';
+
+    // Daily average articles calculation (8월 31일 기준)
+    const AUGUST_DAYS = 31;
+    
+    const totalDailyAverage = validRecords.reduce((sum, record) => {
+      const totalArticles = parseInt(record.total_articles) || 0;
+      return sum + (totalArticles / AUGUST_DAYS);
+    }, 0) / validRecords.length;
+
+    const asterasysDailyAverage = asterasysData.reduce((sum, record) => {
+      const totalArticles = parseInt(record.total_articles) || 0;
+      return sum + (totalArticles / AUGUST_DAYS);
+    }, 0) / asterasysData.length;
+
+    // Asterasys vs Market average ratio
+    const asterasysVsMarketRatio = totalDailyAverage > 0 ? 
+      ((asterasysDailyAverage / totalDailyAverage) * 100).toFixed(1) : '0.0';
     
     // Enhanced campaign intensity with detailed metrics
     const campaignIntensity = {
@@ -166,6 +183,9 @@ export async function GET() {
         totalArticles,
         asterasysArticles,
         marketShare: marketSharePercentage,
+        totalDailyAverage: totalDailyAverage.toFixed(1),
+        asterasysDailyAverage: asterasysDailyAverage.toFixed(1),
+        asterasysVsMarketRatio: asterasysVsMarketRatio,
         averageMarketingScore: Math.round(
           validRecords.reduce((sum, record) => 
             sum + (parseInt(record.marketing_keyword_score) || 0), 0

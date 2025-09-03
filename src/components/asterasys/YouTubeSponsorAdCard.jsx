@@ -75,11 +75,11 @@ const YouTubeSponsorAdCard = () => {
                     </div>
                 </div>
 
-                <div className="card-body custom-card-action p-0">
+                <div className="card-body custom-card-action p-0" style={{ height: '500px', overflow: 'hidden' }}>
                     {loading ? (
                         <CardLoader />
                     ) : (
-                        <div className="table-responsive">
+                        <div className="table-responsive" style={{ height: '100%', overflow: 'auto' }}>
                             <table className="table table-hover mb-0">
                                 <thead>
                                     <tr className="border-b">
@@ -87,7 +87,6 @@ const YouTubeSponsorAdCard = () => {
                                         <th>제품</th>
                                         <th>캠페인</th>
                                         <th>CPV</th>
-                                        <th>노출수</th>
                                         <th>조회수</th>
                                         <th>광고</th>
                                     </tr>
@@ -106,17 +105,18 @@ const YouTubeSponsorAdCard = () => {
                                                 </span>
                                             </td>
                                             <td>
-                                                <div className="fw-semibold text-dark fs-12">
-                                                    {item.campaign?.replace('2507_', '')}
+                                                <div className="fw-semibold text-dark fs-12" style={{ 
+                                                    maxWidth: '250px',
+                                                    wordWrap: 'break-word',
+                                                    wordBreak: 'break-word',
+                                                    whiteSpace: 'pre-wrap',
+                                                    lineHeight: '1.3'
+                                                }}>
+                                                    {item.campaign?.replace(/^2508_/, '')}
                                                 </div>
                                             </td>
                                             <td>
                                                 <div className="text-dark fw-semibold fs-12">₩{(item.cpv || 0).toLocaleString()}</div>
-                                            </td>
-                                            <td>
-                                                <div className="text-dark fw-semibold fs-12">
-                                                    {(item.impressions || 0).toLocaleString()}회
-                                                </div>
                                             </td>
                                             <td>
                                                 <div className="text-dark fw-semibold fs-12">
@@ -153,9 +153,9 @@ const YouTubeSponsorAdCard = () => {
                             </div>
                             <div className="col-md-4">
                                 <div className="fw-bold text-success">
-                                    {getFilteredData().reduce((sum, item) => sum + (item.impressions || 0), 0).toLocaleString()}회
+                                    ₩{getFilteredData().reduce((sum, item) => sum + (item.cpv || 0), 0).toLocaleString()}
                                 </div>
-                                <small className="text-muted">총 노출</small>
+                                <small className="text-muted">총 CPV</small>
                             </div>
                             <div className="col-md-4">
                                 <div className="fw-bold text-info">

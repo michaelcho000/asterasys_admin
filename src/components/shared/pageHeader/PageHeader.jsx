@@ -33,7 +33,17 @@ const PageHeader = ({ children }) => {
             'sales': '판매 성과',
             'rankings': '경쟁사 순위',
             'market-share': '시장 점유율',
-            'technology': '기술별 비교'
+            'technology': '기술별 비교',
+            'hospital-blog': '병원 블로그 포스팅',
+            'experience-posts': '체험단 포스팅',
+            'cafe-seo': '카페 상위노출',
+            'cafe-posts': '카페 게시글',
+            'cafe-comments': '카페 댓글',
+            'youtube-comments': '유튜브 댓글작업',
+            'youtube-ads': '유튜브 광고',
+            'targeting-ads': '타게팅 광고',
+            'outdoor-ads': '옥외 광고',
+            'auto-complete': '자동완성 작업'
         }
         
         const folderName = pathMapping[segments[0]] || segments[0]

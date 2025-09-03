@@ -56,21 +56,88 @@ const YouTubeSalesCorrelationChart = () => {
         return correlationData ? correlationData[activeCategory] || [] : []
     }
 
+    // Robust Percentile Normalization 함수들
+    const calculatePercentiles = (data) => {
+        const sorted = [...data].filter(val => val > 0).sort((a, b) => a - b)
+        if (sorted.length === 0) return { q1: 0, q3: 0, iqr: 0 }
+        
+        const q1Index = Math.floor(sorted.length * 0.25)
+        const q3Index = Math.floor(sorted.length * 0.75)
+        const q1 = sorted[q1Index]
+        const q3 = sorted[q3Index]
+        
+        return { q1, q3, iqr: q3 - q1 }
+    }
+    
+    const robustNormalize = (value, q1, iqr) => {
+        if (iqr === 0) return 50 // 모든 값이 같을 때
+        const normalized = ((value - q1) / iqr) * 80 + 10 // 10-90% 범위 사용
+        return Math.max(5, Math.min(95, normalized)) // 5-95% 범위로 제한
+    }
+
     const getDynamicChartOptions = () => {
         const currentData = getCurrentData()
         
+        // 데이터 추출
+        const salesData = currentData.map(product => product.sales || 0)
+        const youtubeData = currentData.map(product => product.youtubeScore || 0)
+        
+        // Robust 정규화를 위한 분위수 계산
+        const salesPercentiles = calculatePercentiles(salesData)
+        const youtubePercentiles = calculatePercentiles(youtubeData)
+        
+        // 절대값 사용하되 시각적 균형을 위한 스케일 조정
+        const maxSales = Math.max(...salesData)
+        const maxYoutube = Math.max(...youtubeData)
+        
+        // YouTube 점수를 판매량과 비슷한 스케일로 조정
+        const scaleRatio = maxSales > 0 ? maxSales / maxYoutube : 1
+        const scaledYoutubeData = youtubeData.map(youtube => youtube * scaleRatio)
+        
+        // 실제 절대값 사용 (스케일 조정된 YouTube 데이터)
+        const displaySalesData = salesData
+        const displayYoutubeData = scaledYoutubeData
+        
+        // 디버깅을 위한 로그 출력
+        console.log('Chart Debug Info:', {
+            salesData,
+            youtubeData,
+            maxSales,
+            maxYoutube,
+            scaleRatio,
+            displaySalesData,
+            displayYoutubeData,
+            products: currentData.map(p => p.product)
+        })
+        
         return {
             chart: {
-                type: 'line',
+                type: 'bar',
                 height: 377,
-                toolbar: { show: false }
+                toolbar: { show: false },
+                stacked: false,
+                zoom: { enabled: false },
+                animations: {
+                    enabled: false
+                },
+                redrawOnParentResize: false,
+                redrawOnWindowResize: false,
+                autoSelected: 'pan',
+                selection: {
+                    enabled: false
+                },
+                brush: {
+                    enabled: false
+                }
             },
             plotOptions: {
                 bar: {
                     horizontal: false,
                     borderRadius: 4,
                     borderRadiusApplication: 'end',
-                    columnWidth: '60%'
+                    columnWidth: '70%',
+                    distributed: false,
+                    rangeBarOverlap: true
                 }
             },
             dataLabels: {
@@ -82,6 +149,12 @@ const YouTubeSalesCorrelationChart = () => {
                 curve: 'smooth',
                 colors: ['transparent', 'transparent', '#ef4444']
             },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: { height: 300 }
+                }
+            }],
             xaxis: {
                 categories: currentData.map(product => product.product),
                 labels: {
@@ -98,7 +171,7 @@ const YouTubeSalesCorrelationChart = () => {
             yaxis: [
                 {
                     title: {
-                        text: '판매량 (대) / YouTube 조회수 (천회)',
+                        text: '판매량 (대) / YouTube 성과 (조정 스케일)',
                         style: { fontSize: '12px' }
                     },
                     labels: {
@@ -115,10 +188,14 @@ const YouTubeSalesCorrelationChart = () => {
                 {
                     opposite: true,
                     title: {
-                        text: '효율성 지수 (조회수 1K당 판매량)',
+                        text: '효율성 지수 (판매량/YouTube성과 비율)',
                         style: { fontSize: '12px' }
                     },
                     labels: {
+                        style: {
+                            colors: '#ef4444',
+                            fontSize: '12px'
+                        },
                         formatter: function (val) {
                             return val.toFixed(1);
                         }
@@ -127,27 +204,25 @@ const YouTubeSalesCorrelationChart = () => {
             ],
             series: [
                 {
-                    name: '누적 판매량',
-                    data: currentData.map(product => product.sales),
-                    type: 'bar',
-                    yAxisIndex: 0
+                    name: '판매량 (대)',
+                    data: displaySalesData,
+                    type: 'bar'
                 },
                 {
-                    name: 'YouTube 종합성과', 
-                    data: currentData.map(product => Math.round(product.youtubeScore / 10)), // 10으로 나누어 스케일 조정
-                    type: 'bar',
-                    yAxisIndex: 0
+                    name: 'YouTube 성과 (조정된 스케일)', 
+                    data: displayYoutubeData,
+                    type: 'bar'
                 },
                 {
                     name: '효율성 지수',
-                    data: currentData.map(product => parseFloat(product.efficiency)),
+                    data: currentData.map(product => parseFloat(product.efficiency || 0)),
                     type: 'line',
                     yAxisIndex: 1
                 }
             ],
             colors: ['#3b82f6', '#10b981', '#ef4444'],
             fill: {
-                opacity: [0.85, 0.85, 0.1]
+                opacity: [0.9, 0.7, 0.1]
             },
             markers: {
                 size: [0, 0, 6],
@@ -167,9 +242,19 @@ const YouTubeSalesCorrelationChart = () => {
                 y: {
                     formatter: function (val, opts) {
                         const seriesIndex = opts.seriesIndex;
-                        if (seriesIndex === 0) return val.toLocaleString() + '대';
-                        if (seriesIndex === 1) return (val * 10).toLocaleString() + '점';
-                        if (seriesIndex === 2) return val + '점';
+                        const dataIndex = opts.dataPointIndex;
+                        const product = currentData[dataIndex];
+                        
+                        if (seriesIndex === 0) {
+                            return `판매량: ${val.toLocaleString()}대`;
+                        }
+                        if (seriesIndex === 1) {
+                            const actualYoutubeScore = product?.youtubeScore || 0;
+                            return `YouTube 성과: ${val.toFixed(0)} (실제: ${actualYoutubeScore.toLocaleString()}점)`;
+                        }
+                        if (seriesIndex === 2) {
+                            return `${val.toFixed(2)}점`;
+                        }
                         return val;
                     }
                 }
@@ -185,6 +270,26 @@ const YouTubeSalesCorrelationChart = () => {
                 xaxis: { lines: { show: false } },
                 yaxis: { lines: { show: true } },
                 padding: { top: 0, right: 0, bottom: 0, left: 20 }
+            },
+            noData: {
+                text: '데이터를 불러오는 중...',
+                align: 'center',
+                verticalAlign: 'middle'
+            },
+            states: {
+                hover: {
+                    filter: {
+                        type: 'lighten',
+                        value: 0.04
+                    }
+                },
+                active: {
+                    allowMultipleDataPointsSelection: false,
+                    filter: {
+                        type: 'darken',
+                        value: 0.35
+                    }
+                }
             }
         }
     }
@@ -249,17 +354,17 @@ const YouTubeSalesCorrelationChart = () => {
                     <div className="d-flex align-items-center justify-content-between mb-4">
                         <div>
                             <p className="fs-12 text-muted mb-0">
-                                누적 판매량 • 8월 YouTube 조회수 • 마케팅 효율성 비교
+                                판매량 절대값 • YouTube 성과 (스케일 조정) • 상관관계 분석
                             </p>
                         </div>
                         <div className="d-flex align-items-center gap-3">
                             <div className="d-flex align-items-center gap-1">
                                 <div className="rounded-circle bg-primary" style={{width: '8px', height: '8px'}}></div>
-                                <span className="fs-12 text-muted">누적 판매량</span>
+                                <span className="fs-12 text-muted">판매량 (대)</span>
                             </div>
                             <div className="d-flex align-items-center gap-1">
                                 <div className="rounded-circle bg-success" style={{width: '8px', height: '8px'}}></div>
-                                <span className="fs-12 text-muted">YouTube 종합성과</span>
+                                <span className="fs-12 text-muted">YouTube 성과 (조정됨)</span>
                             </div>
                             <div className="d-flex align-items-center gap-1">
                                 <div className="rounded-circle bg-danger" style={{width: '8px', height: '8px'}}></div>
@@ -273,7 +378,7 @@ const YouTubeSalesCorrelationChart = () => {
                         <ReactApexChart
                             options={getDynamicChartOptions()}
                             series={getDynamicChartOptions().series}
-                            type="line"
+                            type="bar"
                             height={377}
                         />
                     )}
