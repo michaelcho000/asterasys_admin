@@ -1,0 +1,200 @@
+import { useState, useEffect } from 'react'
+
+const useCompetitorAnalysis = () => {
+    const [competitorData, setCompetitorData] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+
+    useEffect(() => {
+        const loadCompetitorData = async () => {
+            try {
+                setLoading(true)
+                
+                // 모든 필요한 CSV 데이터 로드
+                const [cafeResponse, blogResponse, trafficResponse, youtubeResponse, newsResponse] = await Promise.all([
+                    fetch('/api/data/files/cafe_rank'),
+                    fetch('/api/data/files/blog_rank'),
+                    fetch('/api/data/files/traffic'),
+                    fetch('/api/data/files/youtube_rank'),
+                    fetch('/api/data/files/news_rank')
+                ])
+                
+                const [cafeData, blogData, trafficData, youtubeData, newsData] = await Promise.all([
+                    cafeResponse.json(),
+                    blogResponse.json(), 
+                    trafficResponse.json(),
+                    youtubeResponse.json(),
+                    newsResponse.json()
+                ])
+                
+                // 종합 점수 계산
+                const processedData = calculateComprehensiveScores(
+                    cafeData.marketData || [],
+                    blogData.marketData || [],
+                    trafficData.marketData || [],
+                    youtubeData.marketData || [],
+                    newsData.marketData || []
+                )
+                
+                setCompetitorData(processedData)
+                
+            } catch (error) {
+                console.error('경쟁사 분석 데이터 로드 실패:', error)
+                setError(error)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        loadCompetitorData()
+    }, [])
+
+    const calculateComprehensiveScores = (cafeData, blogData, trafficData, youtubeData, newsData) => {
+        const competitors = new Map()
+        const asterasysProducts = ['쿨페이즈', '리프테라', '쿨소닉']
+
+        // 1. 카페 점수 계산 (총 발행량 + 총 댓글수 + 총 대댓글수 + 총 조회수)
+        cafeData.forEach(item => {
+            const cafeScore = 
+                parseInt(item['총 발행량']?.replace(/,/g, '') || 0) +
+                parseInt(item['총 댓글수']?.replace(/,/g, '') || 0) +
+                parseInt(item['총 대댓글수']?.replace(/,/g, '') || 0) +
+                (parseInt(item['총 조회수']?.replace(/,/g, '') || 0) / 100) // 조회수는 100으로 나누어 가중치 조정
+            
+            competitors.set(item.키워드, {
+                name: item.키워드,
+                group: item.그룹,
+                cafeScore: Math.round(cafeScore),
+                isAsterasys: asterasysProducts.includes(item.키워드),
+                rawData: {
+                    cafe: {
+                        발행량: parseInt(item['총 발행량']?.replace(/,/g, '') || 0),
+                        댓글수: parseInt(item['총 댓글수']?.replace(/,/g, '') || 0),
+                        대댓글수: parseInt(item['총 대댓글수']?.replace(/,/g, '') || 0),
+                        조회수: parseInt(item['총 조회수']?.replace(/,/g, '') || 0)
+                    }
+                }
+            })
+        })
+
+        // 2. 블로그 점수 계산 (발행량합 + 댓글 총 개수 + 대댓글 총 개수)
+        const blogAggregated = new Map()
+        
+        blogData.forEach(item => {
+            if (!item.키워드 || item.키워드.trim() === '') return
+            
+            const keyword = item.키워드
+            if (!blogAggregated.has(keyword)) {
+                blogAggregated.set(keyword, {
+                    발행량합: 0,
+                    댓글총개수: 0,
+                    대댓글총개수: 0
+                })
+            }
+            
+            const current = blogAggregated.get(keyword)
+            current.발행량합 += parseInt(item['발행량합']?.replace(/,/g, '') || 0)
+            current.댓글총개수 += parseInt(item['댓글 총 개수']?.replace(/,/g, '') || 0)
+            current.대댓글총개수 += parseInt(item['대댓글 총 개수']?.replace(/,/g, '') || 0)
+        })
+
+        // 블로그 점수를 기존 데이터에 추가
+        blogAggregated.forEach((blogStats, keyword) => {
+            if (competitors.has(keyword)) {
+                const blogScore = blogStats.발행량합 + blogStats.댓글총개수 + blogStats.대댓글총개수
+                const competitor = competitors.get(keyword)
+                competitor.blogScore = blogScore
+                competitor.rawData.blog = blogStats
+            }
+        })
+
+        // 3. 검색량 점수 추가
+        trafficData.forEach(item => {
+            if (competitors.has(item.키워드)) {
+                const searchVolume = parseInt(item['월감 검색량']?.replace(/,/g, '') || 0)
+                const competitor = competitors.get(item.키워드)
+                competitor.searchScore = searchVolume
+                competitor.rawData.search = { 검색량: searchVolume }
+            }
+        })
+
+        // 4. 유튜브 점수 (총 발행량 사용)
+        youtubeData.forEach(item => {
+            if (competitors.has(item.키워드)) {
+                const youtubeScore = parseInt(item['총 발행량']?.replace(/,/g, '') || 0)
+                const competitor = competitors.get(item.키워드)
+                competitor.youtubeScore = youtubeScore
+                competitor.rawData.youtube = item
+            }
+        })
+
+        // 5. 뉴스 점수 (총 발행량 사용)
+        newsData.forEach(item => {
+            if (competitors.has(item.키워드)) {
+                const newsScore = parseInt(item['총 발행량']?.replace(/,/g, '') || 0)
+                const competitor = competitors.get(item.키워드)
+                competitor.newsScore = newsScore
+                competitor.rawData.news = item
+            }
+        })
+
+        // 6. 종합 점수 계산 및 순위 매기기
+        const competitorArray = Array.from(competitors.values()).map(competitor => {
+            const totalScore = 
+                (competitor.cafeScore || 0) +
+                (competitor.blogScore || 0) +
+                (competitor.searchScore || 0) +
+                (competitor.youtubeScore || 0) +
+                (competitor.newsScore || 0)
+            
+            return {
+                ...competitor,
+                totalScore: totalScore
+            }
+        })
+
+        // 전체 순위 계산
+        const sortedAll = competitorArray
+            .sort((a, b) => b.totalScore - a.totalScore)
+            .map((competitor, index) => ({
+                ...competitor,
+                overallRank: index + 1
+            }))
+
+        // RF/HIFU별 순위 계산
+        const rfCompetitors = sortedAll
+            .filter(c => c.group === '고주파')
+            .sort((a, b) => b.totalScore - a.totalScore)
+            .map((competitor, index) => ({
+                ...competitor,
+                categoryRank: index + 1
+            }))
+
+        const hifuCompetitors = sortedAll
+            .filter(c => c.group === '초음파')
+            .sort((a, b) => b.totalScore - a.totalScore)
+            .map((competitor, index) => ({
+                ...competitor,
+                categoryRank: index + 1
+            }))
+
+        // 최종 결과 합치기
+        const finalResults = [...rfCompetitors, ...hifuCompetitors]
+
+        return {
+            all: sortedAll,
+            rf: rfCompetitors,
+            hifu: hifuCompetitors,
+            summary: {
+                totalCompetitors: sortedAll.length,
+                asterasysProducts: sortedAll.filter(c => c.isAsterasys),
+                topRfCompetitor: rfCompetitors[0],
+                topHifuCompetitor: hifuCompetitors[0]
+            }
+        }
+    }
+
+    return { competitorData, loading, error }
+}
+
+export default useCompetitorAnalysis

@@ -4,6 +4,8 @@ import { FiMoreVertical } from 'react-icons/fi'
 import getIcon from '@/utils/getIcon'
 import Link from 'next/link'
 import CardLoader from '@/components/shared/CardLoader'
+import { KPICalculations } from '../../../config/calculations.config.js'
+import { formatNumber } from '@/utils/formatNumber'
 
 /**
  * Asterasys Marketing KPI Statistics Component
@@ -15,19 +17,30 @@ const AsteraysKPIStatistics = () => {
     const [activeDropdown, setActiveDropdown] = useState(null)
     const [kpiData, setKpiData] = useState([])
     const [loading, setLoading] = useState(true)
+    const [lastUpdated, setLastUpdated] = useState('')
 
-    useEffect(() => {
-        const loadKPIData = async () => {
+    // 데이터 로드 함수를 별도로 정의하여 재사용 가능하게 만듦
+    const loadKPIData = async () => {
             try {
                 setLoading(true)
                 
                 // 5개 CSV 파일 동시 로드
+                // 캐시 무효화를 위해 timestamp 추가 및 fetch 옵션 설정
+                const timestamp = Date.now()
+                const fetchOptions = {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache'
+                    }
+                }
+                
                 const [blogResponse, cafeResponse, newsResponse, trafficResponse, saleResponse] = await Promise.all([
-                    fetch('/api/data/files/blog_rank'),
-                    fetch('/api/data/files/cafe_rank'),
-                    fetch('/api/data/files/news_rank'),
-                    fetch('/api/data/files/traffic'),
-                    fetch('/api/data/files/sale')
+                    fetch(`/api/data/files/blog_rank?t=${timestamp}`, fetchOptions),
+                    fetch(`/api/data/files/cafe_rank?t=${timestamp}`, fetchOptions),
+                    fetch(`/api/data/files/news_rank?t=${timestamp}`, fetchOptions),
+                    fetch(`/api/data/files/traffic?t=${timestamp}`, fetchOptions),
+                    fetch(`/api/data/files/sale?t=${timestamp}`, fetchOptions)
                 ])
                 
                 const [blogData, cafeData, newsData, trafficData, saleData] = await Promise.all([
@@ -38,96 +51,96 @@ const AsteraysKPIStatistics = () => {
                     saleResponse.json()
                 ])
                 
+                // 상세 디버깅 로그
+                console.log('=== KPI Data Loading ===')
+                console.log('Traffic API Response:', trafficData)
+                console.log('Traffic Market Data:', trafficData.marketData)
+                console.log('Traffic Asterasys Data:', trafficData.asterasysData)
+                
                 // KPI 데이터 실시간 계산
                 const calculatedKPI = calculateKPIFromCSV(blogData, cafeData, newsData, trafficData, saleData)
+                console.log('Calculated KPI:', calculatedKPI)
+                console.log('Traffic KPI Card:', calculatedKPI.find(item => item.title === "검색량"))
                 setKpiData(calculatedKPI)
+                setLastUpdated(new Date().toLocaleTimeString())
                 
             } catch (error) {
                 console.error('KPI 데이터 로드 실패:', error)
             } finally {
                 setLoading(false)
             }
-        }
-
+    }
+    
+    // 컴포넌트 마운트 시 및 새로고침 시 데이터 로드
+    useEffect(() => {
         loadKPIData()
     }, [])
 
     const calculateKPIFromCSV = (blogData, cafeData, newsData, trafficData, saleData) => {
-        // Asterasys 제품 식별
-        const asterasysProducts = ['쿨페이즈', '리프테라', '쿨소닉']
+        // Use centralized calculation functions
+        const blogMetrics = KPICalculations.blogPublish(blogData.marketData || [])
+        const cafeMetrics = KPICalculations.cafePublish(cafeData.marketData || [])
+        const newsMetrics = KPICalculations.newsPublish(newsData.marketData || [])
+        const trafficMetrics = KPICalculations.searchVolume(trafficData.marketData || [])
+        const saleMetrics = KPICalculations.salesVolume(saleData.marketData || [])
         
-        // 각 채널별 Asterasys 합계 계산
-        const blogTotal = blogData.asterasysData?.reduce((sum, item) => 
-            sum + (parseInt(item['발행량합']) || 0), 0) || 0
-        const cafeTotal = cafeData.asterasysData?.reduce((sum, item) => 
-            sum + (parseInt(item['총 발행량']) || 0), 0) || 0
-        const newsTotal = newsData.asterasysData?.reduce((sum, item) => 
-            sum + (parseInt(item['총 발행량']) || 0), 0) || 0
-        const trafficTotal = trafficData.asterasysData?.reduce((sum, item) => 
-            sum + (parseInt(item['월감 검색량']) || 0), 0) || 0
-        const saleTotal = saleData.asterasysData?.reduce((sum, item) => 
-            sum + (parseInt(item['판매량']) || 0), 0) || 0
-            
-        // 전체 시장 합계 계산
-        const blogMarketTotal = blogData.marketData?.reduce((sum, item) => 
-            sum + (parseInt(item['발행량합']) || 0), 0) || 1
-        const cafeMarketTotal = cafeData.marketData?.reduce((sum, item) => 
-            sum + (parseInt(item['총 발행량']) || 0), 0) || 1
-        const newsMarketTotal = newsData.marketData?.reduce((sum, item) => 
-            sum + (parseInt(item['총 발행량']) || 0), 0) || 1
-        const trafficMarketTotal = trafficData.marketData?.reduce((sum, item) => 
-            sum + (parseInt(item['월감 검색량']) || 0), 0) || 1
-        const saleMarketTotal = saleData.marketData?.reduce((sum, item) => 
-            sum + (parseInt(item['판매량']) || 0), 0) || 1
+        // Debug logging
+        console.log('Traffic Data:', {
+            raw: trafficData,
+            marketData: trafficData.marketData,
+            calculated: trafficMetrics,
+            asterasysTotal: trafficMetrics.asterasysTotal,
+            percentage: trafficMetrics.percentage
+        })
 
         return [
             {
                 id: 1,
                 title: "블로그 발행량",
-                total_number: blogTotal.toString(),
-                progress: ((blogTotal / blogMarketTotal) * 100).toFixed(1) + "%",
+                total_number: formatNumber(blogMetrics.asterasysTotal),
+                progress: blogMetrics.percentage + "%",
                 progress_info: "실시간 CSV 데이터 기반",
-                context: `전체 블로그 대비 ${((blogTotal / blogMarketTotal) * 100).toFixed(1)}% (${blogTotal}/${blogMarketTotal}건)`,
+                context: blogMetrics.context,
                 icon: "feather-edit-3",
                 color: "primary"
             },
             {
                 id: 2,
                 title: "카페 발행량", 
-                total_number: cafeTotal.toString(),
-                progress: ((cafeTotal / cafeMarketTotal) * 100).toFixed(1) + "%",
+                total_number: formatNumber(cafeMetrics.asterasysTotal),
+                progress: cafeMetrics.percentage + "%",
                 progress_info: "실시간 CSV 데이터 기반",
-                context: `전체 카페 대비 ${((cafeTotal / cafeMarketTotal) * 100).toFixed(1)}% (${cafeTotal}/${cafeMarketTotal}건)`,
+                context: cafeMetrics.context,
                 icon: "feather-message-circle",
                 color: "success"
             },
             {
                 id: 3,
                 title: "뉴스 발행량",
-                total_number: newsTotal.toString(),
-                progress: ((newsTotal / newsMarketTotal) * 100).toFixed(1) + "%", 
+                total_number: formatNumber(newsMetrics.asterasysTotal),
+                progress: newsMetrics.percentage + "%", 
                 progress_info: "실시간 CSV 데이터 기반",
-                context: `전체 뉴스 대비 ${((newsTotal / newsMarketTotal) * 100).toFixed(1)}% (${newsTotal}/${newsMarketTotal}건)`,
+                context: newsMetrics.context,
                 icon: "feather-file-text",
                 color: "info"
             },
             {
                 id: 4,
                 title: "검색량",
-                total_number: trafficTotal.toString(),
-                progress: ((trafficTotal / trafficMarketTotal) * 100).toFixed(1) + "%",
+                total_number: formatNumber(trafficMetrics.asterasysTotal),
+                progress: trafficMetrics.percentage + "%",
                 progress_info: "실시간 CSV 데이터 기반", 
-                context: `전체 검색 대비 ${((trafficTotal / trafficMarketTotal) * 100).toFixed(1)}% (${trafficTotal}/${trafficMarketTotal}회)`,
+                context: trafficMetrics.context,
                 icon: "feather-search",
                 color: "warning"
             },
             {
                 id: 5,
                 title: "판매량",
-                total_number: saleTotal.toString(),
-                progress: ((saleTotal / saleMarketTotal) * 100).toFixed(1) + "%",
+                total_number: formatNumber(saleMetrics.asterasysTotal),
+                progress: saleMetrics.percentage + "%",
                 progress_info: "실시간 CSV 데이터 기반",
-                context: `전체 시장 대비 ${((saleTotal / saleMarketTotal) * 100).toFixed(1)}% (${saleTotal}/${saleMarketTotal}대)`,
+                context: saleMetrics.context,
                 icon: "feather-shopping-cart", 
                 color: "danger"
             }
@@ -139,6 +152,22 @@ const AsteraysKPIStatistics = () => {
     }
     return (
         <>
+            {/* Manual Refresh Button for debugging */}
+            <div className="col-12 mb-3">
+                <button 
+                    className="btn btn-primary btn-sm"
+                    onClick={loadKPIData}
+                    disabled={loading}
+                >
+                    {loading ? 'Loading...' : 'Refresh Data (디버깅용)'}
+                </button>
+                {lastUpdated && (
+                    <span className="ms-2 text-muted small">
+                        Last updated: {lastUpdated}
+                    </span>
+                )}
+            </div>
+            
             {loading ? (
                 <div className="col-12">
                     <CardLoader />

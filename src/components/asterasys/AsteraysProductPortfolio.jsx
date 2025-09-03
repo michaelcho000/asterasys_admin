@@ -1,9 +1,10 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import { asterasysProductsData } from '@/utils/fackData/asterasysKPIData'
 import { FiTrendingUp, FiMessageSquare, FiShoppingBag, FiSearch, FiTarget, FiDollarSign, FiMousePointer, FiUsers } from 'react-icons/fi'
 import getIcon from '@/utils/getIcon'
+import { ASTERASYS_PRODUCTS, TrendCalculations } from '../../../config/calculations.config.js'
+import { formatNumber } from '@/utils/formatNumber'
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -14,53 +15,118 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const AsteraysProductPortfolio = () => {
     const [trendData, setTrendData] = useState({})
+    const [productData, setProductData] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const loadTrendData = async () => {
+        const loadAllData = async () => {
             try {
-                const response = await fetch('/api/data/files/asterasys_total_data- naver datalab')
-                const data = await response.json()
+                setLoading(true)
                 
-                if (data && data.length > 0) {
-                    // 최근 30일 데이터만 사용
-                    const recentData = data.slice(-30)
+                // Load all required data files - add timestamp to prevent caching
+                const timestamp = Date.now()
+                const fetchOptions = {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache'
+                    }
+                }
+                
+                const [blogResponse, cafeResponse, trafficResponse, salesResponse, naverResponse] = await Promise.all([
+                    fetch(`/api/data/files/blog_rank?t=${timestamp}`, fetchOptions),
+                    fetch(`/api/data/files/cafe_rank?t=${timestamp}`, fetchOptions),
+                    fetch(`/api/data/files/traffic?t=${timestamp}`, fetchOptions),
+                    fetch(`/api/data/files/sale?t=${timestamp}`, fetchOptions),
+                    fetch(`/api/data/files/asterasys_total_data- naver datalab?t=${timestamp}`, fetchOptions)
+                ])
+                
+                const [blogData, cafeData, trafficData, salesData, naverData] = await Promise.all([
+                    blogResponse.json(),
+                    cafeResponse.json(),
+                    trafficResponse.json(),
+                    salesResponse.json(),
+                    naverResponse.json()
+                ])
+                
+                // Process portfolio data for Asterasys products
+                const portfolioData = ASTERASYS_PRODUCTS.map(productName => {
+                    const blogItem = blogData.marketData?.find(item => item['키워드'] === productName) || {}
+                    const cafeItem = cafeData.marketData?.find(item => item['키워드'] === productName) || {}
+                    const trafficItem = trafficData.marketData?.find(item => item['키워드'] === productName) || {}
+                    const salesItem = salesData.marketData?.find(item => item['키워드'] === productName) || {}
                     
-                    const processedTrends = {
-                        리프테라: {
-                            data: recentData.map(row => parseFloat(row['리프테라']) || 0),
-                            categories: recentData.map(row => new Date(row['날짜']).getDate()),
-                            current: parseFloat(recentData[recentData.length - 1]?.['리프테라']) || 0,
-                            previous: parseFloat(recentData[recentData.length - 8]?.['리프테라']) || 0
-                        },
-                        쿨페이즈: {
-                            data: recentData.map(row => parseFloat(row['쿨페이즈']) || 0),
-                            categories: recentData.map(row => new Date(row['날짜']).getDate()),
-                            current: parseFloat(recentData[recentData.length - 1]?.['쿨페이즈']) || 0,
-                            previous: parseFloat(recentData[recentData.length - 8]?.['쿨페이즈']) || 0
-                        },
-                        쿨소닉: {
-                            data: recentData.map(row => parseFloat(row['쿨소닉']) || 0),
-                            categories: recentData.map(row => new Date(row['날짜']).getDate()),
-                            current: parseFloat(recentData[recentData.length - 1]?.['쿨소닉']) || 0,
-                            previous: parseFloat(recentData[recentData.length - 8]?.['쿨소닉']) || 0
+                    // Determine category
+                    const category = productName === '쿨페이즈' ? 'RF' : 'HIFU'
+                    const categoryKr = category === 'RF' ? '고주파' : '초음파'
+                    
+                    // Calculate rankings from market data
+                    const blogRank = parseInt(blogItem['발행량 순위']) || 0
+                    const cafeRank = parseInt(cafeItem['발행량 순위']) || 0
+                    const searchRank = parseInt(trafficItem['검색량 순위']) || 0  // Fixed field name
+                    
+                    // Parse numbers with comma removal
+                    const parseNumber = (value) => {
+                        if (!value) return 0
+                        return parseInt(String(value).replace(/,/g, '')) || 0
+                    }
+                    
+                    return {
+                        id: productName,
+                        name: productName,
+                        category,
+                        categoryKr,
+                        highlight: true,
+                        performance: {
+                            blog: {
+                                count: parseNumber(blogItem['발행량합']),
+                                marketRank: blogRank
+                            },
+                            cafe: {
+                                count: parseNumber(cafeItem['총 발행량']) + parseNumber(cafeItem['총 댓글수']) + parseNumber(cafeItem['총 대댓글수']),
+                                marketRank: cafeRank
+                            },
+                            search: {
+                                count: parseNumber(trafficItem['월감 검색량']),  // Fixed parsing with comma
+                                marketRank: searchRank
+                            },
+                            sales: {
+                                count: parseNumber(salesItem['판매량'])
+                            }
                         }
                     }
+                })
+                
+                setProductData(portfolioData)
+                
+                // Process Naver trend data
+                const data = naverData.marketData
+                
+                if (data && data.length > 0) {
+                    // Use centralized trend calculation
+                    const processedTrends = {}
+                    
+                    ASTERASYS_PRODUCTS.forEach(productName => {
+                        processedTrends[productName] = TrendCalculations.processTrendData(data, productName, 30)
+                    })
                     
                     setTrendData(processedTrends)
                 }
             } catch (error) {
-                console.error('네이버 데이터랩 트렌드 로드 실패:', error)
+                console.error('포트폴리오 데이터 로드 실패:', error)
+            } finally {
+                setLoading(false)
             }
         }
 
-        loadTrendData()
+        loadAllData()
     }, [])
 
     const getTrendChart = (productName) => {
         const trend = trendData[productName]
         if (!trend) return null
 
-        const changePercent = ((trend.current - trend.previous) / trend.previous * 100).toFixed(1)
+        const changePercent = trend.changePercent ? trend.changePercent() : '0'
         const isPositive = parseFloat(changePercent) >= 0
 
         const chartOptions = {
@@ -126,8 +192,15 @@ const AsteraysProductPortfolio = () => {
                     </h5>
                 </div>
                 <div className="card-body">
+                    {loading ? (
+                        <div className="text-center py-5">
+                            <div className="spinner-border text-primary" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    ) : (
                     <div className="row">
-                        {asterasysProductsData.map((product) => (
+                        {productData.map((product) => (
                             <div key={product.id} className="col-lg-4 col-md-6">
                                 <div className={`card border border-light shadow-sm h-100 ${product.highlight ? 'border-top-4 border-top-primary' : ''}`}>
                                     <div className="card-header bg-primary-subtle">
@@ -140,9 +213,6 @@ const AsteraysProductPortfolio = () => {
                                                     {product.categoryKr} • {product.category}
                                                 </small>
                                             </div>
-                                            <span className="badge bg-primary text-white">
-                                                {product.categoryKr} 시장 {product.performance.blog.marketRank}위
-                                            </span>
                                         </div>
                                     </div>
                                     <div className="card-body">
@@ -157,12 +227,12 @@ const AsteraysProductPortfolio = () => {
                                                         <div>
                                                             <FiTrendingUp className={`mb-1 ${product.performance.blog.marketRank <= 3 ? 'text-primary' : 'text-primary'}`} size={20} />
                                                             <div className={`fs-4 fw-bold mb-1 ${product.performance.blog.marketRank <= 3 ? 'text-primary' : 'text-primary'}`}>
-                                                                {product.performance.blog.count}
+                                                                {formatNumber(product.performance.blog.count)}
                                                             </div>
                                                             <small className="text-muted fw-medium">블로그 발행</small>
                                                         </div>
                                                         <div className="badge bg-primary">
-                                                            {product.performance.blog.marketRank}위
+                                                            {product.category} 블로그 {product.performance.blog.marketRank}위
                                                         </div>
                                                     </div>
                                                 </div>
@@ -177,12 +247,12 @@ const AsteraysProductPortfolio = () => {
                                                         <div>
                                                             <FiMessageSquare className={`mb-1 ${product.performance.cafe.marketRank <= 3 ? 'text-primary' : 'text-primary'}`} size={20} />
                                                             <div className={`fs-4 fw-bold mb-1 ${product.performance.cafe.marketRank <= 3 ? 'text-primary' : 'text-primary'}`}>
-                                                                {product.performance.cafe.count}
+                                                                {formatNumber(product.performance.cafe.count)}
                                                             </div>
                                                             <small className="text-muted fw-medium">카페 발행</small>
                                                         </div>
-                                                        <div className="badge bg-primary">
-                                                            {product.performance.cafe.marketRank}위
+                                                        <div className="badge bg-success">
+                                                            {product.category} 카페 {product.performance.cafe.marketRank}위
                                                         </div>
                                                     </div>
                                                 </div>
@@ -198,12 +268,12 @@ const AsteraysProductPortfolio = () => {
                                                         <div>
                                                             <FiSearch className={`mb-1 ${product.performance.search.marketRank <= 3 ? 'text-primary' : 'text-primary'}`} size={20} />
                                                             <div className={`fs-4 fw-bold mb-1 ${product.performance.search.marketRank <= 3 ? 'text-primary' : 'text-primary'}`}>
-                                                                {product.performance.search.count}
+                                                                {formatNumber(product.performance.search.count)}
                                                             </div>
                                                             <small className="text-muted fw-medium">월 검색량</small>
                                                         </div>
-                                                        <div className="badge bg-primary">
-                                                            {product.performance.search.marketRank}위
+                                                        <div className="badge bg-warning text-dark">
+                                                            {product.category} 검색 {product.performance.search.marketRank}위
                                                         </div>
                                                     </div>
                                                 </div>
@@ -219,7 +289,7 @@ const AsteraysProductPortfolio = () => {
                                                         <div>
                                                             <FiShoppingBag className="text-secondary mb-1" size={20} />
                                                             <div className="fs-4 fw-bold text-secondary mb-1">
-                                                                {product.performance.sales.count}
+                                                                {formatNumber(product.performance.sales.count)}
                                                             </div>
                                                             <small className="text-muted fw-medium">판매량</small>
                                                         </div>
@@ -250,7 +320,7 @@ const AsteraysProductPortfolio = () => {
                             </div>
                         ))}
                     </div>
-
+                    )}
                 </div>
             </div>
         </div>

@@ -17,23 +17,25 @@ const LatestLeads = ({title}) => {
             try {
                 setLoading(true)
                 
-                // 4개 CSV 파일 동시 로드
-                const [cafeResponse, youtubeResponse, blogResponse, newsResponse] = await Promise.all([
+                // 5개 CSV 파일 동시 로드 (traffic 추가)
+                const [cafeResponse, youtubeResponse, blogResponse, newsResponse, trafficResponse] = await Promise.all([
                     fetch('/api/data/files/cafe_rank'),
                     fetch('/api/data/files/youtube_rank'),
                     fetch('/api/data/files/blog_rank'),
-                    fetch('/api/data/files/news_rank')
+                    fetch('/api/data/files/news_rank'),
+                    fetch('/api/data/files/traffic')
                 ])
                 
-                const [cafeData, youtubeData, blogData, newsData] = await Promise.all([
+                const [cafeData, youtubeData, blogData, newsData, trafficData] = await Promise.all([
                     cafeResponse.json(),
                     youtubeResponse.json(),
                     blogResponse.json(),
-                    newsResponse.json()
+                    newsResponse.json(),
+                    trafficResponse.json()
                 ])
                 
-                // 데이터 통합 처리
-                const processedData = processCompetitorData(cafeData, youtubeData, blogData, newsData)
+                // 데이터 통합 처리 (traffic 추가)
+                const processedData = processCompetitorData(cafeData, youtubeData, blogData, newsData, trafficData)
                 setCompetitorData(processedData)
                 
             } catch (error) {
@@ -46,33 +48,36 @@ const LatestLeads = ({title}) => {
         loadCompetitorData()
     }, [])
 
-    const processCompetitorData = (cafeData, youtubeData, blogData, newsData) => {
+    const processCompetitorData = (cafeData, youtubeData, blogData, newsData, trafficData) => {
         const cafe = cafeData.marketData || []
         const youtube = youtubeData.marketData || []
         const blog = blogData.marketData || []
         const news = newsData.marketData || []
+        const traffic = trafficData.marketData || []
         
         // 키워드별 데이터 통합
         const integrated = cafe.map(cafeItem => {
             const youtubeItem = youtube.find(y => y.키워드 === cafeItem.키워드) || {}
             const blogItem = blog.find(b => b.키워드 === cafeItem.키워드) || {}
             const newsItem = news.find(n => n.키워드 === cafeItem.키워드) || {}
+            const trafficItem = traffic.find(t => t.키워드 === cafeItem.키워드) || {}
             
             // 각 채널별 점수 추출 (컬럼명 정확히 맞춤)
             const cafeScore = parseInt(cafeItem['총 발행량']) || 0
             const youtubeScore = parseInt(youtubeItem['총 발행량']) || 0
             const blogScore = parseInt(blogItem['발행량합']) || 0  // blog_rank는 '발행량합' 컬럼 사용
             const newsScore = parseInt(newsItem['총 발행량']) || 0
+            const searchScore = parseInt(trafficItem['월감 검색량']?.replace(/,/g, '') || 0)
             
-            // 종합 점수 계산 (4개 채널 합산)
-            const totalScore = cafeScore + youtubeScore + blogScore + newsScore
+            // 종합 점수 계산 (5개 채널 합산)
+            const totalScore = cafeScore + youtubeScore + blogScore + newsScore + searchScore
             
-            // 트렌드 분석 (4개 채널 기준으로 재조정)
+            // 트렌드 분석 (5개 채널 기준으로 재조정 - 검색량 포함)
             let status = '성장필요'
-            if (totalScore >= 2000) status = '시장지배'      // 최상위 (써마지, 울쎄라급)
-            else if (totalScore >= 1200) status = '경쟁우위'  // 상위권 (인모드급)
-            else if (totalScore >= 800) status = '안정적'   // 중위권 (Asterasys급)
-            else if (totalScore >= 400) status = '성장세'      // 하위권
+            if (totalScore >= 60000) status = '시장지배'      // 최상위 (써마지, 울쎄라급)
+            else if (totalScore >= 20000) status = '경쟁우위'  // 상위권 (인모드급)
+            else if (totalScore >= 10000) status = '안정적'   // 중위권 (Asterasys급)
+            else if (totalScore >= 5000) status = '성장세'      // 하위권
             
             const isAsterasys = ['쿨페이즈', '리프테라', '쿨소닉'].includes(cafeItem.키워드)
             
@@ -83,6 +88,7 @@ const LatestLeads = ({title}) => {
                 youtubeScore,
                 blogScore,
                 newsScore,
+                searchScore,
                 totalScore,
                 cafeRank: parseInt(cafeItem['발행량 순위']) || 0,
                 status,
@@ -164,6 +170,7 @@ const LatestLeads = ({title}) => {
                                         <th>유튜브점수</th>
                                         <th>블로그점수</th>
                                         <th>뉴스점수</th>
+                                        <th>검색량</th>
                                         <th>종합점수</th>
                                         <th>상태</th>
                                     </tr>
@@ -199,6 +206,9 @@ const LatestLeads = ({title}) => {
                                                 </td>
                                                 <td>
                                                     <div className="text-dark fw-semibold">{item.newsScore.toLocaleString()}</div>
+                                                </td>
+                                                <td>
+                                                    <div className="text-dark fw-semibold">{item.searchScore.toLocaleString()}</div>
                                                 </td>
                                                 <td>
                                                     <div className="fw-bold text-primary fs-6">{item.totalScore.toLocaleString()}</div>

@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
-import { competitorMatrix, marketOverview, heroKPIs } from '@/utils/fackData/competitorData'
+import useCompetitorAnalysis from '@/hooks/useCompetitorAnalysis'
+import CardLoader from '@/components/shared/CardLoader'
 import AsterasysMarketChart from '@/components/asterasys/AsterasysMarketChart'
 import AsterasysHIFUChart from '@/components/asterasys/AsterasysHIFUChart'
 import MarketingChart from '@/components/widgetsCharts/MarketingChart'
@@ -14,12 +15,33 @@ import { FiTrendingUp, FiTrendingDown, FiMinus } from 'react-icons/fi'
 
 const AsterasysCompetitiveDashboard = () => {
     const [activeTab, setActiveTab] = useState('all')
+    const { competitorData, loading, error } = useCompetitorAnalysis()
 
     const getFilteredData = (technology) => {
-        if (technology === 'rf') return competitorMatrix.RF
-        if (technology === 'hifu') return competitorMatrix.HIFU
-        return [...competitorMatrix.RF, ...competitorMatrix.HIFU]
+        if (!competitorData) return []
+        if (technology === 'rf') return competitorData.rf
+        if (technology === 'hifu') return competitorData.hifu
+        return competitorData.all
     }
+
+    const getAsterasysStats = () => {
+        if (!competitorData) return { totalSales: 0, totalScore: 0, marketShare: 0 }
+        
+        const asterasysProducts = competitorData.all.filter(c => c.isAsterasys)
+        const totalScore = asterasysProducts.reduce((sum, product) => sum + product.totalScore, 0)
+        const marketTotal = competitorData.all.reduce((sum, product) => sum + product.totalScore, 0)
+        
+        return {
+            totalProducts: asterasysProducts.length,
+            totalScore: totalScore,
+            marketShare: ((totalScore / marketTotal) * 100).toFixed(1),
+            products: asterasysProducts
+        }
+    }
+
+    if (loading) return <div className="col-12"><CardLoader /></div>
+    if (error) return <div className="col-12"><div className="alert alert-danger">데이터 로딩 오류: {error.message}</div></div>
+    if (!competitorData) return <div className="col-12"><div className="alert alert-info">데이터를 불러오는 중...</div></div>
 
     return (
         <>
@@ -38,11 +60,11 @@ const AsterasysCompetitiveDashboard = () => {
                             <div className="col-md-4 text-end">
                                 <div className="d-flex align-items-center justify-content-end">
                                     <div className="me-4">
-                                        <div className="h4 text-white mb-0">674</div>
-                                        <small className="opacity-75">전체 판매량 (대)</small>
+                                        <div className="h4 text-white mb-0">{getAsterasysStats().totalScore.toLocaleString()}</div>
+                                        <small className="opacity-75">종합 점수</small>
                                     </div>
                                     <div>
-                                        <div className="h4 text-white mb-0">8.71%</div>
+                                        <div className="h4 text-white mb-0">{getAsterasysStats().marketShare}%</div>
                                         <small className="opacity-75">시장 점유율</small>
                                     </div>
                                 </div>
@@ -173,24 +195,24 @@ const AsterasysCompetitiveDashboard = () => {
                             </div>
                             <div className="card-body">
                                 <div className="row g-3">
-                                    {competitorMatrix.RF.map((brand, index) => (
-                                        <div key={brand.brand} className="col-12">
-                                            <div className={`d-flex align-items-center p-3 rounded ${brand.asterasys ? 'bg-warning-subtle border border-warning' : 'bg-light'}`}>
+                                    {getFilteredData('rf').slice(0, 5).map((competitor, index) => (
+                                        <div key={competitor.name} className="col-12">
+                                            <div className={`d-flex align-items-center p-3 rounded ${competitor.isAsterasys ? 'bg-warning-subtle border border-warning' : 'bg-light'}`}>
                                                 <div className="me-3">
-                                                    <span className={`badge ${brand.asterasys ? 'bg-warning text-dark' : 'bg-secondary'} fs-6`}>
-                                                        {brand.rank}위
+                                                    <span className={`badge ${competitor.isAsterasys ? 'bg-warning text-dark' : 'bg-secondary'} fs-6`}>
+                                                        {competitor.categoryRank}위
                                                     </span>
                                                 </div>
                                                 <div className="flex-grow-1">
                                                     <div className="fw-semibold">
-                                                        {brand.asterasys && '⭐ '}
-                                                        {brand.brand}
+                                                        {competitor.isAsterasys && '⭐ '}
+                                                        {competitor.name}
                                                     </div>
-                                                    <small className="text-muted">카페 발행량</small>
+                                                    <small className="text-muted">종합 점수</small>
                                                 </div>
                                                 <div className="text-end">
-                                                    <div className="h5 fw-bold text-primary mb-0">{brand.cafe}</div>
-                                                    <small className="text-muted">건</small>
+                                                    <div className="h5 fw-bold text-primary mb-0">{competitor.totalScore.toLocaleString()}</div>
+                                                    <small className="text-muted">점</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -212,31 +234,25 @@ const AsterasysCompetitiveDashboard = () => {
                             </div>
                             <div className="card-body">
                                 <div className="row g-3">
-                                    {competitorMatrix.HIFU.map((brand, index) => (
-                                        <div key={brand.brand} className="col-12">
-                                            <div className={`d-flex align-items-center p-3 rounded ${brand.asterasys ? 'bg-warning-subtle border border-warning' : 'bg-light'}`}>
+                                    {getFilteredData('hifu').slice(0, 5).map((competitor, index) => (
+                                        <div key={competitor.name} className="col-12">
+                                            <div className={`d-flex align-items-center p-3 rounded ${competitor.isAsterasys ? 'bg-warning-subtle border border-warning' : 'bg-light'}`}>
                                                 <div className="me-3">
-                                                    <span className={`badge ${brand.asterasys ? 'bg-warning text-dark' : 'bg-info'} fs-6`}>
-                                                        {brand.rank}위
+                                                    <span className={`badge ${competitor.isAsterasys ? 'bg-warning text-dark' : 'bg-info'} fs-6`}>
+                                                        {competitor.categoryRank}위
                                                     </span>
                                                 </div>
                                                 <div className="flex-grow-1">
                                                     <div className="fw-semibold">
-                                                        {brand.asterasys && '⭐ '}
-                                                        {brand.brand}
+                                                        {competitor.isAsterasys && '⭐ '}
+                                                        {competitor.name}
                                                     </div>
-                                                    <small className="text-muted">카페 발행량</small>
+                                                    <small className="text-muted">종합 점수</small>
                                                 </div>
                                                 <div className="text-end">
-                                                    <div className="h5 fw-bold text-info mb-0">{brand.cafe}</div>
-                                                    <small className="text-muted">건</small>
+                                                    <div className="h5 fw-bold text-info mb-0">{competitor.totalScore.toLocaleString()}</div>
+                                                    <small className="text-muted">점</small>
                                                 </div>
-                                                {brand.sales && (
-                                                    <div className="ms-3 text-end">
-                                                        <div className="small text-success fw-bold">{brand.sales}</div>
-                                                        <small className="text-muted">판매</small>
-                                                    </div>
-                                                )}
                                             </div>
                                         </div>
                                     ))}
@@ -251,10 +267,10 @@ const AsterasysCompetitiveDashboard = () => {
             <div className="col-12 mb-4">
                 <div className="card stretch stretch-full">
                     <div className="card-header">
-                        <h5 className="card-title">🏆 경쟁사 순위 현황 (실제 데이터)</h5>
+                        <h5 className="card-title">🏆 경쟁사 순위 현황 (종합 점수 기준)</h5>
                         <div className="card-header-action">
                             <small className="text-muted">
-                                데이터: cafe_rank.csv • ⭐ Asterasys 제품
+                                카페점수 + 블로그점수 + 검색량 + 유튜브 + 뉴스 • ⭐ Asterasys 제품
                             </small>
                         </div>
                     </div>
@@ -272,20 +288,28 @@ const AsterasysCompetitiveDashboard = () => {
                                             <tr>
                                                 <th>순위</th>
                                                 <th>브랜드</th>
-                                                <th>카페 발행량</th>
-                                                <th>판매량</th>
+                                                <th>종합점수</th>
+                                                <th>카페</th>
+                                                <th>블로그</th>
+                                                <th>검색</th>
+                                                <th>유튜브</th>
+                                                <th>뉴스</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {competitorMatrix.RF.map((brand) => (
-                                                <tr key={brand.brand} className={brand.asterasys ? 'table-warning' : ''}>
-                                                    <td className="fw-bold">{brand.rank}</td>
+                                            {getFilteredData('rf').map((competitor) => (
+                                                <tr key={competitor.name} className={competitor.isAsterasys ? 'table-warning' : ''}>
+                                                    <td className="fw-bold">{competitor.categoryRank}</td>
                                                     <td>
-                                                        {brand.asterasys && <span className="badge bg-warning text-dark me-1">⭐</span>}
-                                                        {brand.brand}
+                                                        {competitor.isAsterasys && <span className="badge bg-warning text-dark me-1">⭐</span>}
+                                                        {competitor.name}
                                                     </td>
-                                                    <td>{brand.cafe}건</td>
-                                                    <td>{brand.sales ? `${brand.sales}대` : '-'}</td>
+                                                    <td className="fw-semibold text-primary">{competitor.totalScore.toLocaleString()}</td>
+                                                    <td>{competitor.cafeScore?.toLocaleString() || 0}</td>
+                                                    <td>{competitor.blogScore?.toLocaleString() || 0}</td>
+                                                    <td>{competitor.searchScore?.toLocaleString() || 0}</td>
+                                                    <td>{competitor.youtubeScore?.toLocaleString() || 0}</td>
+                                                    <td>{competitor.newsScore?.toLocaleString() || 0}</td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -305,20 +329,74 @@ const AsterasysCompetitiveDashboard = () => {
                                             <tr>
                                                 <th>순위</th>
                                                 <th>브랜드</th>
-                                                <th>카페 발행량</th>
-                                                <th>판매량</th>
+                                                <th>종합점수</th>
+                                                <th>카페</th>
+                                                <th>블로그</th>
+                                                <th>검색</th>
+                                                <th>유튜브</th>
+                                                <th>뉴스</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {competitorMatrix.HIFU.map((brand) => (
-                                                <tr key={brand.brand} className={brand.asterasys ? 'table-warning' : ''}>
-                                                    <td className="fw-bold">{brand.rank}</td>
+                                            {getFilteredData('hifu').map((competitor) => (
+                                                <tr key={competitor.name} className={competitor.isAsterasys ? 'table-warning' : ''}>
+                                                    <td className="fw-bold">{competitor.categoryRank}</td>
                                                     <td>
-                                                        {brand.asterasys && <span className="badge bg-warning text-dark me-1">⭐</span>}
-                                                        {brand.brand}
+                                                        {competitor.isAsterasys && <span className="badge bg-warning text-dark me-1">⭐</span>}
+                                                        {competitor.name}
                                                     </td>
-                                                    <td>{brand.cafe}건</td>
-                                                    <td>{brand.sales ? `${brand.sales}대` : '-'}</td>
+                                                    <td className="fw-semibold text-info">{competitor.totalScore.toLocaleString()}</td>
+                                                    <td>{competitor.cafeScore?.toLocaleString() || 0}</td>
+                                                    <td>{competitor.blogScore?.toLocaleString() || 0}</td>
+                                                    <td>{competitor.searchScore?.toLocaleString() || 0}</td>
+                                                    <td>{competitor.youtubeScore?.toLocaleString() || 0}</td>
+                                                    <td>{competitor.newsScore?.toLocaleString() || 0}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 전체 순위 요약 */}
+                        <div className="row mt-4 pt-3 border-top">
+                            <div className="col-12">
+                                <h6 className="text-dark fw-semibold mb-3">📊 전체 시장 순위 (TOP 10)</h6>
+                                <div className="table-responsive">
+                                    <table className="table table-sm">
+                                        <thead className="table-dark">
+                                            <tr>
+                                                <th>전체순위</th>
+                                                <th>브랜드</th>
+                                                <th>분류</th>
+                                                <th>종합점수</th>
+                                                <th>카페</th>
+                                                <th>블로그</th>
+                                                <th>검색</th>
+                                                <th>유튜브</th>
+                                                <th>뉴스</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {getFilteredData('all').slice(0, 10).map((competitor) => (
+                                                <tr key={competitor.name} className={competitor.isAsterasys ? 'table-warning' : ''}>
+                                                    <td className="fw-bold">{competitor.overallRank}</td>
+                                                    <td>
+                                                        {competitor.isAsterasys && <span className="badge bg-warning text-dark me-1">⭐</span>}
+                                                        {competitor.name}
+                                                    </td>
+                                                    <td>
+                                                        <span className={`badge ${competitor.group === '고주파' ? 'bg-purple' : 'bg-info'}`}>
+                                                            {competitor.group === '고주파' ? 'RF' : 'HIFU'}
+                                                        </span>
+                                                    </td>
+                                                    <td className="fw-semibold">{competitor.totalScore.toLocaleString()}</td>
+                                                    <td>{competitor.cafeScore?.toLocaleString() || 0}</td>
+                                                    <td>{competitor.blogScore?.toLocaleString() || 0}</td>
+                                                    <td>{competitor.searchScore?.toLocaleString() || 0}</td>
+                                                    <td>{competitor.youtubeScore?.toLocaleString() || 0}</td>
+                                                    <td>{competitor.newsScore?.toLocaleString() || 0}</td>
                                                 </tr>
                                             ))}
                                         </tbody>
