@@ -109,8 +109,18 @@ const LatestLeads = ({title}) => {
     }
 
     const getFilteredData = () => {
-        if (activeTab === 'ALL') return competitorData
-        return competitorData.filter(item => item.category === activeTab)
+        if (activeTab === 'ALL') {
+            return competitorData
+        }
+        
+        // 카테고리별 필터링 후 해당 카테고리 내에서 1~9위 순위 재계산
+        const filtered = competitorData.filter(item => item.category === activeTab)
+        return filtered
+            .sort((a, b) => b.totalScore - a.totalScore)
+            .map((item, index) => ({
+                ...item,
+                categoryRank: index + 1  // 카테고리별 순위 (1~9위)
+            }))
     }
 
     const getStatusColor = (status) => {
@@ -181,7 +191,7 @@ const LatestLeads = ({title}) => {
                                             <tr key={item.keyword} className={`chat-single-item ${item.isAsterasys ? 'table-primary' : ''}`}>
                                                 <td>
                                                     <div className="fw-bold text-dark">
-                                                        {item.overallRank}
+                                                        {activeTab === 'ALL' ? item.overallRank : item.categoryRank}
                                                     </div>
                                                 </td>
                                                 <td>
