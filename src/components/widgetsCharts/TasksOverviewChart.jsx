@@ -52,24 +52,24 @@ const TasksOverviewChart = () => {
             try {
                 setLoading(true)
                 
-                // 네이버 데이터랩 CSV 파일을 직접 파싱
-                const response = await fetch('/asterasys_total_data - naver datalab.csv')
-                const csvText = await response.text()
-                
-                const lines = csvText.split('\n').filter(line => line.trim())
-                
-                // 네이버 데이터랩 CSV 구조: 7번째 줄부터 실제 데이터
-                const dataLines = lines.slice(7) // 헤더 정보 건너뛰기
-                
-                const processedData = dataLines.map(line => {
-                    const cols = line.split(',')
-                    return {
-                        날짜: cols[0],
-                        리프테라: parseFloat(cols[1]) || 0,
-                        쿨페이즈: parseFloat(cols[3]) || 0,
-                        쿨소닉: parseFloat(cols[5]) || 0
+                // API를 통해 네이버 데이터랩 데이터 가져오기
+                const timestamp = Date.now()
+                const response = await fetch(`/api/data/files/naver datalab?t=${timestamp}`, {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache'
                     }
-                }).filter(row => row.날짜 && row.날짜.includes('2025')) // 2025년 데이터만
+                })
+                
+                const data = await response.json()
+                
+                if (!data.success || !data.marketData) {
+                    console.error('네이버 데이터랩 데이터 로드 실패')
+                    return
+                }
+                
+                const processedData = data.marketData.filter(row => row.날짜 && row.날짜.includes('2025')) // 2025년 데이터만
                 
                 // 주간 단위로 그룹화 
                 const weeklyData = []

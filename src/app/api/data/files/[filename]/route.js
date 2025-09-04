@@ -8,6 +8,10 @@ import path from 'path'
  * 실제 CSV 파일에서 직접 데이터 추출하여 반환
  */
 
+// Vercel 배포를 위한 설정
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function GET(request, { params }) {
   try {
     const { filename } = params
@@ -34,6 +38,58 @@ export async function GET(request, { params }) {
 
     // CSV 파일 읽기
     const csvContent = fs.readFileSync(csvFilePath, 'utf8')
+    
+    // 네이버 데이터랩 특수 처리
+    if (filename === 'naver datalab') {
+      const lines = csvContent.split('\n')
+      
+      // 7번째 줄부터 실제 데이터 (헤더 포함)
+      const dataLines = lines.slice(6)
+      
+      if (dataLines.length === 0) {
+        return NextResponse.json(
+          { error: '네이버 데이터랩 파일이 비어있습니다', filename: filename },
+          { status: 400 }
+        )
+      }
+      
+      // 헤더 처리 - 날짜,리프테라,날짜,쿨페이즈,날짜,쿨소닉
+      const headers = ['날짜', '리프테라', '쿨페이즈', '쿨소닉']
+      
+      // 데이터 파싱
+      const marketData = []
+      for (let i = 1; i < dataLines.length; i++) {
+        const line = dataLines[i].trim()
+        if (!line) continue
+        
+        const cols = line.split(',')
+        if (cols.length >= 6) {
+          marketData.push({
+            날짜: cols[0],
+            리프테라: parseFloat(cols[1]) || 0,
+            쿨페이즈: parseFloat(cols[3]) || 0,
+            쿨소닉: parseFloat(cols[5]) || 0
+          })
+        }
+      }
+      
+      return NextResponse.json({
+        success: true,
+        filename: filename,
+        headers: headers,
+        asterasysData: marketData, // 모든 데이터가 Asterasys 제품 데이터
+        marketData: marketData,
+        dataCount: {
+          asterasys: marketData.length,
+          market: marketData.length
+        },
+        lastUpdated: new Date().toISOString(),
+        source: `asterasys_total_data - ${filename}.csv`
+      })
+    }
+    
+    // 기존 CSV 처리 로직
+    const csvContent2 = csvContent
     const lines = csvContent.split('\n').filter(line => line.trim())
     
     if (lines.length === 0) {

@@ -3,6 +3,11 @@ import fs from 'fs'
 import path from 'path'
 import { parse } from 'csv-parse/sync'
 
+
+// Vercel 배포를 위한 설정
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const csvFilePath = path.join(process.cwd(), 'data', 'raw', 'asterasys_total_data - cafe_seo.csv')
@@ -35,24 +40,28 @@ export async function GET() {
       const exposure = parseInt(record['노출현황'] || record.exposure || '0')
       const smartBlock = record['스마트블록'] || record.smart_block || ''
       const popularPost = record['인기글'] || record.popular_post || ''
-      const cafe = record['카페'] || record.cafe || ''
+      const cafeRank = record['카페순위'] || record.cafe_rank || ''
       
       // Update current product if provided
-      if (product) {
-        currentProduct = product
+      if (product && product.trim()) {
+        currentProduct = product.trim()
       }
       
       // Skip if no keyword or link (main data rows have both)
-      if (!keyword || !link || !currentProduct) return
+      if (!keyword || !link) return
+      
+      // Use the last known product if current row doesn't have one
+      // If still no product, use 'Other' as fallback
+      const finalProduct = currentProduct || 'Other'
       
       cafeSeoData.push({
-        product: currentProduct,
-        keyword: keyword,
-        link: link,
+        product: finalProduct,
+        keyword: keyword.trim(),
+        link: link.trim(),
         exposure: exposure,
         smartBlock: smartBlock === 'O',
         popularPost: popularPost === 'O',
-        cafeNumber: parseInt(cafe) || 0
+        cafeRank: parseInt(cafeRank) || 0
       })
     })
     

@@ -7,6 +7,11 @@ import { NextResponse } from 'next/server';
  * Serves top product rankings and performance data
  */
 
+
+// Vercel 배포를 위한 설정
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);

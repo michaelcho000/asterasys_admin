@@ -1,0 +1,51 @@
+# Windows 실행 파일
+cloudflared.exe
+*.exe
+
+# 환경 변수 파일
+.env
+.env.local
+.env.production.local
+.env.development.local
+.env.test.local
+
+# 개발 파일
+node_modules
+.next
+.git
+.gitignore
+
+# 테스트 및 개발 도구
+jest.config.js
+jest.setup.js
+__tests__
+*.test.js
+*.spec.js
+
+# 임시 파일 및 로그
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+
+# IDE 설정
+.vscode
+.idea
+*.swp
+*.swo
+
+# 빌드 도구
+update-api-routes.js
+scripts/test-*.js
+
+# 문서
+README.md
+docs/
+*.md
+
+# 백업 파일
+*.backup
+*.bak
+*~

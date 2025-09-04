@@ -7,6 +7,10 @@ import { NextResponse } from 'next/server';
  * Serves processed KPI data for the dashboard
  */
 
+// Vercel 배포를 위한 설정
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   try {
     // Read processed KPI data

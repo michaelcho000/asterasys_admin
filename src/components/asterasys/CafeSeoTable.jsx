@@ -48,6 +48,19 @@ const CafeSeoTable = () => {
             let aValue = a[sortBy]
             let bValue = b[sortBy]
             
+            // cafeRank 정렬 시 빈값 처리
+            if (sortBy === 'cafeRank') {
+                // 빈값(0 또는 null)은 최하위로 설정
+                const aRank = aValue || 999999
+                const bRank = bValue || 999999
+                
+                if (sortOrder === 'desc') {
+                    return bRank - aRank
+                } else {
+                    return aRank - bRank
+                }
+            }
+            
             // 문자열인 경우 처리
             if (typeof aValue === 'string') {
                 aValue = aValue.toLowerCase()
@@ -142,6 +155,13 @@ const CafeSeoTable = () => {
                                         </th>
                                         <th>스마트블록</th>
                                         <th>인기글</th>
+                                        <th 
+                                            className="sortable" 
+                                            onClick={() => handleSort('cafeRank')}
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            카페순위 {getSortIcon('cafeRank')}
+                                        </th>
                                         <th>작업</th>
                                     </tr>
                                 </thead>
@@ -178,6 +198,11 @@ const CafeSeoTable = () => {
                                                     {item.popularPost && (
                                                         <span className="badge bg-success">O</span>
                                                     )}
+                                                </td>
+                                                <td>
+                                                    <div className="text-dark fw-medium">
+                                                        {item.cafeRank ? `${item.cafeRank}위` : '-'}
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div className="d-flex gap-1">

@@ -1,12 +1,9 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
 import { FiTrendingUp, FiMessageSquare, FiShoppingBag, FiSearch, FiTarget, FiDollarSign, FiMousePointer, FiUsers } from 'react-icons/fi'
 import getIcon from '@/utils/getIcon'
-import { ASTERASYS_PRODUCTS, TrendCalculations } from '../../../config/calculations.config.js'
+import { ASTERASYS_PRODUCTS } from '../../../config/calculations.config.js'
 import { formatNumber } from '@/utils/formatNumber'
-
-const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 /**
  * Asterasys 3종 제품 포트폴리오 컴포넌트
@@ -14,7 +11,6 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
  */
 
 const AsteraysProductPortfolio = () => {
-    const [trendData, setTrendData] = useState({})
     const [productData, setProductData] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -33,20 +29,18 @@ const AsteraysProductPortfolio = () => {
                     }
                 }
                 
-                const [blogResponse, cafeResponse, trafficResponse, salesResponse, naverResponse] = await Promise.all([
+                const [blogResponse, cafeResponse, trafficResponse, salesResponse] = await Promise.all([
                     fetch(`/api/data/files/blog_rank?t=${timestamp}`, fetchOptions),
                     fetch(`/api/data/files/cafe_rank?t=${timestamp}`, fetchOptions),
                     fetch(`/api/data/files/traffic?t=${timestamp}`, fetchOptions),
-                    fetch(`/api/data/files/sale?t=${timestamp}`, fetchOptions),
-                    fetch(`/api/data/files/asterasys_total_data- naver datalab?t=${timestamp}`, fetchOptions)
+                    fetch(`/api/data/files/sale?t=${timestamp}`, fetchOptions)
                 ])
                 
-                const [blogData, cafeData, trafficData, salesData, naverData] = await Promise.all([
+                const [blogData, cafeData, trafficData, salesData] = await Promise.all([
                     blogResponse.json(),
                     cafeResponse.json(),
                     trafficResponse.json(),
-                    salesResponse.json(),
-                    naverResponse.json()
+                    salesResponse.json()
                 ])
                 
                 // Process portfolio data for Asterasys products
@@ -98,20 +92,6 @@ const AsteraysProductPortfolio = () => {
                 })
                 
                 setProductData(portfolioData)
-                
-                // Process Naver trend data
-                const data = naverData.marketData
-                
-                if (data && data.length > 0) {
-                    // Use centralized trend calculation
-                    const processedTrends = {}
-                    
-                    ASTERASYS_PRODUCTS.forEach(productName => {
-                        processedTrends[productName] = TrendCalculations.processTrendData(data, productName, 30)
-                    })
-                    
-                    setTrendData(processedTrends)
-                }
             } catch (error) {
                 console.error('포트폴리오 데이터 로드 실패:', error)
             } finally {
@@ -122,64 +102,6 @@ const AsteraysProductPortfolio = () => {
         loadAllData()
     }, [])
 
-    const getTrendChart = (productName) => {
-        const trend = trendData[productName]
-        if (!trend) return null
-
-        const changePercent = trend.changePercent ? trend.changePercent() : '0'
-        const isPositive = parseFloat(changePercent) >= 0
-
-        const chartOptions = {
-            chart: {
-                type: 'area',
-                height: 50,
-                sparkline: { enabled: true },
-                animations: { enabled: false }
-            },
-            stroke: {
-                curve: 'smooth',
-                width: 2
-            },
-            fill: {
-                type: 'gradient',
-                gradient: {
-                    shade: 'light',
-                    type: 'vertical',
-                    shadeIntensity: 0.3,
-                    inverseColors: false,
-                    opacityFrom: 0.7,
-                    opacityTo: 0.1,
-                    stops: [0, 100]
-                }
-            },
-            colors: [isPositive ? '#10b981' : '#ef4444'],
-            tooltip: {
-                enabled: false
-            },
-            xaxis: {
-                categories: trend.categories
-            }
-        }
-
-        return (
-            <div>
-                <div className="d-flex align-items-center justify-content-between mb-2">
-                    <span className="small text-muted">네이버 검색 트렌드</span>
-                    <span className={`badge ${isPositive ? 'bg-success' : 'bg-danger'} fs-11`}>
-                        {isPositive ? '+' : ''}{changePercent}%
-                    </span>
-                </div>
-                <div style={{ height: '50px' }}>
-                    <ReactApexChart
-                        options={chartOptions}
-                        series={[{ data: trend.data }]}
-                        type="area"
-                        height={50}
-                    />
-                </div>
-            </div>
-        )
-    }
 
     return (
         <div className="col-12">
@@ -300,11 +222,6 @@ const AsteraysProductPortfolio = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        {/* 네이버 데이터랩 트렌드 차트 */}
-                                        <div className="mt-3 pt-3 border-top">
-                                            {getTrendChart(product.name)}
                                         </div>
 
                                         {/* Performance Summary */}

@@ -7,6 +7,11 @@ import path from 'path'
  * 처리된 YouTube 시장 분석 데이터 제공
  */
 
+
+// Vercel 배포를 위한 설정
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   try {
     // YouTube 분석 데이터 파일 경로들

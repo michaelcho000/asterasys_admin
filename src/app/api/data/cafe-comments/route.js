@@ -3,6 +3,11 @@ import fs from 'fs'
 import path from 'path'
 import { parse } from 'csv-parse/sync'
 
+
+// Vercel 배포를 위한 설정
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const csvFilePath = path.join(process.cwd(), 'data', 'raw', 'asterasys_total_data - cafe_comments.csv')

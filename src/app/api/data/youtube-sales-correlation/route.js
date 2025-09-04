@@ -6,6 +6,11 @@ import path from 'path'
  * YouTube vs 판매량 정확한 1:1 매칭 데이터 API
  */
 
+
+// Vercel 배포를 위한 설정
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   try {
     // 정확한 매칭 데이터 파일 로드

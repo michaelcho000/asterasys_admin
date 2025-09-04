@@ -8,6 +8,11 @@ import { parse } from 'csv-parse/sync'
  * Asterasys 제품별 광고 캠페인 성과 데이터 제공
  */
 
+
+// Vercel 배포를 위한 설정
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   try {
     // YouTube 스폰서 광고 CSV 파일 경로

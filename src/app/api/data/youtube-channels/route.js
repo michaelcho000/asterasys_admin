@@ -7,6 +7,11 @@ import path from 'path'
  * Asterasys 제품별 상위 채널 데이터 제공
  */
 
+
+// Vercel 배포를 위한 설정
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   try {
     // YouTube 채널 데이터 파일 경로
