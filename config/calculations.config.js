@@ -169,23 +169,37 @@ const KPICalculations = {
     };
   },
   
-  // 판매량 (reference only, not for ranking)
+  // 판매량 (새로운 CSV 형식: 총 판매량과 8월 판매량으로 구분)
   salesVolume: (salesData) => {
     const asterasysData = filterAsterasysProducts(salesData);
-    const asterasysTotal = asterasysData.reduce((sum, item) => 
-      sum + parseValue(item['판매량']), 0);
-    const marketTotal = salesData.reduce((sum, item) => 
-      sum + parseValue(item['판매량']), 0);
-    const marketShare = marketTotal > 0 ? (asterasysTotal / marketTotal) * 100 : 0;
+    
+    // 총 판매량 기준 계산
+    const asterasysTotalSales = asterasysData.reduce((sum, item) => 
+      sum + parseValue(item['총 판매량']), 0);
+    const marketTotalSales = salesData.reduce((sum, item) => 
+      sum + parseValue(item['총 판매량']), 0);
+    
+    // 8월 판매량 기준 계산 (월간 성과 참고용)
+    const asterasysAugustSales = asterasysData.reduce((sum, item) => 
+      sum + parseValue(item['8월 판매량']), 0);
+    const marketAugustSales = salesData.reduce((sum, item) => 
+      sum + parseValue(item['8월 판매량']), 0);
+    
+    const marketShare = marketTotalSales > 0 ? (asterasysTotalSales / marketTotalSales) * 100 : 0;
+    const augustMarketShare = marketAugustSales > 0 ? (asterasysAugustSales / marketAugustSales) * 100 : 0;
     
     return {
-      asterasysTotal,
-      marketTotal,
+      asterasysTotal: asterasysTotalSales,
+      marketTotal: marketTotalSales,
+      asterasysAugust: asterasysAugustSales,
+      marketAugust: marketAugustSales,
       marketShare,
-      value: asterasysTotal,
-      total: marketTotal,
-      percentage: calculateMarketShare(asterasysTotal, marketTotal),
-      context: formatContext('전체 시장 대비', calculateMarketShare(asterasysTotal, marketTotal), asterasysTotal, marketTotal, '대')
+      augustMarketShare,
+      value: asterasysTotalSales,
+      total: marketTotalSales,
+      percentage: calculateMarketShare(asterasysTotalSales, marketTotalSales),
+      context: formatContext('전체 시장 대비', calculateMarketShare(asterasysTotalSales, marketTotalSales), asterasysTotalSales, marketTotalSales, '대') +
+               ` | 8월: ${asterasysAugustSales}대 (시장 점유율 ${augustMarketShare.toFixed(1)}%)`
     };
   }
 };

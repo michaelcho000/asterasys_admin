@@ -85,7 +85,9 @@ const AsteraysProductPortfolio = () => {
                                 marketRank: searchRank
                             },
                             sales: {
-                                count: parseNumber(salesItem['판매량'])
+                                totalCount: parseNumber(salesItem['총 판매량']),  // 총 판매량
+                                augustCount: parseNumber(salesItem['8월 판매량']),  // 8월 판매량
+                                count: parseNumber(salesItem['총 판매량'])  // 기본 표시용 (총 판매량)
                             }
                         }
                     }
@@ -208,16 +210,21 @@ const AsteraysProductPortfolio = () => {
                                                          transition: 'all 0.3s ease'
                                                      }}>
                                                     <div className="d-flex align-items-center justify-content-between">
-                                                        <div>
+                                                        <div className="flex-grow-1">
                                                             <FiShoppingBag className="text-secondary mb-1" size={20} />
-                                                            <div className="fs-4 fw-bold text-secondary mb-1">
-                                                                {formatNumber(product.performance.sales.count)}
+                                                            <div className="d-flex align-items-baseline gap-2 mb-1">
+                                                                <div className="fs-4 fw-bold text-secondary">
+                                                                    {formatNumber(product.performance.sales.totalCount)}
+                                                                </div>
+                                                                <small className="text-primary fw-medium">
+                                                                    8월: {formatNumber(product.performance.sales.augustCount)}대
+                                                                </small>
                                                             </div>
-                                                            <small className="text-muted fw-medium">판매량</small>
+                                                            <small className="text-muted fw-medium">총 판매량</small>
                                                         </div>
                                                         <div className="badge bg-secondary text-white fs-11">
-                                                            {product.name === '쿨페이즈' ? '상승세' : 
-                                                             product.name === '리프테라' ? '안정' : '신제품'}
+                                                            {product.performance.sales.augustCount > 10 ? '활발' : 
+                                                             product.performance.sales.augustCount > 0 ? '양호' : '관찰'}
                                                         </div>
                                                     </div>
                                                 </div>
