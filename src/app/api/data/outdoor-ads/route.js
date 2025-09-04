@@ -11,10 +11,14 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     const csvFilePath = path.join(process.cwd(), 'data', 'raw', 'asterasys_total_data - ott.csv')
+    console.log('Looking for file at:', csvFilePath)
     
     if (!fs.existsSync(csvFilePath)) {
+      console.log('File not found at:', csvFilePath)
       return NextResponse.json({ error: 'OTT data file not found' }, { status: 404 })
     }
+    
+    console.log('File found, processing...')
     
     const csvContent = fs.readFileSync(csvFilePath, 'utf-8')
     
@@ -33,8 +37,11 @@ export async function GET() {
     const outdoorAdsData = []
     let currentProduct = ''
     
-    records.forEach(record => {
-      const product = record['기기구분'] || record.product || ''
+    console.log('Total records parsed:', records.length)
+    console.log('First record:', records[0])
+    
+    records.forEach((record, index) => {
+      const product = record['기기'] || record.product || ''  // '기기구분' → '기기'로 변경
       const region = record['지역'] || record.region || ''
       const mediaName = record['매체명'] || record.media_name || ''
       const mediaLocation = record['매체 위치'] || record.media_location || ''
@@ -43,14 +50,27 @@ export async function GET() {
       const quantity = record['수량'] || record.quantity || ''
       const dailyBroadcast = record['1일 송출횟수'] || record.daily_broadcast || ''
       const period = record['기간'] || record.period || ''
+      const adPeriod = record['광고기간'] || record.ad_period || ''
       
-      // Update current product if provided
-      if (product) {
-        currentProduct = product
+      if (index < 3) {
+        console.log(`Record ${index}:`, { product, region, mediaName, mediaLocation })
+      }
+      
+      // Update current product if provided (첫 번째 행에서 제품명 설정)
+      if (product && product.trim()) {
+        currentProduct = product.trim()
+      }
+      
+      // 첫 번째 행에서 currentProduct를 설정하지 못한 경우 기본값으로 설정
+      if (!currentProduct && index === 0) {
+        currentProduct = '쿨페이즈'  // CSV 데이터 기준 첫 번째 제품
       }
       
       // Skip if no essential data (mediaName is essential)
-      if (!mediaName || !currentProduct) return
+      if (!mediaName || !currentProduct) {
+        if (index < 3) console.log(`Skipping record ${index}: mediaName='${mediaName}', currentProduct='${currentProduct}'`)
+        return
+      }
       
       outdoorAdsData.push({
         product: currentProduct,
@@ -61,7 +81,8 @@ export async function GET() {
         displayFormat: displayFormat,
         quantity: quantity,
         dailyBroadcast: dailyBroadcast,
-        period: period
+        period: period,
+        adPeriod: adPeriod
       })
     })
     

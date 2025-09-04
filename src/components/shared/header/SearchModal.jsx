@@ -3,82 +3,82 @@ import React from 'react'
 import { FiAirplay, FiChevronRight, FiCommand, FiDownload, FiFilePlus, FiSearch, FiUserPlus } from 'react-icons/fi'
 
 
-const tags = ["Projects", "Leads", "Contacts", "Inbox", "Invoices", "Tasks", "Customers", "Notes", "Affiliate", "Storage", "Calendar"]
+const tags = ["블로그순위", "카페순위", "검색량", "판매량", "유튜브순위", "뉴스순위", "경쟁사분석", "마켓팅성과", "트렌드분석", "KPI대시보드", "성과보고서"]
 const recnetSearch = [
     {
         id: 1,
-        search_title: "CRM dashboard redesign",
-        path: "Home / project / crm",
+        search_title: "리프테라 경쟁사 분석",
+        path: "메인 / 경쟁사순위 / RF",
         icon: <FiAirplay />,
-        badge: "/"
+        badge: "R"
     },
     {
         id: 2,
-        search_title: "Create new document",
-        path: "Home / tasks / docs",
+        search_title: "쿨페이즈 마켓팅 성과",
+        path: "메인 / 제품포트폴리오 / RF",
         icon: <FiFilePlus />,
-        badge: "N /"
+        badge: "M"
     },
     {
         id: 3,
-        search_title: "Invite project colleagues",
-        path: "Home / project / invite",
+        search_title: "쿨소닉 판매 트렌드",
+        path: "멤인 / 검색트렌드 / HIFU",
         icon: <FiUserPlus />,
-        badge: "P /"
+        badge: "T"
     },
 
 ]
-const userSearch = [
+const competitorSearch = [
     {
         id: 1,
-        name: "Alexandra Della",
-        email: "alex.della@outlook.com",
+        name: "리프테라",
+        email: "HIFU • Asterasys 제품",
         src: "/images/avatar/1.png",
     },
     {
         id: 2,
-        name: "Green Cute",
-        email: "green.cute@outlook.com",
+        name: "쿨페이즈",
+        email: "RF • Asterasys 제품",
         src: "/images/avatar/2.png",
     },
     {
         id: 3,
-        name: "Malanie Hanvey",
-        email: "malanie.anvey@outlook.com",
+        name: "쿨소닉",
+        email: "HIFU • Asterasys 신제품",
         src: "/images/avatar/3.png",
     },
     {
         id: 4,
-        name: "Kenneth Hune",
-        email: "kenth.hune@outlook.com",
+        name: "울쒸라",
+        email: "HIFU • 경쟁사 (시장지배)",
         src: "/images/avatar/4.png",
     },
     {
         id: 5,
-        name: "Archie Cantones",
-        email: "archie.cones@outlook.com",
+        name: "써마지",
+        email: "RF • 경쟁사 (최상위)",
         src: "/images/avatar/5.png",
     },
 
 ]
-const filesList = [
+const dataFiles = [
     {
         id: 1,
-        file_name: "Project Style CSS",
-        size: "05.74 MB",
-        src: "/images/file-icons/css.png"
+        file_name: "asterasys_total_data - blog_rank.csv",
+        size: "블로그 순위 데이터",
+        src: "/images/file-icons/csv.png"
     },
     {
         id: 2,
-        file_name: "Dashboard Project Zip",
-        size: "46.83 MB",
-        src: "/images/file-icons/zip.png"
+        file_name: "asterasys_total_data - cafe_rank.csv",
+        size: "카페 순위 데이터",
+        src: "/images/file-icons/csv.png"
     },
     {
         id: 3,
-        file_name: "Project Document PDF",
-        size: "12.85 MB",
-        src: "/images/file-icons/pdf.png"
+        file_name: "asterasys_total_data - sale.csv",
+        size: "판매량 데이터",
+        src: "/images/file-icons/csv.png"
     },
 
 ]
@@ -93,7 +93,7 @@ const SearchModal = () => {
                     <span className="input-group-text">
                         <i className="fs-6 text-muted"><FiSearch /></i>
                     </span>
-                    <input type="text" className="form-control search-input-field" placeholder="Search...." />
+                    <input type="text" className="form-control search-input-field" placeholder="제품명, 경쟁사, 데이터 검색..." />
                     <span className="input-group-text">
                         <button type="button" className="btn-close"></button>
                     </span>
@@ -117,20 +117,20 @@ const SearchModal = () => {
                     </div>
                     <div className="dropdown-divider my-3"></div>
                     <div className="users-result px-4 py-2">
-                        <Title name={"Users"} number={"5"} />
+                        <Title name={"Competitors"} number={"5"} />
                         {
-                            userSearch.map(({ name, id, email, src }) => <Card key={id} src={src} subTitle={email} title={name} badge={<FiChevronRight size={12} />} />)
+                            competitorSearch.map(({ name, id, email, src }) => <Card key={id} src={src} subTitle={email} title={name} badge={<FiChevronRight size={12} />} />)
                         }
                     </div>
                     <div className="dropdown-divider my-3"></div>
                     <div className="file-result px-4 py-2">
-                        <Title name={"Files"} number={"3"} />
+                        <Title name={"Data Files"} number={"3"} />
                         {
-                            filesList.map(({ file_name, id, size, src }) => <Card key={id} src={src} subTitle={size} title={file_name} badge={<FiDownload size={12} />} />)
+                            dataFiles.map(({ file_name, id, size, src }) => <Card key={id} src={src} subTitle={size} title={file_name} badge={<FiDownload size={12} />} />)
                         }
                     </div>
                     <div className="dropdown-divider mt-3 mb-0"></div>
-                    <Link href={"#"} className="p-3 fs-10 fw-bold text-uppercase text-center d-block">Loar More</Link>
+                    <Link href={"#"} className="p-3 fs-10 fw-bold text-uppercase text-center d-block">더 많은 결과 보기</Link>
                 </div>
             </div>
         </div>

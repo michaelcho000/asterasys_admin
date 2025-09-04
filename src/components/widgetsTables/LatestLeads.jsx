@@ -11,31 +11,34 @@ const LatestLeads = ({title}) => {
     const [competitorData, setCompetitorData] = useState([])
     const [loading, setLoading] = useState(true)
     const [activeTab, setActiveTab] = useState('ALL')
+    const [sortConfig, setSortConfig] = useState({ key: 'totalScore', direction: 'desc' })
 
     useEffect(() => {
         const loadCompetitorData = async () => {
             try {
                 setLoading(true)
                 
-                // 5개 CSV 파일 동시 로드 (traffic 추가)
-                const [cafeResponse, youtubeResponse, blogResponse, newsResponse, trafficResponse] = await Promise.all([
+                // 6개 CSV 파일 동시 로드 (sale 추가)
+                const [cafeResponse, youtubeResponse, blogResponse, newsResponse, trafficResponse, salesResponse] = await Promise.all([
                     fetch('/api/data/files/cafe_rank'),
                     fetch('/api/data/files/youtube_rank'),
                     fetch('/api/data/files/blog_rank'),
                     fetch('/api/data/files/news_rank'),
-                    fetch('/api/data/files/traffic')
+                    fetch('/api/data/files/traffic'),
+                    fetch('/api/data/files/sale')
                 ])
                 
-                const [cafeData, youtubeData, blogData, newsData, trafficData] = await Promise.all([
+                const [cafeData, youtubeData, blogData, newsData, trafficData, salesData] = await Promise.all([
                     cafeResponse.json(),
                     youtubeResponse.json(),
                     blogResponse.json(),
                     newsResponse.json(),
-                    trafficResponse.json()
+                    trafficResponse.json(),
+                    salesResponse.json()
                 ])
                 
-                // 데이터 통합 처리 (traffic 추가)
-                const processedData = processCompetitorData(cafeData, youtubeData, blogData, newsData, trafficData)
+                // 데이터 통합 처리 (sale 추가)
+                const processedData = processCompetitorData(cafeData, youtubeData, blogData, newsData, trafficData, salesData)
                 setCompetitorData(processedData)
                 
             } catch (error) {
@@ -48,12 +51,13 @@ const LatestLeads = ({title}) => {
         loadCompetitorData()
     }, [])
 
-    const processCompetitorData = (cafeData, youtubeData, blogData, newsData, trafficData) => {
+    const processCompetitorData = (cafeData, youtubeData, blogData, newsData, trafficData, salesData) => {
         const cafe = cafeData.marketData || []
         const youtube = youtubeData.marketData || []
         const blog = blogData.marketData || []
         const news = newsData.marketData || []
         const traffic = trafficData.marketData || []
+        const sales = salesData.marketData || []
         
         // 키워드별 데이터 통합
         const integrated = cafe.map(cafeItem => {
@@ -61,6 +65,7 @@ const LatestLeads = ({title}) => {
             const blogItem = blog.find(b => b.키워드 === cafeItem.키워드) || {}
             const newsItem = news.find(n => n.키워드 === cafeItem.키워드) || {}
             const trafficItem = traffic.find(t => t.키워드 === cafeItem.키워드) || {}
+            const salesItem = sales.find(s => s.키워드 === cafeItem.키워드) || {}
             
             // 각 채널별 점수 추출 (컬럼명 정확히 맞춤)
             const cafeScore = parseInt(cafeItem['총 발행량']) || 0
@@ -69,8 +74,14 @@ const LatestLeads = ({title}) => {
             const newsScore = parseInt(newsItem['총 발행량']) || 0
             const searchScore = parseInt(trafficItem['월감 검색량']?.replace(/,/g, '') || 0)
             
-            // 종합 점수 계산 (5개 채널 합산)
-            const totalScore = cafeScore + youtubeScore + blogScore + newsScore + searchScore
+            // 판매량 처리: 데이터가 있는 경우만 숫자로, 없으면 null
+            const hasSalesData = salesItem && (salesItem['총 판매량'] || salesItem['8월 판매량'])
+            const totalSales = hasSalesData ? (parseInt(salesItem['총 판매량']?.replace(/,/g, '') || 0)) : null
+            const augustSales = hasSalesData ? (parseInt(salesItem['8월 판매량']?.replace(/,/g, '') || 0)) : null
+            
+            // 종합 점수 계산 (판매량 있는 경우만 포함)
+            const salesScoreForTotal = (totalSales || 0) + (augustSales || 0)
+            const totalScore = cafeScore + youtubeScore + blogScore + newsScore + searchScore + salesScoreForTotal
             
             // 트렌드 분석 (5개 채널 기준으로 재조정 - 검색량 포함)
             let status = '성장필요'
@@ -89,6 +100,9 @@ const LatestLeads = ({title}) => {
                 blogScore,
                 newsScore,
                 searchScore,
+                totalSales,
+                augustSales,
+                hasSalesData,
                 totalScore,
                 cafeRank: parseInt(cafeItem['발행량 순위']) || 0,
                 status,
@@ -108,19 +122,48 @@ const LatestLeads = ({title}) => {
         }))
     }
 
+    const handleSort = (key) => {
+        setSortConfig(prevConfig => ({
+            key,
+            direction: prevConfig.key === key && prevConfig.direction === 'desc' ? 'asc' : 'desc'
+        }))
+    }
+
+    const getSortedData = (data) => {
+        if (!sortConfig.key) return data
+
+        return [...data].sort((a, b) => {
+            const aValue = a[sortConfig.key] || 0
+            const bValue = b[sortConfig.key] || 0
+            
+            if (sortConfig.key === 'keyword') {
+                return sortConfig.direction === 'asc' 
+                    ? aValue.localeCompare(bValue)
+                    : bValue.localeCompare(aValue)
+            } else {
+                return sortConfig.direction === 'asc' 
+                    ? aValue - bValue
+                    : bValue - aValue
+            }
+        })
+    }
+
     const getFilteredData = () => {
+        let filteredData
         if (activeTab === 'ALL') {
-            return competitorData
+            filteredData = competitorData
+        } else {
+            // 카테고리별 필터링 후 해당 카테고리 내에서 1~9위 순위 재계산
+            const filtered = competitorData.filter(item => item.category === activeTab)
+            filteredData = filtered
+                .sort((a, b) => b.totalScore - a.totalScore)
+                .map((item, index) => ({
+                    ...item,
+                    categoryRank: index + 1  // 카테고리별 순위 (1~9위)
+                }))
         }
         
-        // 카테고리별 필터링 후 해당 카테고리 내에서 1~9위 순위 재계산
-        const filtered = competitorData.filter(item => item.category === activeTab)
-        return filtered
-            .sort((a, b) => b.totalScore - a.totalScore)
-            .map((item, index) => ({
-                ...item,
-                categoryRank: index + 1  // 카테고리별 순위 (1~9위)
-            }))
+        return getSortedData(filteredData)
     }
 
     const getStatusColor = (status) => {
@@ -174,14 +217,34 @@ const LatestLeads = ({title}) => {
                                 <thead>
                                     <tr className="border-b">
                                         <th scope="row">순위</th>
-                                        <th>브랜드</th>
+                                        <th style={{cursor: 'pointer'}} onClick={() => handleSort('keyword')}>
+                                            브랜드 {sortConfig.key === 'keyword' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                        </th>
                                         <th>분야</th>
-                                        <th>카페점수</th>
-                                        <th>유튜브점수</th>
-                                        <th>블로그점수</th>
-                                        <th>뉴스점수</th>
-                                        <th>검색량</th>
-                                        <th>종합점수</th>
+                                        <th style={{cursor: 'pointer'}} onClick={() => handleSort('cafeScore')}>
+                                            카페점수 {sortConfig.key === 'cafeScore' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                        </th>
+                                        <th style={{cursor: 'pointer'}} onClick={() => handleSort('youtubeScore')}>
+                                            유튜브점수 {sortConfig.key === 'youtubeScore' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                        </th>
+                                        <th style={{cursor: 'pointer'}} onClick={() => handleSort('blogScore')}>
+                                            블로그점수 {sortConfig.key === 'blogScore' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                        </th>
+                                        <th style={{cursor: 'pointer'}} onClick={() => handleSort('newsScore')}>
+                                            뉴스점수 {sortConfig.key === 'newsScore' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                        </th>
+                                        <th style={{cursor: 'pointer'}} onClick={() => handleSort('searchScore')}>
+                                            검색량 {sortConfig.key === 'searchScore' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                        </th>
+                                        <th style={{cursor: 'pointer'}} onClick={() => handleSort('totalSales')}>
+                                            총판매량 {sortConfig.key === 'totalSales' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                        </th>
+                                        <th style={{cursor: 'pointer'}} onClick={() => handleSort('augustSales')}>
+                                            8월판매 {sortConfig.key === 'augustSales' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                        </th>
+                                        <th style={{cursor: 'pointer'}} onClick={() => handleSort('totalScore')}>
+                                            종합점수 {sortConfig.key === 'totalScore' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                        </th>
                                         <th>상태</th>
                                     </tr>
                                 </thead>
@@ -219,6 +282,16 @@ const LatestLeads = ({title}) => {
                                                 </td>
                                                 <td>
                                                     <div className="text-dark fw-semibold">{item.searchScore.toLocaleString()}</div>
+                                                </td>
+                                                <td>
+                                                    <div className="text-dark fw-semibold">
+                                                        {item.hasSalesData ? item.totalSales.toLocaleString() : '자료 없음'}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div className="text-dark fw-semibold">
+                                                        {item.hasSalesData ? item.augustSales.toLocaleString() : '자료 없음'}
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div className="fw-bold text-primary fs-6">{item.totalScore.toLocaleString()}</div>

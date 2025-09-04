@@ -182,6 +182,13 @@ const OutdoorAdsTable = () => {
                                         >
                                             기간 {getSortIcon('period')}
                                         </th>
+                                        <th 
+                                            className="sortable" 
+                                            onClick={() => handleSort('adPeriod')}
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            광고기간 {getSortIcon('adPeriod')}
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -266,6 +273,11 @@ const OutdoorAdsTable = () => {
                                                 <td>
                                                     <div className="text-dark fw-medium">
                                                         {item.period}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div className="text-dark fw-medium">
+                                                        {item.adPeriod}
                                                     </div>
                                                 </td>
                                             </tr>
