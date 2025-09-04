@@ -207,7 +207,8 @@ const Header = () => {
                         {/* <TimesheetsModal /> */}
                         {/* <!--! [HIDDEN] 알림 버튼 - 나중에 복원 가능 !--> */}
                         {/* <NotificationsModal /> */}
-                        <ProfileModal />
+                        {/* <!--! [HIDDEN] 프로필 버튼 - 나중에 복원 가능 !--> */}
+                        {/* <ProfileModal /> */}
                     </div>
                 </div>
                 {/* <!--! [End] Header Right !--> */}
