@@ -196,7 +196,7 @@ const CategoryCard = ({ title, icon, topics, moreTopicsLink, totalTopic }) => {
 }
 
 
-export const TrandingCard = ({ title}) => {
+const TrandingCard = ({ title}) => {
     return (
         <div className="card border rounded-3 mb-3 overflow-hidden">
             <div className="d-flex align-items-center justify-content-between">
