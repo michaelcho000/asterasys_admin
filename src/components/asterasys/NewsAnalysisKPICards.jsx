@@ -1,15 +1,20 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import CardLoader from '@/components/shared/CardLoader'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const NewsAnalysisKPICards = () => {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState(null)
+  const month = useSelectedMonthStore((state) => state.selectedMonth)
 
   useEffect(() => {
+    if (!month) return
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/data/news-analysis')
+        setLoading(true)
+        const response = await fetch(withMonthParam('/api/data/news-analysis', month))
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
@@ -30,7 +35,7 @@ const NewsAnalysisKPICards = () => {
     }
 
     fetchData()
-  }, [])
+  }, [month])
 
   if (loading || !data || !data.summary) {
     return (

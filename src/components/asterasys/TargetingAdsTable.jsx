@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { FiChevronUp, FiChevronDown } from 'react-icons/fi'
 import CardLoader from '@/components/shared/CardLoader'
 import useCardTitleActions from '@/hooks/useCardTitleActions'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const TargetingAdsTable = () => {
     const { refreshKey, isRemoved, isExpanded, handleRefresh, handleExpand, handleDelete } = useCardTitleActions()
@@ -11,13 +13,15 @@ const TargetingAdsTable = () => {
     const [activeFilter, setActiveFilter] = useState('ALL')
     const [sortBy, setSortBy] = useState('results')
     const [sortOrder, setSortOrder] = useState('desc')
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
 
     useEffect(() => {
+        if (!month) return
         const loadTargetingAdsData = async () => {
             try {
                 setLoading(true)
                 
-                const response = await fetch('/api/data/targeting-ads')
+                const response = await fetch(withMonthParam('/api/data/targeting-ads', month))
                 
                 if (response.ok) {
                     const data = await response.json()
@@ -37,7 +41,7 @@ const TargetingAdsTable = () => {
         }
 
         loadTargetingAdsData()
-    }, [])
+    }, [month, refreshKey])
 
     const getFilteredData = () => {
         let filtered = activeFilter === 'ALL' ? [...targetingAdsData] : 

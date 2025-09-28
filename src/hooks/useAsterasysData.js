@@ -1,5 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 /**
  * Asterasys 동적 데이터 Hook
@@ -11,16 +13,17 @@ export const useAsterasysData = (filename) => {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const month = useSelectedMonthStore((state) => state.selectedMonth)
 
   useEffect(() => {
-    if (!filename) return
+    if (!filename || !month) return
 
     const fetchData = async () => {
       try {
         setLoading(true)
         setError(null)
 
-        const response = await fetch(`/api/data/files/${filename}`)
+        const response = await fetch(withMonthParam(`/api/data/files/${filename}`, month))
         
         if (!response.ok) {
           throw new Error(`API Error: ${response.status}`)
@@ -38,7 +41,7 @@ export const useAsterasysData = (filename) => {
     }
 
     fetchData()
-  }, [filename])
+  }, [filename, month])
 
   return { data, loading, error }
 }
@@ -50,14 +53,16 @@ export const useProcessedData = (dataType = 'kpis') => {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const month = useSelectedMonthStore((state) => state.selectedMonth)
 
   useEffect(() => {
+    if (!month) return
     const fetchProcessedData = async () => {
       try {
         setLoading(true)
         setError(null)
 
-        const response = await fetch(`/api/data/${dataType}`)
+        const response = await fetch(withMonthParam(`/api/data/${dataType}`, month))
         
         if (!response.ok) {
           throw new Error(`API Error: ${response.status}`)
@@ -75,7 +80,7 @@ export const useProcessedData = (dataType = 'kpis') => {
     }
 
     fetchProcessedData()
-  }, [dataType])
+  }, [dataType, month])
 
   return { data, loading, error }
 }
@@ -88,9 +93,10 @@ export const useMultipleAsterasysData = (filenames = []) => {
   const [data, setData] = useState({})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const month = useSelectedMonthStore((state) => state.selectedMonth)
 
   useEffect(() => {
-    if (filenames.length === 0) return
+    if (filenames.length === 0 || !month) return
 
     const fetchMultipleData = async () => {
       try {
@@ -98,7 +104,7 @@ export const useMultipleAsterasysData = (filenames = []) => {
         setError(null)
 
         const promises = filenames.map(filename => 
-          fetch(`/api/data/files/${filename}`).then(res => res.json())
+          fetch(withMonthParam(`/api/data/files/${filename}`, month)).then(res => res.json())
         )
 
         const results = await Promise.all(promises)
@@ -119,7 +125,7 @@ export const useMultipleAsterasysData = (filenames = []) => {
     }
 
     fetchMultipleData()
-  }, [filenames.join(',')])
+  }, [filenames.join(','), month])
 
   return { data, loading, error }
 }

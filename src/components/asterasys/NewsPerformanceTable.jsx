@@ -2,17 +2,22 @@
 import React, { useState, useEffect } from 'react'
 import CardHeader from '@/components/shared/CardHeader'
 import CardLoader from '@/components/shared/CardLoader'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const NewsPerformanceTable = () => {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState(null)
   const [sortField, setSortField] = useState('marketing_score')
   const [sortDirection, setSortDirection] = useState('desc')
+  const month = useSelectedMonthStore((state) => state.selectedMonth)
 
   useEffect(() => {
+    if (!month) return
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/data/news-analysis')
+        setLoading(true)
+        const response = await fetch(withMonthParam('/api/data/news-analysis', month))
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
@@ -32,7 +37,7 @@ const NewsPerformanceTable = () => {
     }
 
     fetchData()
-  }, [])
+  }, [month])
 
   const handleSort = (field) => {
     if (sortField === field) {

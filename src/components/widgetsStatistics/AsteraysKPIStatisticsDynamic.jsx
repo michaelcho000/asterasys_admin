@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { FiMoreVertical } from 'react-icons/fi'
 import getIcon from '@/utils/getIcon'
 import Link from 'next/link'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 /**
  * Asterasys KPI Statistics - 동적 데이터 로딩
@@ -14,12 +16,14 @@ const AsteraysKPIStatisticsDynamic = () => {
     const [kpiData, setKpiData] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
 
     useEffect(() => {
+        if (!month) return
         const fetchKPIData = async () => {
             try {
                 setLoading(true)
-                const response = await fetch('/api/data/kpis')
+                const response = await fetch(withMonthParam('/api/data/kpis', month))
                 
                 if (!response.ok) {
                     throw new Error(`API Error: ${response.status}`)
@@ -74,7 +78,7 @@ const AsteraysKPIStatisticsDynamic = () => {
         }
 
         fetchKPIData()
-    }, [])
+    }, [month])
 
     if (loading) {
         return (
@@ -129,7 +133,7 @@ const AsteraysKPIStatisticsDynamic = () => {
                             <div className="pt-4">
                                 <div className="d-flex align-items-center justify-content-between">
                                     <Link href="#" className="fs-12 fw-medium text-muted text-truncate-1-line">
-                                        2025년 8월 실제 데이터
+                                        {month ? `${month} 기준 데이터` : '데이터 준비 중'}
                                     </Link>
                                     <div className="w-100 text-end">
                                         <span className="fs-12 text-dark">{progress_info}</span>

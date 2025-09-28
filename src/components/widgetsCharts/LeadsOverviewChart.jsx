@@ -4,24 +4,34 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import CardLoader from '@/components/shared/CardLoader'
 import useCardTitleActions from '@/hooks/useCardTitleActions'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
+
+const formatMonthLabel = (month) => {
+    if (!month) return '데이터 준비 중'
+    const [year, monthPart] = month.split('-')
+    return `${year}년 ${parseInt(monthPart, 10)}월`
+}
 
 const LeadsOverviewChart = ({ chartHeight, isFooterShow }) => {
     const { refreshKey, isRemoved, isExpanded, handleRefresh, handleExpand, handleDelete } = useCardTitleActions();
     const [channelData, setChannelData] = useState([])
     const [loading, setLoading] = useState(true)
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
 
     useEffect(() => {
+        if (!month) return
         const loadChannelData = async () => {
             try {
                 setLoading(true)
                 
                 // 4개 채널 CSV 파일 동시 로드
                 const [cafeResponse, youtubeResponse, newsResponse, blogResponse] = await Promise.all([
-                    fetch('/api/data/files/cafe_rank'),
-                    fetch('/api/data/files/youtube_rank'),
-                    fetch('/api/data/files/news_rank'),
-                    fetch('/api/data/files/blog_rank')
+                    fetch(withMonthParam('/api/data/files/cafe_rank', month)),
+                    fetch(withMonthParam('/api/data/files/youtube_rank', month)),
+                    fetch(withMonthParam('/api/data/files/news_rank', month)),
+                    fetch(withMonthParam('/api/data/files/blog_rank', month))
                 ])
                 
                 const [cafeData, youtubeData, newsData, blogData] = await Promise.all([
@@ -43,7 +53,7 @@ const LeadsOverviewChart = ({ chartHeight, isFooterShow }) => {
         }
 
         loadChannelData()
-    }, [])
+    }, [month])
 
     const calculateChannelDataFromCSV = (cafeData, youtubeData, newsData, blogData) => {
         // 각 채널별 Asterasys 합계 계산
@@ -161,7 +171,11 @@ const LeadsOverviewChart = ({ chartHeight, isFooterShow }) => {
                         </>
                     )}
                 </div>
-                {isFooterShow && <Link href="#" className="card-footer fs-11 fw-bold text-uppercase text-center">실제 CSV 데이터 기반 • 2025년 8월</Link>}
+                {isFooterShow && (
+                    <Link href="#" className="card-footer fs-11 fw-bold text-uppercase text-center">
+                        실제 CSV 데이터 기반 • {formatMonthLabel(month)}
+                    </Link>
+                )}
                 <CardLoader refreshKey={refreshKey} />
             </div>
         </div>

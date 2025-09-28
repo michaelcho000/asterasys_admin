@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { FiExternalLink, FiChevronUp, FiChevronDown } from 'react-icons/fi'
 import CardLoader from '@/components/shared/CardLoader'
 import useCardTitleActions from '@/hooks/useCardTitleActions'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const CafeSeoTable = () => {
     const { refreshKey, isRemoved, isExpanded, handleRefresh, handleExpand, handleDelete } = useCardTitleActions()
@@ -11,13 +13,15 @@ const CafeSeoTable = () => {
     const [activeFilter, setActiveFilter] = useState('ALL')
     const [sortBy, setSortBy] = useState('exposure')
     const [sortOrder, setSortOrder] = useState('desc')
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
 
     useEffect(() => {
+        if (!month) return
         const loadCafeSeoData = async () => {
             try {
                 setLoading(true)
                 
-                const response = await fetch('/api/data/cafe-seo')
+                const response = await fetch(withMonthParam('/api/data/cafe-seo', month))
                 
                 if (response.ok) {
                     const data = await response.json()
@@ -37,7 +41,7 @@ const CafeSeoTable = () => {
         }
 
         loadCafeSeoData()
-    }, [])
+    }, [month])
 
     const getFilteredData = () => {
         let filtered = activeFilter === 'ALL' ? [...cafeSeoData] : 

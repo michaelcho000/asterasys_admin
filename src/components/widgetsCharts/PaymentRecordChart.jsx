@@ -4,6 +4,8 @@ import CardHeader from '@/components/shared/CardHeader';
 import useCardTitleActions from '@/hooks/useCardTitleActions';
 import CardLoader from '@/components/shared/CardLoader';
 import dynamic from 'next/dynamic'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore';
+import { withMonthParam } from '@/utils/withMonthParam';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const PaymentRecordChart = () => {
@@ -12,17 +14,19 @@ const PaymentRecordChart = () => {
     const [loading, setLoading] = useState(true)
     const [excludeTop2, setExcludeTop2] = useState(false) // TOP 2 제외 토글 상태
     const { refreshKey, isRemoved, isExpanded, handleRefresh, handleExpand, handleDelete } = useCardTitleActions();
+    const month = useSelectedMonthStore((state) => state.selectedMonth);
 
     useEffect(() => {
+        if (!month) return
         const loadChartData = async () => {
             try {
                 setLoading(true)
                 
                 // 차트에 필요한 CSV 파일들 로드 (traffic.csv 추가)
                 const [blogResponse, cafeResponse, trafficResponse] = await Promise.all([
-                    fetch('/api/data/files/blog_rank'),
-                    fetch('/api/data/files/cafe_rank'),
-                    fetch('/api/data/files/traffic')
+                    fetch(withMonthParam('/api/data/files/blog_rank', month)),
+                    fetch(withMonthParam('/api/data/files/cafe_rank', month)),
+                    fetch(withMonthParam('/api/data/files/traffic', month))
                 ])
                 
                 const [blogData, cafeData, trafficData] = await Promise.all([
@@ -43,7 +47,7 @@ const PaymentRecordChart = () => {
         }
 
         loadChartData()
-    }, [])
+    }, [month])
 
     const generateChartFromCSV = (blogData, cafeData, trafficData) => {
         const blog = blogData.marketData || []

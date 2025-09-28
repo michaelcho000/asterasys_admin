@@ -6,18 +6,22 @@ import { CircularProgressbar } from 'react-circular-progressbar'
 import CardLoader from '@/components/shared/CardLoader'
 import getIcon from '@/utils/getIcon'
 import useCardTitleActions from '@/hooks/useCardTitleActions'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const FacebookTargetingWidget = () => {
     const [fbData, setFbData] = useState([])
     const [loading, setLoading] = useState(true)
     const [selectedProduct, setSelectedProduct] = useState('전체')
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
     const { refreshKey, isRemoved, isExpanded, handleRefresh, handleExpand, handleDelete } = useCardTitleActions()
 
     useEffect(() => {
+        if (!month) return
         const loadFacebookData = async () => {
             try {
                 setLoading(true)
-                const response = await fetch('/api/data/files/facebook_targeting')
+                const response = await fetch(withMonthParam('/api/data/files/facebook_targeting', month))
                 const data = await response.json()
                 
                 if (data && data.marketData) {
@@ -32,7 +36,7 @@ const FacebookTargetingWidget = () => {
         }
 
         loadFacebookData()
-    }, [])
+    }, [month, refreshKey])
 
     const processFacebookData = (rawData) => {
         const products = {}

@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { NextResponse } from 'next/server';
+import { resolveRequestMonth } from '@/lib/server/requestMonth';
 
 /**
  * Top Products API Endpoint
@@ -21,7 +22,21 @@ export async function GET(request) {
     const category = searchParams.get('category') || 'all';
 
     // Read processed KPI data
-    const kpiFilePath = path.join(process.cwd(), 'data', 'processed', 'kpis.json');
+    const monthContext = resolveRequestMonth(request, { required: ['processed'] });
+
+    if (monthContext.error) {
+      return NextResponse.json({ error: monthContext.error.message }, { status: 400 });
+    }
+
+    if (!monthContext.ok) {
+      return NextResponse.json({
+        error: '월별 KPI 데이터를 찾을 수 없습니다',
+        month: monthContext.month,
+        missing: monthContext.missing
+      }, { status: 404 });
+    }
+
+    const kpiFilePath = path.join(monthContext.paths.processed, 'kpis.json');
     
     if (!fs.existsSync(kpiFilePath)) {
       return NextResponse.json(
@@ -78,7 +93,9 @@ export async function GET(request) {
         brand,
         category,
         limit,
-        processedAt: kpiData.processedAt
+        processedAt: kpiData.processedAt,
+        month: monthContext.month,
+        source: path.relative(process.cwd(), kpiFilePath)
       }
     });
     

@@ -5,6 +5,8 @@ import { FiMoreVertical } from 'react-icons/fi'
 import CardHeader from '@/components/shared/CardHeader'
 import CardLoader from '@/components/shared/CardLoader'
 import useCardTitleActions from '@/hooks/useCardTitleActions'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const LatestLeads = ({title}) => {
     const { refreshKey, isRemoved, isExpanded, handleRefresh, handleExpand, handleDelete } = useCardTitleActions();
@@ -12,20 +14,22 @@ const LatestLeads = ({title}) => {
     const [loading, setLoading] = useState(true)
     const [activeTab, setActiveTab] = useState('ALL')
     const [sortConfig, setSortConfig] = useState({ key: 'totalScore', direction: 'desc' })
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
 
     useEffect(() => {
+        if (!month) return
         const loadCompetitorData = async () => {
             try {
                 setLoading(true)
                 
                 // 6개 CSV 파일 동시 로드 (sale 추가)
                 const [cafeResponse, youtubeResponse, blogResponse, newsResponse, trafficResponse, salesResponse] = await Promise.all([
-                    fetch('/api/data/files/cafe_rank'),
-                    fetch('/api/data/files/youtube_rank'),
-                    fetch('/api/data/files/blog_rank'),
-                    fetch('/api/data/files/news_rank'),
-                    fetch('/api/data/files/traffic'),
-                    fetch('/api/data/files/sale')
+                    fetch(withMonthParam('/api/data/files/cafe_rank', month)),
+                    fetch(withMonthParam('/api/data/files/youtube_rank', month)),
+                    fetch(withMonthParam('/api/data/files/blog_rank', month)),
+                    fetch(withMonthParam('/api/data/files/news_rank', month)),
+                    fetch(withMonthParam('/api/data/files/traffic', month)),
+                    fetch(withMonthParam('/api/data/files/sale', month))
                 ])
                 
                 const [cafeData, youtubeData, blogData, newsData, trafficData, salesData] = await Promise.all([
@@ -49,7 +53,7 @@ const LatestLeads = ({title}) => {
         }
 
         loadCompetitorData()
-    }, [])
+    }, [month])
 
     const processCompetitorData = (cafeData, youtubeData, blogData, newsData, trafficData, salesData) => {
         const cafe = cafeData.marketData || []

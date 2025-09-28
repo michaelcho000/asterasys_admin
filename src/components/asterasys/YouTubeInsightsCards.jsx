@@ -4,6 +4,8 @@ import { FiMoreVertical, FiExternalLink } from 'react-icons/fi'
 import getIcon from '@/utils/getIcon'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -11,16 +13,18 @@ const YouTubeInsightsCards = () => {
     const [insights, setInsights] = useState({})
     const [asterasysData, setAsterasysData] = useState({})
     const [loading, setLoading] = useState(true)
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
 
     useEffect(() => {
+        if (!month) return
         const loadYouTubeData = async () => {
             try {
                 setLoading(true)
                 
                 // YouTube 분석 데이터 및 채널 데이터 동시 로드
                 const [analysisResponse, channelsResponse] = await Promise.all([
-                    fetch('/api/data/youtube-analysis'),
-                    fetch('/api/data/youtube-channels')
+                    fetch(withMonthParam('/api/data/youtube-analysis', month)),
+                    fetch(withMonthParam('/api/data/youtube-channels', month))
                 ])
                 
                 const [analysisData, channelsData] = await Promise.all([
@@ -65,7 +69,7 @@ const YouTubeInsightsCards = () => {
         }
 
         loadYouTubeData()
-    }, [])
+    }, [month])
 
     const getDefaultAsterasysData = () => {
         return {}

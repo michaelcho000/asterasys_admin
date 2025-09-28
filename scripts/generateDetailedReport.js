@@ -5,14 +5,65 @@
  * 18개 제품 모든 데이터의 정확한 수치 출력
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs')
+const path = require('path')
+
+const MONTH_REGEX = /^\d{4}-(0[1-9]|1[0-2])$/
+const CONFIG_PATH = path.join(process.cwd(), 'config', 'latest-month.json')
+
+function parseArgs(argv) {
+  return argv.slice(2).reduce((acc, item) => {
+    if (!item.startsWith('--')) return acc
+    const [rawKey, rawValue] = item.replace(/^--/, '').split('=')
+    const key = rawKey.trim()
+    const value = rawValue === undefined ? true : rawValue.trim()
+    acc[key] = value
+    return acc
+  }, {})
+}
+
+function readLatestMonth() {
+  try {
+    if (!fs.existsSync(CONFIG_PATH)) return null
+    const content = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'))
+    if (MONTH_REGEX.test(content?.month)) {
+      return content.month
+    }
+  } catch (error) {
+    console.warn('[DetailedReport] latest-month.json 읽기 실패:', error.message)
+  }
+  return null
+}
+
+function resolveMonth(requested) {
+  if (!requested) return null
+  if (!MONTH_REGEX.test(requested)) {
+    throw new Error(`잘못된 월 형식입니다: ${requested}. YYYY-MM 형식을 사용하세요.`)
+  }
+  return requested
+}
+
+function ensureFile(pathToFile) {
+  if (!fs.existsSync(pathToFile)) {
+    throw new Error(`파일을 찾을 수 없습니다: ${pathToFile}`)
+  }
+  return pathToFile
+}
 
 async function generateDetailedReport() {
   try {
+    const args = parseArgs(process.argv)
+    const month = resolveMonth(args.month) || readLatestMonth()
+
+    if (!month) {
+      throw new Error('월 정보를 찾을 수 없습니다. --month=YYYY-MM 형식으로 실행해 주세요.')
+    }
+
+    console.log(`📅 분석 월: ${month}`)
+
     // 처리된 데이터 로드
-    const csvPath = path.join(process.cwd(), 'data', 'processed', 'youtube', 'youtube_market_share.csv');
-    const csvData = fs.readFileSync(csvPath, 'utf8');
+    const csvPath = path.join(process.cwd(), 'data', 'raw', 'generated', month, 'youtube_market_share.csv')
+    const csvData = fs.readFileSync(ensureFile(csvPath), 'utf8')
     const lines = csvData.split('\n').filter(line => line.trim());
     const headers = lines[0].split(',');
     
@@ -33,7 +84,7 @@ async function generateDetailedReport() {
     console.log('='.repeat(80));
     console.log('📊 YouTube 의료기기 시장 완전 분석 보고서');
     console.log('='.repeat(80));
-    console.log(`📅 분석 기준일: 2025-08-28`);
+    console.log(`📅 데이터 기준 월: ${month}`);
     console.log(`📊 총 비디오: ${totalVideos.toLocaleString()}개`);
     console.log(`👁️ 총 조회수: ${totalViews.toLocaleString()}회`);
     console.log(`📺 총 채널수: ${totalChannels.toLocaleString()}개`);

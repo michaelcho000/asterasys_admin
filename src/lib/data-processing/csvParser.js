@@ -8,9 +8,14 @@ import { parse } from 'csv-parse/sync';
  */
 
 export class CSVParser {
-  constructor() {
-    this.dataPath = path.join(process.cwd(), 'data', 'raw');
-    this.outputPath = path.join(process.cwd(), 'data', 'processed');
+  constructor({ month }) {
+    if (!month) {
+      throw new Error('CSVParser requires a target month.')
+    }
+
+    this.month = month
+    this.dataPath = path.join(process.cwd(), 'data', 'raw', this.month)
+    this.outputPath = path.join(process.cwd(), 'data', 'processed', this.month)
   }
 
   /**
@@ -18,7 +23,12 @@ export class CSVParser {
    */
   parseCSV(filename, options = {}) {
     try {
-      const filePath = path.join(this.dataPath, filename);
+      const filePath = path.join(this.dataPath, filename)
+
+      if (!fs.existsSync(filePath)) {
+        throw new Error(`월별 CSV 파일을 찾을 수 없습니다: ${filePath}`)
+      }
+
       const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' });
       
       const records = parse(fileContent, {
@@ -30,8 +40,8 @@ export class CSVParser {
 
       return records;
     } catch (error) {
-      console.error(`Error parsing ${filename}:`, error);
-      return [];
+      console.error(`Error parsing ${filename}:`, error.message);
+      throw error;
     }
   }
 
@@ -192,7 +202,7 @@ export class CSVParser {
         youtubeContents: this.parseYouTubeContents(),
         youtubeComments: this.parseYouTubeComments(),
         processedAt: new Date().toISOString(),
-        dataMonth: '2025-08'
+        dataMonth: this.month
       };
 
       // Save processed data

@@ -2,18 +2,43 @@ import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 import { parse } from 'csv-parse/sync'
+import { resolveRequestMonth } from '@/lib/server/requestMonth'
 
 
 // Vercel 배포를 위한 설정
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+export async function GET(request) {
   try {
-    const csvFilePath = path.join(process.cwd(), 'data', 'raw', 'asterasys_total_data - cafe_comments.csv')
+    const monthContext = resolveRequestMonth(request, { required: ['raw'] })
+
+    if (monthContext.error) {
+      return NextResponse.json({ error: monthContext.error.message }, { status: 400 })
+    }
+
+    if (!monthContext.ok) {
+      return NextResponse.json(
+        {
+          error: '월별 원본 데이터 폴더를 찾을 수 없습니다',
+          month: monthContext.month,
+          missing: monthContext.missing
+        },
+        { status: 404 }
+      )
+    }
+
+    const csvFilePath = path.join(monthContext.paths.raw, 'asterasys_total_data - cafe_comments.csv')
     
     if (!fs.existsSync(csvFilePath)) {
-      return NextResponse.json({ error: 'Cafe comments data file not found' }, { status: 404 })
+      return NextResponse.json(
+        {
+          error: 'Cafe comments data file not found',
+          month: monthContext.month,
+          expectedPath: csvFilePath
+        },
+        { status: 404 }
+      )
     }
     
     const csvContent = fs.readFileSync(csvFilePath, 'utf-8')
@@ -108,7 +133,12 @@ export async function GET() {
         uniqueNicknames,
         asterasysMarketShare: totalComments > 0 ? ((asterasysComments / totalComments) * 100).toFixed(1) : '0.0'
       },
-      productStats
+      productStats,
+      meta: {
+        month: monthContext.month,
+        source: path.relative(process.cwd(), csvFilePath),
+        updatedAt: new Date().toISOString()
+      }
     }
     
     return NextResponse.json(response)

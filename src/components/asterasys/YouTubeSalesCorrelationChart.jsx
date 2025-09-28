@@ -4,6 +4,8 @@ import CardHeader from '@/components/shared/CardHeader';
 import useCardTitleActions from '@/hooks/useCardTitleActions';
 import CardLoader from '@/components/shared/CardLoader';
 import dynamic from 'next/dynamic'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -11,15 +13,17 @@ const YouTubeSalesCorrelationChart = () => {
     const [activeCategory, setActiveCategory] = useState('ALL');
     const [correlationData, setCorrelationData] = useState(null)
     const [loading, setLoading] = useState(true)
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
     const { refreshKey, isRemoved, isExpanded, handleRefresh, handleExpand, handleDelete } = useCardTitleActions();
 
     useEffect(() => {
+        if (!month) return
         const loadCorrelationData = async () => {
             try {
                 setLoading(true)
                 
                 // YouTube vs Sales 상관관계 데이터 로드
-                const response = await fetch('/api/data/youtube-sales-correlation')
+                const response = await fetch(withMonthParam('/api/data/youtube-sales-correlation', month))
                 
                 if (response.ok) {
                     const data = await response.json()
@@ -37,7 +41,7 @@ const YouTubeSalesCorrelationChart = () => {
         }
 
         loadCorrelationData()
-    }, [])
+    }, [month, refreshKey])
 
     const processCorrelationData = (data) => {
         // API에서 받은 카테고리별 데이터 사용

@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { NextResponse } from 'next/server';
+import { resolveRequestMonth } from '@/lib/server/requestMonth';
 
 /**
  * KPI Data API Endpoint
@@ -13,8 +14,21 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request) {
   try {
-    // Read processed KPI data
-    const kpiFilePath = path.join(process.cwd(), 'data', 'processed', 'kpis.json');
+    const monthContext = resolveRequestMonth(request, { required: ['processed'] });
+
+    if (monthContext.error) {
+      return NextResponse.json({ error: monthContext.error.message }, { status: 400 });
+    }
+
+    if (!monthContext.ok) {
+      return NextResponse.json({
+        error: '월별 KPI 데이터를 찾을 수 없습니다',
+        month: monthContext.month,
+        missing: monthContext.missing
+      }, { status: 404 });
+    }
+
+    const kpiFilePath = path.join(monthContext.paths.processed, 'kpis.json');
     
     if (!fs.existsSync(kpiFilePath)) {
       return NextResponse.json(
@@ -27,6 +41,11 @@ export async function GET(request) {
     }
 
     const kpiData = JSON.parse(fs.readFileSync(kpiFilePath, 'utf8'));
+    kpiData.meta = {
+      ...(kpiData.meta || {}),
+      month: monthContext.month,
+      source: path.relative(process.cwd(), kpiFilePath)
+    };
     
     // Add response headers for caching
     const response = NextResponse.json(kpiData);
@@ -46,6 +65,12 @@ export async function GET(request) {
 }
 
 export async function HEAD(request) {
-  // For preflight checks
-  return new NextResponse(null, { status: 200 });
+  const monthContext = resolveRequestMonth(request, { required: ['processed'] });
+
+  if (!monthContext.ok) {
+    return new NextResponse(null, { status: 404 });
+  }
+
+  const kpiFilePath = path.join(monthContext.paths.processed, 'kpis.json');
+  return new NextResponse(null, { status: fs.existsSync(kpiFilePath) ? 200 : 404 });
 }

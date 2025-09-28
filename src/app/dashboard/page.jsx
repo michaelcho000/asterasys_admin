@@ -10,6 +10,8 @@ import CompetitiveAnalysisChart from '@/components/dashboard/CompetitiveAnalysis
 import ChannelPerformanceChart from '@/components/dashboard/ChannelPerformanceChart';
 import ProductRankingTable from '@/components/dashboard/ProductRankingTable';
 import TopInfluencersTable from '@/components/dashboard/TopInfluencersTable';
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore';
+import { withMonthParam } from '@/utils/withMonthParam';
 
 /**
  * Asterasys Marketing Intelligence Dashboard
@@ -21,13 +23,17 @@ export default function AsteraysMarketingDashboard() {
   const [channelsData, setChannelsData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const month = useSelectedMonthStore((state) => state.selectedMonth);
 
   useEffect(() => {
+    if (!month) return;
     const loadDashboardData = async () => {
       try {
+        setLoading(true);
+        setError(null);
         const [kpiResponse, channelsResponse] = await Promise.all([
-          fetch('/api/data/kpis'),
-          fetch('/api/data/channels')
+          fetch(withMonthParam('/api/data/kpis', month)),
+          fetch(withMonthParam('/api/data/channels', month))
         ]);
 
         if (!kpiResponse.ok || !channelsResponse.ok) {
@@ -50,7 +56,7 @@ export default function AsteraysMarketingDashboard() {
     };
 
     loadDashboardData();
-  }, []);
+  }, [month]);
 
   if (loading) {
     return (

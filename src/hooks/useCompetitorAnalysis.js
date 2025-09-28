@@ -1,22 +1,26 @@
 import { useState, useEffect } from 'react'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const useCompetitorAnalysis = () => {
     const [competitorData, setCompetitorData] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
 
     useEffect(() => {
+        if (!month) return
         const loadCompetitorData = async () => {
             try {
                 setLoading(true)
                 
                 // 모든 필요한 CSV 데이터 로드
                 const [cafeResponse, blogResponse, trafficResponse, youtubeResponse, newsResponse] = await Promise.all([
-                    fetch('/api/data/files/cafe_rank'),
-                    fetch('/api/data/files/blog_rank'),
-                    fetch('/api/data/files/traffic'),
-                    fetch('/api/data/files/youtube_rank'),
-                    fetch('/api/data/files/news_rank')
+                    fetch(withMonthParam('/api/data/files/cafe_rank', month)),
+                    fetch(withMonthParam('/api/data/files/blog_rank', month)),
+                    fetch(withMonthParam('/api/data/files/traffic', month)),
+                    fetch(withMonthParam('/api/data/files/youtube_rank', month)),
+                    fetch(withMonthParam('/api/data/files/news_rank', month))
                 ])
                 
                 const [cafeData, blogData, trafficData, youtubeData, newsData] = await Promise.all([
@@ -47,7 +51,7 @@ const useCompetitorAnalysis = () => {
         }
 
         loadCompetitorData()
-    }, [])
+    }, [month])
 
     const calculateComprehensiveScores = (cafeData, blogData, trafficData, youtubeData, newsData) => {
         const competitors = new Map()

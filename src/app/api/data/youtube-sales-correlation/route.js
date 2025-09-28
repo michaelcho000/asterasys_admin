@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { resolveRequestMonth } from '@/lib/server/requestMonth'
 
 /**
  * YouTube vs 판매량 정확한 1:1 매칭 데이터 API
@@ -14,7 +15,24 @@ export const dynamic = 'force-dynamic';
 export async function GET(request) {
   try {
     // 정확한 매칭 데이터 파일 로드
-    const matchingFilePath = path.join(process.cwd(), 'data', 'processed', 'youtube', 'youtube_sales_exact_matching.json')
+    const monthContext = resolveRequestMonth(request, { required: ['youtubeProcessed'] })
+
+    if (monthContext.error) {
+      return NextResponse.json({ error: monthContext.error.message }, { status: 400 })
+    }
+
+    if (!monthContext.ok) {
+      return NextResponse.json(
+        {
+          error: 'YouTube-Sales 매칭 데이터를 찾을 수 없습니다',
+          month: monthContext.month,
+          missing: monthContext.missing
+        },
+        { status: 404 }
+      )
+    }
+
+    const matchingFilePath = path.join(monthContext.paths.youtubeProcessed, 'youtube_sales_exact_matching.json')
     
     // 파일이 없으면 실시간 생성
     if (!fs.existsSync(matchingFilePath)) {
@@ -42,7 +60,7 @@ export async function GET(request) {
       asterasysProducts: matchingData.asterasysProducts || [],
       summary: matchingData.summary || {},
       insights: {
-        dataNote: 'YouTube: 2025년 8월 성과 | 판매량: 누적 데이터',
+        dataNote: `YouTube: ${monthContext.month} 성과 | 판매량: 누적 데이터`,
         matchingNote: '1:1 정확 매칭 (Sale 데이터 있는 제품만)',
         youtubeScoreFormula: '조회수(40%) + 영상수(25%) + 좋아요(20%) + 댓글(15%)',
         efficiencyFormula: '판매량 / YouTube종합점수 × 100'
@@ -51,7 +69,9 @@ export async function GET(request) {
         lastUpdated: new Date().toISOString(),
         totalMatched: matchingData.summary?.totalMatched || 0,
         totalUnmatched: matchingData.summary?.totalUnmatched || 0,
-        asterasysCount: matchingData.summary?.asterasysCount || 0
+        asterasysCount: matchingData.summary?.asterasysCount || 0,
+        month: monthContext.month,
+        source: path.relative(process.cwd(), matchingFilePath)
       }
     }
 

@@ -3,11 +3,46 @@
  * YouTube 제품별 정량 집계 스크립트 (오프라인)
  * 입력: data/raw/dataset_youtube-scraper_*.json (최신 파일 1개 자동 선택)
  * 매핑: data/mappings/products.json (18개 제품)
- * 출력: data/processed/youtube_products.json, youtube_products.csv
+ * 출력: data/processed/youtube_products.json, data/raw/generated/youtube_products.csv
  */
 
 const fs = require('fs');
 const path = require('path');
+
+const MONTH_REGEX = /^\d{4}-(0[1-9]|1[0-2])$/
+const CONFIG_PATH = path.join(process.cwd(), 'config', 'latest-month.json')
+
+function parseArgs(argv) {
+  return argv.slice(2).reduce((acc, item) => {
+    if (!item.startsWith('--')) return acc
+    const [rawKey, rawValue] = item.replace(/^--/, '').split('=')
+    const key = rawKey.trim()
+    const value = rawValue === undefined ? true : rawValue.trim()
+    acc[key] = value
+    return acc
+  }, {})
+}
+
+function readLatestMonth() {
+  try {
+    if (!fs.existsSync(CONFIG_PATH)) return null
+    const content = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'))
+    if (MONTH_REGEX.test(content?.month)) {
+      return content.month
+    }
+  } catch (error) {
+    console.warn('[YouTubeData] latest-month.json 읽기 실패:', error.message)
+  }
+  return null
+}
+
+function resolveMonth(requested) {
+  if (!requested) return null
+  if (!MONTH_REGEX.test(requested)) {
+    throw new Error(`잘못된 월 형식입니다: ${requested}. YYYY-MM 형식을 사용하세요.`)
+  }
+  return requested
+}
 
 function readJSON(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -44,12 +79,28 @@ function quantile(values, q) {
 }
 
 function main() {
-  const root = process.cwd();
-  const rawDir = path.join(root, 'data', 'raw');
-  const processedDir = path.join(root, 'data', 'processed');
-  const ytDir = path.join(processedDir, 'youtube');
-  fs.mkdirSync(processedDir, { recursive: true });
-  fs.mkdirSync(ytDir, { recursive: true });
+  const root = process.cwd()
+  const args = parseArgs(process.argv)
+  const month = resolveMonth(args.month) || readLatestMonth()
+
+  if (!month) {
+    throw new Error('월 정보를 찾을 수 없습니다. --month=YYYY-MM 형식으로 실행해 주세요.')
+  }
+
+  console.log(`📅 대상 월: ${month}`)
+
+  const rawDir = path.join(root, 'data', 'raw', month)
+  if (!fs.existsSync(rawDir)) {
+    throw new Error(`원본 데이터 폴더가 존재하지 않습니다: ${rawDir}`)
+  }
+
+  const processedDir = path.join(root, 'data', 'processed', month)
+  const rawGeneratedDir = path.join(root, 'data', 'raw', 'generated', month)
+  const ytDir = path.join(root, 'data', 'processed', 'youtube', month)
+
+  fs.mkdirSync(processedDir, { recursive: true })
+  fs.mkdirSync(rawGeneratedDir, { recursive: true })
+  fs.mkdirSync(ytDir, { recursive: true })
 
   const productsMapping = readJSON(path.join(root, 'data', 'mappings', 'products.json'));
   const productKeys = Object.keys(productsMapping.products);
@@ -159,7 +210,7 @@ function main() {
   fs.writeFileSync(outJson, JSON.stringify(output, null, 2), 'utf8');
 
   // 저장(CSV)
-  const outCsv = path.join(processedDir, 'youtube_products.csv');
+  const outCsv = path.join(rawGeneratedDir, 'youtube_products.csv');
   const header = [
     'product','brand','category','videos','views','likes','comments','views_avg','likes_avg','comments_avg','engagement_rate','shorts_ratio','views_median','views_p90','sov_posts','sov_views'
   ];
@@ -394,7 +445,8 @@ function main() {
     (totalVideos? b.videos/totalVideos:0).toFixed(6),
     (totalViews? b.views/totalViews:0).toFixed(6)
   ].join(','))).join('\n');
-  fs.writeFileSync(path.join(ytDir, 'youtube_market_share.csv'), brandCsv, 'utf8');
+  const marketShareCsvPath = path.join(rawGeneratedDir, 'youtube_market_share.csv');
+  fs.writeFileSync(marketShareCsvPath, brandCsv, 'utf8');
 
   // 대시보드 요약 + Top 추천(병원/클리닉 채널)
   const topHospitals = chRows.filter(r=>r.type==='hospital_clinic').slice(0,50);
@@ -426,7 +478,7 @@ function main() {
   console.log(' -', path.relative(root, path.join(ytDir, 'youtube_weekly_summary.csv')));
   console.log(' -', path.relative(root, path.join(ytDir, 'youtube_weekday_hour.csv')));
   console.log(' -', path.relative(root, path.join(ytDir, 'youtube_product_format.csv')));
-  console.log(' -', path.relative(root, path.join(ytDir, 'youtube_market_share.csv')));
+  console.log(' -', path.relative(root, marketShareCsvPath));
   console.log(' -', path.relative(root, path.join(ytDir, 'youtube_dashboard_summary.json')));
   console.log(' -', path.relative(root, path.join(ytDir, 'asterasys_youtube_insights.json')));
   console.log('\nTop (조회수 기준):');
@@ -443,5 +495,3 @@ try {
   console.error('처리 실패:', e.message);
   process.exit(1);
 }
-
-

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { FiDownload, FiChevronUp, FiChevronDown } from 'react-icons/fi'
 import CardLoader from '@/components/shared/CardLoader'
 import useCardTitleActions from '@/hooks/useCardTitleActions'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const YouTubeComprehensiveTable = () => {
     const { refreshKey, isRemoved, isExpanded, handleRefresh, handleExpand, handleDelete } = useCardTitleActions();
@@ -11,14 +13,16 @@ const YouTubeComprehensiveTable = () => {
     const [activeTab, setActiveTab] = useState('ALL')
     const [sortBy, setSortBy] = useState('views')
     const [sortOrder, setSortOrder] = useState('desc')
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
 
     useEffect(() => {
+        if (!month) return
         const loadAllData = async () => {
             try {
                 setLoading(true)
                 
                 // YouTube 제품 데이터 API 사용 (메인 대시보드 방식)
-                const response = await fetch('/api/data/youtube-products')
+                const response = await fetch(withMonthParam('/api/data/youtube-products', month))
                 
                 if (response.ok) {
                     const data = await response.json()
@@ -37,7 +41,7 @@ const YouTubeComprehensiveTable = () => {
         }
 
         loadAllData()
-    }, [])
+    }, [month, refreshKey])
 
     const calculateMarketShare = (videos, views, likes, comments, totalVideos, totalViews, totalLikes, totalComments) => {
         // YouTube 시장 점유율 계산: 여러 지표 종합

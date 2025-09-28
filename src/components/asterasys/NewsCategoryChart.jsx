@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import CardHeader from '@/components/shared/CardHeader'
 import CardLoader from '@/components/shared/CardLoader'
 import dynamic from 'next/dynamic'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 const ReactApexChart = dynamic(
   () => import('react-apexcharts').then((mod) => mod.default),
   { 
@@ -15,11 +17,13 @@ const NewsCategoryChart = () => {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState(null)
   const [activeTab, setActiveTab] = useState('RF')
+  const month = useSelectedMonthStore((state) => state.selectedMonth)
 
   useEffect(() => {
+    if (!month) return
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/data/news-analysis')
+        const response = await fetch(withMonthParam('/api/data/news-analysis', month))
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
@@ -39,7 +43,7 @@ const NewsCategoryChart = () => {
     }
 
     fetchData()
-  }, [])
+  }, [month])
 
   if (loading || !data || !data.rfProducts || !data.hifuProducts) {
     return (

@@ -4,15 +4,66 @@
  * YouTube vs Sales 정확한 1:1 매칭 및 종합 성과 지수 계산
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs')
+const path = require('path')
+
+const MONTH_REGEX = /^\d{4}-(0[1-9]|1[0-2])$/
+const CONFIG_PATH = path.join(process.cwd(), 'config', 'latest-month.json')
+
+function parseArgs(argv) {
+  return argv.slice(2).reduce((acc, item) => {
+    if (!item.startsWith('--')) return acc
+    const [rawKey, rawValue] = item.replace(/^--/, '').split('=')
+    const key = rawKey.trim()
+    const value = rawValue === undefined ? true : rawValue.trim()
+    acc[key] = value
+    return acc
+  }, {})
+}
+
+function readLatestMonth() {
+  try {
+    if (!fs.existsSync(CONFIG_PATH)) return null
+    const content = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'))
+    if (MONTH_REGEX.test(content?.month)) {
+      return content.month
+    }
+  } catch (error) {
+    console.warn('[SalesMatching] latest-month.json 읽기 실패:', error.message)
+  }
+  return null
+}
+
+function resolveMonth(requested) {
+  if (!requested) return null
+  if (!MONTH_REGEX.test(requested)) {
+    throw new Error(`잘못된 월 형식입니다: ${requested}. YYYY-MM 형식을 사용하세요.`)
+  }
+  return requested
+}
+
+function ensureFile(pathToFile) {
+  if (!fs.existsSync(pathToFile)) {
+    throw new Error(`파일을 찾을 수 없습니다: ${pathToFile}`)
+  }
+  return pathToFile
+}
 
 function processExactMatching() {
     try {
+        const args = parseArgs(process.argv)
+        const month = resolveMonth(args.month) || readLatestMonth()
+
+        if (!month) {
+            throw new Error('월 정보를 찾을 수 없습니다. --month=YYYY-MM 형식으로 실행해 주세요.')
+        }
+
         console.log('📊 YouTube vs Sale 데이터 정확한 매칭 분석:');
+        console.log(`📅 대상 월: ${month}`)
 
         // YouTube 데이터 로드
-        const youtubeData = fs.readFileSync('data/processed/youtube_products.csv', 'utf8');
+        const youtubeCsvPath = path.join(process.cwd(), 'data', 'raw', 'generated', month, 'youtube_products.csv')
+        const youtubeData = fs.readFileSync(ensureFile(youtubeCsvPath), 'utf8')
         const youtubeLines = youtubeData.split('\n').filter(line => line.trim());
         const youtubeProducts = youtubeLines.slice(1).map(line => {
             const values = line.split(',');
@@ -28,7 +79,8 @@ function processExactMatching() {
         });
 
         // Sale 데이터 로드 (수정된 파일)
-        const saleData = fs.readFileSync('data/raw/asterasys_total_data - sale.csv', 'utf8');
+        const saleCsvPath = path.join(process.cwd(), 'data', 'raw', month, 'asterasys_total_data - sale.csv')
+        const saleData = fs.readFileSync(ensureFile(saleCsvPath), 'utf8')
         const saleLines = saleData.split('\n').filter(line => line.trim());
         const saleProducts = saleLines.slice(1).map(line => {
             const values = line.split(',');
@@ -108,13 +160,11 @@ function processExactMatching() {
         };
 
         // 결과 저장
-        fs.mkdirSync('data/processed/youtube', { recursive: true });
-        fs.writeFileSync(
-            'data/processed/youtube/youtube_sales_exact_matching.json', 
-            JSON.stringify(result, null, 2)
-        );
+        const outputPath = path.join(process.cwd(), 'data', 'processed', 'youtube', month, 'youtube_sales_exact_matching.json')
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true })
+        fs.writeFileSync(outputPath, JSON.stringify(result, null, 2))
 
-        console.log('\n✅ 정확한 매칭 데이터 저장: data/processed/youtube/youtube_sales_exact_matching.json');
+        console.log(`\n✅ 정확한 매칭 데이터 저장: ${path.relative(process.cwd(), outputPath)}`);
         
         return result;
 

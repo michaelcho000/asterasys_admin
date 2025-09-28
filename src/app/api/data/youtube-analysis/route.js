@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { resolveRequestMonth } from '@/lib/server/requestMonth'
 
 /**
  * YouTube 분석 데이터 API
@@ -14,16 +15,35 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request) {
   try {
+    const monthContext = resolveRequestMonth(request, { required: ['generated', 'youtubeProcessed'] })
+
+    if (monthContext.error) {
+      return NextResponse.json({ error: monthContext.error.message }, { status: 400 })
+    }
+
+    if (!monthContext.ok) {
+      return NextResponse.json(
+        {
+          error: '월별 YouTube 분석 데이터를 찾을 수 없습니다',
+          month: monthContext.month,
+          missing: monthContext.missing
+        },
+        { status: 404 }
+      )
+    }
+
     // YouTube 분석 데이터 파일 경로들
-    const csvFilePath = path.join(process.cwd(), 'data', 'processed', 'youtube', 'youtube_market_share.csv')
-    const insightsFilePath = path.join(process.cwd(), 'data', 'processed', 'youtube', 'asterasys_youtube_insights.json')
+    const csvFilePath = path.join(monthContext.paths.generated, 'youtube_market_share.csv')
+    const insightsFilePath = path.join(monthContext.paths.youtubeProcessed, 'asterasys_youtube_insights.json')
     
     // CSV 파일 존재 확인
     if (!fs.existsSync(csvFilePath)) {
       return NextResponse.json(
         { 
           error: 'YouTube 분석 데이터를 찾을 수 없습니다',
-          message: 'scripts/processYouTubeDataNode.js를 먼저 실행해주세요'
+          message: 'scripts/processYouTubeDataNode.js를 먼저 실행해주세요',
+          month: monthContext.month,
+          expectedPath: csvFilePath
         },
         { status: 404 }
       )
@@ -120,7 +140,9 @@ export async function GET(request) {
       metadata: {
         lastUpdated: new Date().toISOString(),
         recordCount: rankings.length,
-        dataSource: 'YouTube 스크래핑 데이터 (2025-08-28)'
+        dataSource: path.relative(process.cwd(), csvFilePath),
+        insightsSource: fs.existsSync(insightsFilePath) ? path.relative(process.cwd(), insightsFilePath) : null,
+        month: monthContext.month
       }
     }
 
@@ -139,12 +161,12 @@ export async function GET(request) {
 }
 
 export async function HEAD(request) {
-  // 데이터 존재 여부만 확인
-  const csvFilePath = path.join(process.cwd(), 'data', 'processed', 'youtube', 'youtube_market_share.csv')
-  
-  if (fs.existsSync(csvFilePath)) {
-    return new NextResponse(null, { status: 200 })
-  } else {
+  const monthContext = resolveRequestMonth(request, { required: ['generated'] })
+
+  if (!monthContext.ok) {
     return new NextResponse(null, { status: 404 })
   }
+
+  const csvFilePath = path.join(monthContext.paths.generated, 'youtube_market_share.csv')
+  return new NextResponse(null, { status: fs.existsSync(csvFilePath) ? 200 : 404 })
 }

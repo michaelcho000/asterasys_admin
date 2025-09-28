@@ -5,20 +5,24 @@ import { FiMoreVertical, FiTrendingUp, FiTrendingDown } from 'react-icons/fi'
 import CardHeader from '@/components/shared/CardHeader'
 import CardLoader from '@/components/shared/CardLoader'
 import useCardTitleActions from '@/hooks/useCardTitleActions'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const YouTubeAnalysisTable = ({ title }) => {
     const { refreshKey, isRemoved, isExpanded, handleRefresh, handleExpand, handleDelete } = useCardTitleActions();
     const [youtubeData, setYoutubeData] = useState([])
     const [loading, setLoading] = useState(true)
     const [activeTab, setActiveTab] = useState('ALL')
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
 
     useEffect(() => {
+        if (!month) return
         const loadYouTubeData = async () => {
             try {
                 setLoading(true)
                 
                 // YouTube 분석 데이터 로드
-                const response = await fetch('/api/data/youtube-analysis')
+                const response = await fetch(withMonthParam('/api/data/youtube-analysis', month))
                 
                 if (response.ok) {
                     const data = await response.json()
@@ -38,7 +42,7 @@ const YouTubeAnalysisTable = ({ title }) => {
         }
 
         loadYouTubeData()
-    }, [])
+    }, [month, refreshKey])
 
     const parseCSVData = (csvText) => {
         const lines = csvText.split('\n').filter(line => line.trim())

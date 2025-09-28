@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { resolveRequestMonth } from '@/lib/server/requestMonth'
 
 /**
  * YouTube 채널 데이터 API
@@ -14,15 +15,34 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request) {
   try {
+    const monthContext = resolveRequestMonth(request, { required: ['youtubeProcessed'] })
+
+    if (monthContext.error) {
+      return NextResponse.json({ error: monthContext.error.message }, { status: 400 })
+    }
+
+    if (!monthContext.ok) {
+      return NextResponse.json(
+        {
+          error: '월별 YouTube 채널 데이터를 찾을 수 없습니다',
+          month: monthContext.month,
+          missing: monthContext.missing
+        },
+        { status: 404 }
+      )
+    }
+
     // YouTube 채널 데이터 파일 경로
-    const channelsFilePath = path.join(process.cwd(), 'data', 'processed', 'youtube', 'asterasys_channels_data.json')
+    const channelsFilePath = path.join(monthContext.paths.youtubeProcessed, 'asterasys_channels_data.json')
     
     // 파일 존재 확인
     if (!fs.existsSync(channelsFilePath)) {
       return NextResponse.json(
         { 
           error: 'YouTube 채널 데이터를 찾을 수 없습니다',
-          message: 'scripts/extractAsterasysChannels.js를 먼저 실행해주세요'
+          message: 'scripts/extractAsterasysChannels.js를 먼저 실행해주세요',
+          month: monthContext.month,
+          expectedPath: channelsFilePath
         },
         { status: 404 }
       )
@@ -37,9 +57,10 @@ export async function GET(request) {
       data: channelsData,
       metadata: {
         lastUpdated: new Date().toISOString(),
-        dataSource: 'YouTube 스크래핑 데이터 (2025-08-28)',
+        dataSource: path.relative(process.cwd(), channelsFilePath),
         products: Object.keys(channelsData),
-        totalProducts: Object.keys(channelsData).length
+        totalProducts: Object.keys(channelsData).length,
+        month: monthContext.month
       }
     }
 
@@ -58,12 +79,12 @@ export async function GET(request) {
 }
 
 export async function HEAD(request) {
-  // 데이터 존재 여부만 확인
-  const channelsFilePath = path.join(process.cwd(), 'data', 'processed', 'youtube', 'asterasys_channels_data.json')
-  
-  if (fs.existsSync(channelsFilePath)) {
-    return new NextResponse(null, { status: 200 })
-  } else {
+  const monthContext = resolveRequestMonth(request, { required: ['youtubeProcessed'] })
+
+  if (!monthContext.ok) {
     return new NextResponse(null, { status: 404 })
   }
+
+  const channelsFilePath = path.join(monthContext.paths.youtubeProcessed, 'asterasys_channels_data.json')
+  return new NextResponse(null, { status: fs.existsSync(channelsFilePath) ? 200 : 404 })
 }

@@ -15,7 +15,7 @@ from pathlib import Path
 class YouTubeDataProcessor:
     def __init__(self, json_file_path):
         self.json_file_path = json_file_path
-        self.output_dir = Path('data/processed/youtube')
+        self.output_dir = Path('data/raw/generated/youtube')
         self.output_dir.mkdir(parents=True, exist_ok=True)
         
         # Asterasys 제품 키워드 (기존 CSV 데이터와 일치)

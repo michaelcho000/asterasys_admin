@@ -4,19 +4,23 @@ import Link from 'next/link'
 import { FiExternalLink } from 'react-icons/fi'
 import CardLoader from '@/components/shared/CardLoader'
 import useCardTitleActions from '@/hooks/useCardTitleActions'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const YouTubeSponsorAdCard = () => {
     const { refreshKey, isRemoved, isExpanded, handleRefresh, handleExpand, handleDelete } = useCardTitleActions();
     const [campaignData, setCampaignData] = useState([])
     const [loading, setLoading] = useState(true)
     const [activeTab, setActiveTab] = useState('ALL')
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
 
     useEffect(() => {
+        if (!month) return
         const loadSponsorData = async () => {
             try {
                 setLoading(true)
                 
-                const response = await fetch('/api/data/youtube-sponsor')
+                const response = await fetch(withMonthParam('/api/data/youtube-sponsor', month))
                 
                 if (response.ok) {
                     const data = await response.json()
@@ -33,7 +37,7 @@ const YouTubeSponsorAdCard = () => {
         }
 
         loadSponsorData()
-    }, [])
+    }, [month, refreshKey])
 
     const getFilteredData = () => {
         if (activeTab === 'ALL') return campaignData

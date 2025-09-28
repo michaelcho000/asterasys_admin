@@ -1,16 +1,34 @@
-import fs from 'fs';
-import path from 'path';
-import CSVParser from './csvParser.js';
-import MetricsCalculator from '../metrics/calculator.js';
+import fs from 'fs'
+import path from 'path'
+import CSVParser from './csvParser.js'
+import MetricsCalculator from '../metrics/calculator.js'
+import {
+  ensureMonthlyDirectories,
+  getProcessedMonthPath,
+  getRawMonthPath
+} from '../server/monthConfig.js'
 
 /**
  * Main data processor that orchestrates CSV parsing and metrics calculation
  */
 
 export class DataProcessor {
-  constructor() {
-    this.outputPath = path.join(process.cwd(), 'data', 'processed');
-    this.parser = new CSVParser();
+  constructor({ month }) {
+    if (!month) {
+      throw new Error('DataProcessor requires a target month. (hint: --month=YYYY-MM)')
+    }
+
+    this.month = month
+    this.rawMonthPath = getRawMonthPath(this.month)
+
+    if (!fs.existsSync(this.rawMonthPath)) {
+      throw new Error(`원본 데이터 폴더를 찾을 수 없습니다: ${this.rawMonthPath}`)
+    }
+
+    ensureMonthlyDirectories(this.month)
+
+    this.outputPath = getProcessedMonthPath(this.month)
+    this.parser = new CSVParser({ month: this.month })
   }
 
   /**
@@ -22,7 +40,7 @@ export class DataProcessor {
       
       // Step 1: Parse all CSV files
       console.log('Parsing CSV files...');
-      const rawData = await this.parser.parseAllData();
+      const rawData = await this.parser.parseAllData()
       
       // Step 2: Calculate metrics
       console.log('Calculating metrics...');
@@ -40,7 +58,7 @@ export class DataProcessor {
         channels: channelData,
         meta: {
           processedAt: new Date().toISOString(),
-          dataMonth: '2025-08',
+          dataMonth: this.month,
           version: '1.0.0'
         }
       };

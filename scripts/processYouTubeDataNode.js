@@ -12,6 +12,7 @@ class YouTubeDataProcessor {
   constructor(jsonFilePath) {
     this.jsonFilePath = jsonFilePath;
     this.outputDir = path.join(process.cwd(), 'data', 'processed', 'youtube');
+    this.generatedDir = path.join(process.cwd(), 'data', 'raw', 'generated');
     
     // 18개 의료기기 전체 매핑 (기존 CSV 데이터와 일치)
     this.deviceMapping = {
@@ -302,6 +303,9 @@ class YouTubeDataProcessor {
     if (!fs.existsSync(this.outputDir)) {
       fs.mkdirSync(this.outputDir, { recursive: true });
     }
+    if (!fs.existsSync(this.generatedDir)) {
+      fs.mkdirSync(this.generatedDir, { recursive: true });
+    }
 
     // 1. 시장 점유율 데이터 (CSV 스타일)
     const marketShareCSV = [
@@ -312,7 +316,7 @@ class YouTubeDataProcessor {
       ].join(','))
     ].join('\n');
     
-    fs.writeFileSync(path.join(this.outputDir, 'youtube_market_share.csv'), marketShareCSV, 'utf8');
+    fs.writeFileSync(path.join(this.generatedDir, 'youtube_market_share.csv'), marketShareCSV, 'utf8');
 
     // 2. Asterasys 인사이트 JSON
     const asterasysReport = {

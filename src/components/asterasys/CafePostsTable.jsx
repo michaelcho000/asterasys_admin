@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { FiExternalLink, FiChevronUp, FiChevronDown } from 'react-icons/fi'
 import CardLoader from '@/components/shared/CardLoader'
 import useCardTitleActions from '@/hooks/useCardTitleActions'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const CafePostsTable = () => {
     const { refreshKey, isRemoved, isExpanded, handleRefresh, handleExpand, handleDelete } = useCardTitleActions()
@@ -11,13 +13,15 @@ const CafePostsTable = () => {
     const [activeFilter, setActiveFilter] = useState('ALL')
     const [sortBy, setSortBy] = useState('workDate')
     const [sortOrder, setSortOrder] = useState('desc')
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
 
     useEffect(() => {
+        if (!month) return
         const loadCafePostsData = async () => {
             try {
                 setLoading(true)
                 
-                const response = await fetch('/api/data/cafe-posts')
+                const response = await fetch(withMonthParam('/api/data/cafe-posts', month))
                 
                 if (response.ok) {
                     const data = await response.json()
@@ -37,7 +41,7 @@ const CafePostsTable = () => {
         }
 
         loadCafePostsData()
-    }, [])
+    }, [month, refreshKey])
 
     const getFilteredData = () => {
         let filtered = activeFilter === 'ALL' ? [...cafePostsData] : 

@@ -2,18 +2,54 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { parse } from 'csv-parse/sync';
+import { resolveRequestMonth } from '@/lib/server/requestMonth';
+
+function getDaysInMonth(monthString) {
+  if (!monthString || typeof monthString !== 'string') {
+    return 30;
+  }
+
+  const [yearStr, monthStr] = monthString.split('-');
+  const year = Number(yearStr);
+  const month = Number(monthStr);
+
+  if (!Number.isInteger(year) || !Number.isInteger(month) || month < 1 || month > 12) {
+    return 30;
+  }
+
+  // JavaScript Date months are zero-indexed; using month as-is with day 0 gives us the last day of the target month.
+  return new Date(year, month, 0).getDate();
+}
 
 
 // Vercel 배포를 위한 설정
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+export async function GET(request) {
   try {
-    const csvFilePath = path.join(process.cwd(), 'data', 'raw', 'asterasys_total_data - news analysis.csv');
+    const monthContext = resolveRequestMonth(request, { required: ['raw'] });
+
+    if (monthContext.error) {
+      return NextResponse.json({ error: monthContext.error.message }, { status: 400 });
+    }
+
+    if (!monthContext.ok) {
+      return NextResponse.json({
+        error: '월별 원본 데이터 폴더를 찾을 수 없습니다',
+        month: monthContext.month,
+        missing: monthContext.missing
+      }, { status: 404 });
+    }
+
+    const csvFilePath = path.join(monthContext.paths.raw, 'asterasys_total_data - news analysis.csv');
     
     if (!fs.existsSync(csvFilePath)) {
-      return NextResponse.json({ error: 'News analysis data file not found' }, { status: 404 });
+      return NextResponse.json({
+        error: 'News analysis data file not found',
+        month: monthContext.month,
+        expectedPath: csvFilePath
+      }, { status: 404 });
     }
     
     const csvContent = fs.readFileSync(csvFilePath, 'utf-8');
@@ -102,18 +138,22 @@ export async function GET() {
     const marketSharePercentage = totalArticles > 0 ? 
       ((asterasysArticles / totalArticles) * 100).toFixed(1) : '0.0';
 
-    // Daily average articles calculation (8월 31일 기준)
-    const AUGUST_DAYS = 31;
-    
-    const totalDailyAverage = validRecords.reduce((sum, record) => {
-      const totalArticles = parseInt(record.total_articles) || 0;
-      return sum + (totalArticles / AUGUST_DAYS);
-    }, 0) / validRecords.length;
+    // Daily average articles calculation (월별 실제 일수 기준)
+    const daysInMonth = getDaysInMonth(monthContext.month);
 
-    const asterasysDailyAverage = asterasysData.reduce((sum, record) => {
-      const totalArticles = parseInt(record.total_articles) || 0;
-      return sum + (totalArticles / AUGUST_DAYS);
-    }, 0) / asterasysData.length;
+    const totalDailyAverage = validRecords.length > 0
+      ? validRecords.reduce((sum, record) => {
+          const totalArticles = parseInt(record.total_articles) || 0;
+          return sum + (totalArticles / daysInMonth);
+        }, 0) / validRecords.length
+      : 0;
+
+    const asterasysDailyAverage = asterasysData.length > 0
+      ? asterasysData.reduce((sum, record) => {
+          const totalArticles = parseInt(record.total_articles) || 0;
+          return sum + (totalArticles / daysInMonth);
+        }, 0) / asterasysData.length
+      : 0;
 
     // Asterasys vs Market average ratio
     const asterasysVsMarketRatio = totalDailyAverage > 0 ? 
@@ -225,7 +265,13 @@ export async function GET() {
         dominant_category: record.dominant_category,
         dominant_percentage: parseFloat(record.dominant_percentage) || 0
       })),
-      rawData: validRecords
+      rawData: validRecords,
+      metadata: {
+        month: monthContext.month,
+        daysInMonth,
+        source: path.relative(process.cwd(), csvFilePath),
+        updatedAt: new Date().toISOString()
+      }
     };
     
     return NextResponse.json(response);

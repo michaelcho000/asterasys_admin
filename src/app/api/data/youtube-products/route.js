@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { resolveRequestMonth } from '@/lib/server/requestMonth'
 
 /**
  * YouTube 제품 데이터 API
@@ -14,15 +15,34 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request) {
   try {
+    const monthContext = resolveRequestMonth(request, { required: ['generated'] })
+
+    if (monthContext.error) {
+      return NextResponse.json({ error: monthContext.error.message }, { status: 400 })
+    }
+
+    if (!monthContext.ok) {
+      return NextResponse.json(
+        {
+          error: '월별 YouTube 제품 데이터를 찾을 수 없습니다',
+          month: monthContext.month,
+          missing: monthContext.missing
+        },
+        { status: 404 }
+      )
+    }
+
     // YouTube 제품 데이터 CSV 파일 경로
-    const csvFilePath = path.join(process.cwd(), 'data', 'processed', 'youtube_products.csv')
+    const csvFilePath = path.join(monthContext.paths.generated, 'youtube_products.csv')
     
     // 파일 존재 확인
     if (!fs.existsSync(csvFilePath)) {
       return NextResponse.json(
         { 
           error: 'YouTube 제품 데이터를 찾을 수 없습니다',
-          message: 'youtube_products.csv 파일이 필요합니다'
+          message: 'youtube_products.csv 파일이 필요합니다',
+          month: monthContext.month,
+          expectedPath: csvFilePath
         },
         { status: 404 }
       )
@@ -83,8 +103,9 @@ export async function GET(request) {
       summary,
       metadata: {
         lastUpdated: new Date().toISOString(),
-        dataSource: 'youtube_products.csv',
-        recordCount: rankedProducts.length
+        dataSource: path.relative(process.cwd(), csvFilePath),
+        recordCount: rankedProducts.length,
+        month: monthContext.month
       }
     }
 
@@ -103,11 +124,12 @@ export async function GET(request) {
 }
 
 export async function HEAD(request) {
-  const csvFilePath = path.join(process.cwd(), 'data', 'processed', 'youtube_products.csv')
-  
-  if (fs.existsSync(csvFilePath)) {
-    return new NextResponse(null, { status: 200 })
-  } else {
+  const monthContext = resolveRequestMonth(request, { required: ['generated'] })
+
+  if (!monthContext.ok) {
     return new NextResponse(null, { status: 404 })
   }
+
+  const csvFilePath = path.join(monthContext.paths.generated, 'youtube_products.csv')
+  return new NextResponse(null, { status: fs.existsSync(csvFilePath) ? 200 : 404 })
 }

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { FiChevronUp, FiChevronDown } from 'react-icons/fi'
 import CardLoader from '@/components/shared/CardLoader'
 import useCardTitleActions from '@/hooks/useCardTitleActions'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 const AutoCompleteTable = () => {
     const { refreshKey, isRemoved, isExpanded, handleRefresh, handleExpand, handleDelete } = useCardTitleActions()
@@ -11,13 +13,15 @@ const AutoCompleteTable = () => {
     const [activeFilter, setActiveFilter] = useState('ALL')
     const [sortBy, setSortBy] = useState('product')
     const [sortOrder, setSortOrder] = useState('asc')
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
 
     useEffect(() => {
+        if (!month) return
         const loadAutoCompleteData = async () => {
             try {
                 setLoading(true)
                 
-                const response = await fetch('/api/data/auto-complete')
+                const response = await fetch(withMonthParam('/api/data/auto-complete', month))
                 
                 if (response.ok) {
                     const data = await response.json()
@@ -37,7 +41,7 @@ const AutoCompleteTable = () => {
         }
 
         loadAutoCompleteData()
-    }, [])
+    }, [month, refreshKey])
 
     const getFilteredData = () => {
         let filtered = activeFilter === 'ALL' ? [...autoCompleteData] : 
