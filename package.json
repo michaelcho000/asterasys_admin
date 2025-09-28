@@ -29,7 +29,8 @@
     "stripe:listen": "stripe listen --forward-to localhost:3000/api/webhooks/stripe",
     "process-data": "node scripts/processData.js",
     "ingest": "npm run process-data",
-    "youtube:process": "node scripts/processYoutubeData.cjs"
+    "youtube:process": "node scripts/processYoutubeData.cjs",
+    "youtube:channels": "node scripts/extractAsterasysChannels.js"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",

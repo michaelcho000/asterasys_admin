@@ -8,10 +8,17 @@ import { getIcon } from '@/utils/getIcon';
  * High-level overview for C-level executives and stakeholders
  */
 
+const formatMonthLabel = (month) => {
+  if (!month) return '최근 데이터'
+  const [year, monthPart] = month.split('-')
+  return `${year}년 ${parseInt(monthPart, 10)}월`
+}
+
 export default function ExecutiveSummary({ data, channels, filters }) {
   if (!data) return null;
 
   const { overview, brand } = data;
+  const summaryMonthLabel = formatMonthLabel(data?.meta?.month);
 
   // Calculate key insights
   const marketPosition = {
@@ -40,7 +47,7 @@ export default function ExecutiveSummary({ data, channels, filters }) {
               {getIcon('target', { className: 'me-2' })}
               Executive Summary
             </h4>
-            <p className="text-muted small mb-0">2025년 8월 마케팅 성과 종합 분석</p>
+            <p className="text-muted small mb-0">{summaryMonthLabel} 마케팅 성과 종합 분석</p>
           </div>
           <div className="d-flex align-items-center gap-2">
             <span className={`badge bg-${marketShareStatus} px-3 py-2`}>

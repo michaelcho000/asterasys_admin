@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { FiMoreVertical } from 'react-icons/fi'
 import CardHeader from '@/components/shared/CardHeader'
@@ -15,6 +15,19 @@ const LatestLeads = ({title}) => {
     const [activeTab, setActiveTab] = useState('ALL')
     const [sortConfig, setSortConfig] = useState({ key: 'totalScore', direction: 'desc' })
     const month = useSelectedMonthStore((state) => state.selectedMonth)
+    const monthNumber = useMemo(() => {
+        if (!month) return null
+        const [, monthPart] = month.split('-')
+        return parseInt(monthPart, 10)
+    }, [month])
+    const monthlySalesColumn = useMemo(() => {
+        if (!monthNumber) return '8월 판매량'
+        return `${monthNumber}월 판매량`
+    }, [monthNumber])
+    const monthlySalesLabel = useMemo(() => {
+        if (!monthNumber) return '8월'
+        return `${monthNumber}월`
+    }, [monthNumber])
 
     useEffect(() => {
         if (!month) return
@@ -79,12 +92,13 @@ const LatestLeads = ({title}) => {
             const searchScore = parseInt(trafficItem['월감 검색량']?.replace(/,/g, '') || 0)
             
             // 판매량 처리: 데이터가 있는 경우만 숫자로, 없으면 null
-            const hasSalesData = salesItem && (salesItem['총 판매량'] || salesItem['8월 판매량'])
+            const monthlyRawValue = salesItem ? (salesItem[monthlySalesColumn] ?? salesItem['8월 판매량']) : null
+            const hasSalesData = salesItem && (salesItem['총 판매량'] || monthlyRawValue)
             const totalSales = hasSalesData ? (parseInt(salesItem['총 판매량']?.replace(/,/g, '') || 0)) : null
-            const augustSales = hasSalesData ? (parseInt(salesItem['8월 판매량']?.replace(/,/g, '') || 0)) : null
-            
+            const monthlySales = hasSalesData ? (parseInt(String(monthlyRawValue || 0).replace(/,/g, '')) || 0) : null
+
             // 종합 점수 계산 (판매량 있는 경우만 포함)
-            const salesScoreForTotal = (totalSales || 0) + (augustSales || 0)
+            const salesScoreForTotal = (totalSales || 0) + (monthlySales || 0)
             const totalScore = cafeScore + youtubeScore + blogScore + newsScore + searchScore + salesScoreForTotal
             
             // 트렌드 분석 (5개 채널 기준으로 재조정 - 검색량 포함)
@@ -105,7 +119,7 @@ const LatestLeads = ({title}) => {
                 newsScore,
                 searchScore,
                 totalSales,
-                augustSales,
+                monthlySales,
                 hasSalesData,
                 totalScore,
                 cafeRank: parseInt(cafeItem['발행량 순위']) || 0,
@@ -243,8 +257,8 @@ const LatestLeads = ({title}) => {
                                         <th style={{cursor: 'pointer'}} onClick={() => handleSort('totalSales')}>
                                             총판매량 {sortConfig.key === 'totalSales' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                                         </th>
-                                        <th style={{cursor: 'pointer'}} onClick={() => handleSort('augustSales')}>
-                                            8월판매 {sortConfig.key === 'augustSales' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                        <th style={{cursor: 'pointer'}} onClick={() => handleSort('monthlySales')}>
+                                            {monthlySalesLabel} 판매 {sortConfig.key === 'monthlySales' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                                         </th>
                                         <th style={{cursor: 'pointer'}} onClick={() => handleSort('totalScore')}>
                                             종합점수 {sortConfig.key === 'totalScore' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
@@ -294,7 +308,7 @@ const LatestLeads = ({title}) => {
                                                 </td>
                                                 <td>
                                                     <div className="text-dark fw-semibold">
-                                                        {item.hasSalesData ? item.augustSales.toLocaleString() : '자료 없음'}
+                                                        {item.hasSalesData && item.monthlySales !== null ? item.monthlySales.toLocaleString() : '자료 없음'}
                                                     </div>
                                                 </td>
                                                 <td>

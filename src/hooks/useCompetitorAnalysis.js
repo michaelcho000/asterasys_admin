@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react'
 import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
 import { withMonthParam } from '@/utils/withMonthParam'
 
+const parseNumber = (value) => {
+    if (value === null || value === undefined) return 0
+    if (typeof value === 'number') return value
+    const sanitized = String(value).replace(/[^\d.-]/g, '')
+    if (!sanitized) return 0
+    const num = Number(sanitized)
+    return Number.isNaN(num) ? 0 : num
+}
+
 const useCompetitorAnalysis = () => {
     const [competitorData, setCompetitorData] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -15,20 +24,22 @@ const useCompetitorAnalysis = () => {
                 setLoading(true)
                 
                 // 모든 필요한 CSV 데이터 로드
-                const [cafeResponse, blogResponse, trafficResponse, youtubeResponse, newsResponse] = await Promise.all([
+                const [cafeResponse, blogResponse, trafficResponse, youtubeResponse, newsResponse, saleResponse] = await Promise.all([
                     fetch(withMonthParam('/api/data/files/cafe_rank', month)),
                     fetch(withMonthParam('/api/data/files/blog_rank', month)),
                     fetch(withMonthParam('/api/data/files/traffic', month)),
                     fetch(withMonthParam('/api/data/files/youtube_rank', month)),
-                    fetch(withMonthParam('/api/data/files/news_rank', month))
+                    fetch(withMonthParam('/api/data/files/news_rank', month)),
+                    fetch(withMonthParam('/api/data/files/sale', month))
                 ])
                 
-                const [cafeData, blogData, trafficData, youtubeData, newsData] = await Promise.all([
+                const [cafeData, blogData, trafficData, youtubeData, newsData, saleData] = await Promise.all([
                     cafeResponse.json(),
                     blogResponse.json(), 
                     trafficResponse.json(),
                     youtubeResponse.json(),
-                    newsResponse.json()
+                    newsResponse.json(),
+                    saleResponse.json()
                 ])
                 
                 // 종합 점수 계산
@@ -37,7 +48,8 @@ const useCompetitorAnalysis = () => {
                     blogData.marketData || [],
                     trafficData.marketData || [],
                     youtubeData.marketData || [],
-                    newsData.marketData || []
+                    newsData.marketData || [],
+                    saleData.marketData || []
                 )
                 
                 setCompetitorData(processedData)
@@ -53,7 +65,7 @@ const useCompetitorAnalysis = () => {
         loadCompetitorData()
     }, [month])
 
-    const calculateComprehensiveScores = (cafeData, blogData, trafficData, youtubeData, newsData) => {
+    const calculateComprehensiveScores = (cafeData, blogData, trafficData, youtubeData, newsData, saleData) => {
         const competitors = new Map()
         const asterasysProducts = ['쿨페이즈', '리프테라', '쿨소닉']
 
@@ -142,7 +154,19 @@ const useCompetitorAnalysis = () => {
             }
         })
 
-        // 6. 종합 점수 계산 및 순위 매기기
+        // 6. 판매 데이터 추가
+        saleData.forEach(item => {
+            const keyword = (item.키워드 || '').trim()
+            if (Competitors.has(keyword)) {
+                const competitor = competitors.get(keyword)
+                competitor.sales = {
+                    total: parseNumber(item['총 판매량']),
+                    monthly: parseNumber(item['8월 판매량'])
+                }
+            }
+        })
+
+        // 7. 종합 점수 계산 및 순위 매기기
         const competitorArray = Array.from(competitors.values()).map(competitor => {
             const totalScore = 
                 (competitor.cafeScore || 0) +
@@ -185,6 +209,32 @@ const useCompetitorAnalysis = () => {
         // 최종 결과 합치기
         const finalResults = [...rfCompetitors, ...hifuCompetitors]
 
+        const asterasysOnly = finalResults.filter((item) => item.isAsterasys)
+        const othersOnly = finalResults.filter((item) => !item.isAsterasys)
+
+        const engagementTotals = (items) => items.reduce((acc, item) => {
+            const cafeEngagement = (item.rawData.cafe?.댓글수 || 0) + (item.rawData.cafe?.대댓글수 || 0)
+            const blogEngagement = (item.rawData.blog?.댓글총개수 || 0) + (item.rawData.blog?.대댓글총개수 || 0)
+            return acc + cafeEngagement + blogEngagement
+        }, 0)
+
+        const asterasysEngagement = engagementTotals(asterasysOnly)
+        const othersEngagement = engagementTotals(othersOnly)
+
+        const competitorAverageEngagement = othersOnly.length ? (othersEngagement / othersOnly.length) : 0
+        const asterasysAverageEngagement = asterasysOnly.length ? (asterasysEngagement / asterasysOnly.length) : 0
+
+        const salesSummary = {
+            total: asterasysOnly.reduce((sum, item) => sum + (item.sales?.total || 0), 0),
+            perProduct: asterasysOnly.reduce((acc, item) => {
+                acc[item.name] = {
+                    total: item.sales?.total || 0,
+                    monthly: item.sales?.monthly || 0
+                }
+                return acc
+            }, {})
+        }
+
         return {
             all: sortedAll,
             rf: rfCompetitors,
@@ -193,7 +243,12 @@ const useCompetitorAnalysis = () => {
                 totalCompetitors: sortedAll.length,
                 asterasysProducts: sortedAll.filter(c => c.isAsterasys),
                 topRfCompetitor: rfCompetitors[0],
-                topHifuCompetitor: hifuCompetitors[0]
+                topHifuCompetitor: hifuCompetitors[0],
+                sales: salesSummary,
+                engagement: {
+                    asterasysAverage: asterasysAverageEngagement,
+                    competitorsAverage: competitorAverageEngagement
+                }
             }
         }
     }

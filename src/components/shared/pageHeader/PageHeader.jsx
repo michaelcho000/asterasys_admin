@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { FiAlignRight, FiArrowLeft } from 'react-icons/fi'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import PageHeaderDate from './PageHeaderDate'
 
 const PageHeader = ({ children }) => {
     const [openSidebar, setOpenSidebar] = useState(false)
@@ -25,6 +26,7 @@ const PageHeader = ({ children }) => {
             'market-analysis': '시장 분석', 
             'product': 'Asterasys 제품 분석',
             'reports': '운영 리포트',
+            'dashboard': '대시보드',
             'export': '데이터 내보내기',
             'youtube': 'YouTube 분석',
             'blog': '블로그 분석',
@@ -76,6 +78,7 @@ const PageHeader = ({ children }) => {
                             <span>Back</span>
                         </Link>
                     </div>
+                    <PageHeaderDate />
                     {children}
                 </div>
                 <div className="d-md-none d-flex align-items-center">

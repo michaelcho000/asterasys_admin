@@ -1,6 +1,5 @@
 import React from 'react'
 import PageHeader from '@/components/shared/pageHeader/PageHeader'
-import PageHeaderDate from '@/components/shared/pageHeader/PageHeaderDate'
 
 // Dashboard Components - Data Source Mapping:
 import AsteraysKPIStatistics from '@/components/widgetsStatistics/AsteraysKPIStatistics'
@@ -46,9 +45,7 @@ import DuplicateLayout from './duplicateLayout'
 const Home = () => {
   return (
     <DuplicateLayout>
-      <PageHeader>
-        <PageHeaderDate />
-      </PageHeader>
+      <PageHeader />
       <div className='main-content'>
         <div className='row'>
           <AsteraysKPIStatistics />

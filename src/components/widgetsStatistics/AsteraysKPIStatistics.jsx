@@ -1,11 +1,13 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { FiMoreVertical } from 'react-icons/fi'
 import getIcon from '@/utils/getIcon'
 import Link from 'next/link'
 import CardLoader from '@/components/shared/CardLoader'
 import { KPICalculations } from '../../../config/calculations.config.js'
 import { formatNumber } from '@/utils/formatNumber'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
 
 /**
  * Asterasys Marketing KPI Statistics Component
@@ -13,14 +15,27 @@ import { formatNumber } from '@/utils/formatNumber'
  * 데이터 출처: 2025년 8월 실제 CSV 파일
  */
 
+const formatMonthLabel = (month) => {
+    if (!month) return '데이터 준비 중'
+    const [year, monthPart] = month.split('-')
+    return `${year}년 ${parseInt(monthPart, 10)}월`
+}
+
 const AsteraysKPIStatistics = () => {
     const [activeDropdown, setActiveDropdown] = useState(null)
     const [kpiData, setKpiData] = useState([])
     const [loading, setLoading] = useState(true)
     const [lastUpdated, setLastUpdated] = useState('')
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
+    const monthLabel = useMemo(() => formatMonthLabel(month), [month])
 
     // 데이터 로드 함수를 별도로 정의하여 재사용 가능하게 만듦
-    const loadKPIData = async () => {
+    const loadKPIData = async (selectedMonth) => {
+            if (!selectedMonth) {
+                setKpiData([])
+                setLoading(false)
+                return
+            }
             try {
                 setLoading(true)
                 
@@ -36,11 +51,11 @@ const AsteraysKPIStatistics = () => {
                 }
                 
                 const [blogResponse, cafeResponse, newsResponse, trafficResponse, saleResponse] = await Promise.all([
-                    fetch(`/api/data/files/blog_rank?t=${timestamp}`, fetchOptions),
-                    fetch(`/api/data/files/cafe_rank?t=${timestamp}`, fetchOptions),
-                    fetch(`/api/data/files/news_rank?t=${timestamp}`, fetchOptions),
-                    fetch(`/api/data/files/traffic?t=${timestamp}`, fetchOptions),
-                    fetch(`/api/data/files/sale?t=${timestamp}`, fetchOptions)
+                    fetch(withMonthParam(`/api/data/files/blog_rank?t=${timestamp}`, selectedMonth), fetchOptions),
+                    fetch(withMonthParam(`/api/data/files/cafe_rank?t=${timestamp}`, selectedMonth), fetchOptions),
+                    fetch(withMonthParam(`/api/data/files/news_rank?t=${timestamp}`, selectedMonth), fetchOptions),
+                    fetch(withMonthParam(`/api/data/files/traffic?t=${timestamp}`, selectedMonth), fetchOptions),
+                    fetch(withMonthParam(`/api/data/files/sale?t=${timestamp}`, selectedMonth), fetchOptions)
                 ])
                 
                 const [blogData, cafeData, newsData, trafficData, saleData] = await Promise.all([
@@ -62,7 +77,8 @@ const AsteraysKPIStatistics = () => {
                 console.log('Calculated KPI:', calculatedKPI)
                 console.log('Traffic KPI Card:', calculatedKPI.find(item => item.title === "검색량"))
                 setKpiData(calculatedKPI)
-                setLastUpdated(new Date().toLocaleTimeString())
+                const labelForUpdate = formatMonthLabel(selectedMonth)
+                setLastUpdated(`${labelForUpdate} • ${new Date().toLocaleTimeString()}`)
                 
             } catch (error) {
                 console.error('KPI 데이터 로드 실패:', error)
@@ -73,8 +89,8 @@ const AsteraysKPIStatistics = () => {
     
     // 컴포넌트 마운트 시 및 새로고침 시 데이터 로드
     useEffect(() => {
-        loadKPIData()
-    }, [])
+        loadKPIData(month)
+    }, [month])
 
     const calculateKPIFromCSV = (blogData, cafeData, newsData, trafficData, saleData) => {
         // Use centralized calculation functions

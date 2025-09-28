@@ -50,6 +50,15 @@
 - **`dataset_youtube-scraper_*.json`**  
   - 유튜브 원본 JSON. `scripts/processYoutubeData.cjs`/`processYouTubeData.py`/`processYouTubeDataNode.js`가 이 파일을 읽어 2차 지표를 생성합니다.
 
+## 월별 처리 워크플로우
+1. 새 CSV와 YouTube JSON을 `data/raw/<YYYY-MM>/`에 업로드합니다. 기존 월을 재처리할 때는 `--set-latest=false`로 최신 월 갱신을 건너뛰세요.
+2. `npm run process-data -- --month=<YYYY-MM>`을 실행해 `data/processed/<YYYY-MM>/` 산출물을 생성합니다.
+3. `npm run youtube:process -- --month=<YYYY-MM>`으로 `youtube_products.csv`와 YouTube 세부 지표를 갱신합니다.
+4. `node scripts/processYoutubeSalesMatching.js --month=<YYYY-MM>` → `node scripts/analyzeYoutubeSalesCorrelation.js --month=<YYYY-MM>` 순서로 판매·상관분석 JSON을 업데이트합니다.
+5. `npm run youtube:channels -- --month=<YYYY-MM>`을 실행하면 `data/processed/youtube/<YYYY-MM>/asterasys_channels_data.json`이 생성되어 `/api/data/youtube-channels?month=`에서 바로 노출됩니다.
+
+> `scripts/processYouTubeDataNode.js`는 실험용 분석 스크립트입니다. 월별 폴더를 자동으로 인식하지 않으므로 필요 시 JSON 경로를 직접 수정한 뒤 일회성으로 사용하세요.
+
 ## generated/ (파이프라인 산출물)
 - **`generated/youtube_products.csv`**  
   - 생성 스크립트: `scripts/processYoutubeData.cjs`

@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import DuplicateLayout from '../duplicateLayout';
 import PageHeader from '@/components/shared/pageHeader/PageHeader';
-import PageHeaderDate from '@/components/shared/pageHeader/PageHeaderDate';
 import AsteraysKPIStatistics from '@/components/dashboard/AsteraysKPIStatistics';
 import MarketShareChart from '@/components/dashboard/MarketShareChart';
 import CompetitiveAnalysisChart from '@/components/dashboard/CompetitiveAnalysisChart';
@@ -90,17 +89,15 @@ export default function AsteraysMarketingDashboard() {
 
   return (
     <DuplicateLayout>
-      <PageHeader>
-        <div className="d-flex justify-content-between align-items-center w-100">
+      <PageHeader />
+
+      <div className="main-content">
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-end align-items-start gap-2 mb-4">
           <div>
             <h2 className="fs-18 fw-bold text-dark mb-1">Asterasys Marketing Intelligence</h2>
             <p className="fs-12 text-muted mb-0">RF/HIFU 시장 분석 및 경쟁사 대비 성과 모니터링</p>
           </div>
-          <PageHeaderDate />
         </div>
-      </PageHeader>
-
-      <div className="main-content">
         <div className="row">
           {/* KPI Statistics Cards */}
           <AsteraysKPIStatistics data={dashboardData} />

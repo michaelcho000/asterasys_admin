@@ -3,6 +3,10 @@
 /**
  * YouTube 데이터 처리 스크립트 - Node.js 버전
  * Asterasys 대시보드용 YouTube 분석 데이터 생성
+ *
+ * ⚠️ 운영 파이프라인에는 포함되지 않는 실험용 도구입니다.
+ *     월별 폴더를 자동으로 탐색하지 않으므로, 사용 시
+ *     this.jsonFilePath 값을 직접 수정한 뒤 일회성 분석에만 활용하세요.
  */
 
 const fs = require('fs');

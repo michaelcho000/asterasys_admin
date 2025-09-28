@@ -1,6 +1,5 @@
 import React from 'react'
 import PageHeader from '@/components/shared/pageHeader/PageHeader'
-import PageHeaderDate from '@/components/shared/pageHeader/PageHeaderDate'
 import EmailOverview from '@/components/EmailOverview'
 import Browser from '@/components/widgetsList/Browser'
 import Remainders from '@/components/widgetsTables/Remainders'
@@ -15,9 +14,7 @@ import Footer from '@/components/shared/Footer'
 const page = () => {
     return (
         <>
-            <PageHeader >
-                <PageHeaderDate />
-            </PageHeader>
+            <PageHeader />
             <div className='main-content'>
                 <div className='row'>
                     <EmailOverview />

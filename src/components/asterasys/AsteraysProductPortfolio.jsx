@@ -1,9 +1,23 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { FiTrendingUp, FiMessageSquare, FiShoppingBag, FiSearch, FiTarget, FiDollarSign, FiMousePointer, FiUsers } from 'react-icons/fi'
 import getIcon from '@/utils/getIcon'
 import { ASTERASYS_PRODUCTS } from '../../../config/calculations.config.js'
 import { formatNumber } from '@/utils/formatNumber'
+import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
+import { withMonthParam } from '@/utils/withMonthParam'
+
+const formatMonthLabel = (month) => {
+    if (!month) return '데이터 준비 중'
+    const [year, monthPart] = month.split('-')
+    return `${year}년 ${parseInt(monthPart, 10)}월`
+}
+
+const getMonthNumber = (month) => {
+    if (!month) return null
+    const [, monthPart] = month.split('-')
+    return parseInt(monthPart, 10)
+}
 
 /**
  * Asterasys 3종 제품 포트폴리오 컴포넌트
@@ -13,12 +27,26 @@ import { formatNumber } from '@/utils/formatNumber'
 const AsteraysProductPortfolio = () => {
     const [productData, setProductData] = useState([])
     const [loading, setLoading] = useState(true)
+    const month = useSelectedMonthStore((state) => state.selectedMonth)
+
+    const monthNumber = useMemo(() => getMonthNumber(month), [month])
+    const monthLabel = useMemo(() => formatMonthLabel(month), [month])
+    const monthlySalesColumn = useMemo(() => {
+        if (!monthNumber) return '8월 판매량'
+        return `${monthNumber}월 판매량`
+    }, [monthNumber])
+    const monthlyDisplayLabel = useMemo(() => {
+        if (!monthNumber) return '8월'
+        return `${monthNumber}월`
+    }, [monthNumber])
 
     useEffect(() => {
+        if (!month) return
+
         const loadAllData = async () => {
             try {
                 setLoading(true)
-                
+
                 // Load all required data files - add timestamp to prevent caching
                 const timestamp = Date.now()
                 const fetchOptions = {
@@ -28,28 +56,30 @@ const AsteraysProductPortfolio = () => {
                         'Pragma': 'no-cache'
                     }
                 }
-                
+
+                const buildUrl = (basePath) => withMonthParam(`${basePath}?t=${timestamp}`, month)
+
                 const [blogResponse, cafeResponse, trafficResponse, salesResponse] = await Promise.all([
-                    fetch(`/api/data/files/blog_rank?t=${timestamp}`, fetchOptions),
-                    fetch(`/api/data/files/cafe_rank?t=${timestamp}`, fetchOptions),
-                    fetch(`/api/data/files/traffic?t=${timestamp}`, fetchOptions),
-                    fetch(`/api/data/files/sale?t=${timestamp}`, fetchOptions)
+                    fetch(buildUrl('/api/data/files/blog_rank'), fetchOptions),
+                    fetch(buildUrl('/api/data/files/cafe_rank'), fetchOptions),
+                    fetch(buildUrl('/api/data/files/traffic'), fetchOptions),
+                    fetch(buildUrl('/api/data/files/sale'), fetchOptions)
                 ])
-                
+
                 const [blogData, cafeData, trafficData, salesData] = await Promise.all([
                     blogResponse.json(),
                     cafeResponse.json(),
                     trafficResponse.json(),
                     salesResponse.json()
                 ])
-                
+
                 // Process portfolio data for Asterasys products
                 const portfolioData = ASTERASYS_PRODUCTS.map(productName => {
                     const blogItem = blogData.marketData?.find(item => item['키워드'] === productName) || {}
                     const cafeItem = cafeData.marketData?.find(item => item['키워드'] === productName) || {}
                     const trafficItem = trafficData.marketData?.find(item => item['키워드'] === productName) || {}
                     const salesItem = salesData.marketData?.find(item => item['키워드'] === productName) || {}
-                    
+
                     // Determine category
                     const category = productName === '쿨페이즈' ? 'RF' : 'HIFU'
                     const categoryKr = category === 'RF' ? '고주파' : '초음파'
@@ -65,6 +95,10 @@ const AsteraysProductPortfolio = () => {
                         return parseInt(String(value).replace(/,/g, '')) || 0
                     }
                     
+                    const currentMonthSales = parseNumber(
+                        salesItem[monthlySalesColumn] ?? salesItem['8월 판매량'] ?? 0
+                    )
+
                     return {
                         id: productName,
                         name: productName,
@@ -86,13 +120,14 @@ const AsteraysProductPortfolio = () => {
                             },
                             sales: {
                                 totalCount: parseNumber(salesItem['총 판매량']),  // 총 판매량
-                                augustCount: parseNumber(salesItem['8월 판매량']),  // 8월 판매량
+                                monthlyCount: currentMonthSales,
+                                monthlyLabel: monthlyDisplayLabel,
                                 count: parseNumber(salesItem['총 판매량'])  // 기본 표시용 (총 판매량)
                             }
                         }
                     }
                 })
-                
+
                 setProductData(portfolioData)
             } catch (error) {
                 console.error('포트폴리오 데이터 로드 실패:', error)
@@ -102,7 +137,7 @@ const AsteraysProductPortfolio = () => {
         }
 
         loadAllData()
-    }, [])
+    }, [month, monthlySalesColumn, monthlyDisplayLabel])
 
 
     return (
@@ -112,7 +147,7 @@ const AsteraysProductPortfolio = () => {
                     <h5 className="card-title d-flex align-items-center">
                         <i className="feather-package me-2 text-primary"></i>
                         Asterasys 제품 포트폴리오 분석
-                        <span className="badge bg-primary ms-2">2025년 8월</span>
+                        <span className="badge bg-primary ms-2">{monthLabel}</span>
                     </h5>
                 </div>
                 <div className="card-body">
@@ -216,15 +251,15 @@ const AsteraysProductPortfolio = () => {
                                                                 <div className="fs-4 fw-bold text-secondary">
                                                                     {formatNumber(product.performance.sales.totalCount)}
                                                                 </div>
-                                                                <small className="text-primary fw-medium">
-                                                                    8월: {formatNumber(product.performance.sales.augustCount)}대
+                                                            <small className="text-primary fw-medium">
+                                                                    {product.performance.sales.monthlyLabel}: {formatNumber(product.performance.sales.monthlyCount)}대
                                                                 </small>
                                                             </div>
                                                             <small className="text-muted fw-medium">총 판매량</small>
                                                         </div>
                                                         <div className="badge bg-secondary text-white fs-11">
-                                                            {product.performance.sales.augustCount > 10 ? '활발' : 
-                                                             product.performance.sales.augustCount > 0 ? '양호' : '관찰'}
+                                                            {product.performance.sales.monthlyCount > 10 ? '활발' : 
+                                                             product.performance.sales.monthlyCount > 0 ? '양호' : '관찰'}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -252,5 +287,3 @@ const AsteraysProductPortfolio = () => {
 }
 
 export default AsteraysProductPortfolio
-
-
