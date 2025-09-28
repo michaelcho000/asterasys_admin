@@ -2,350 +2,128 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Overview
-
-This is the Asterasys Marketing Intelligence Dashboard - a specialized medical device marketing analytics platform built on the Duralux premium template. The project integrates real CSV data for RF (고주파) and HIFU (초음파) medical device market analysis.
-
-**Tech Stack**: Next.js 14.2.32, React 18, Bootstrap 5.3.3, ApexCharts, SCSS
-
-## Environment Setup
-
-### Prerequisites
-- Node.js 18+ and npm
-- PostgreSQL database
-- Copy `.env.example` to `.env` and configure:
-  - `DATABASE_URL` for PostgreSQL connection
-  - `NEXTAUTH_SECRET` for authentication
-  - Optional: OAuth providers, email service, analytics
-
-### Initial Setup
-```bash
-# 1. Install dependencies
-npm install
-
-# 2. Setup environment variables
-cp .env.example .env        # Copy and configure DATABASE_URL, NEXTAUTH_SECRET, JWT_SECRET
-
-# 3. Database setup (requires PostgreSQL running)
-npm run db:generate         # Generate Prisma client
-npm run db:push             # Push schema to database
-
-# 4. Process CSV data (21 medical device marketing files)
-npm run process-data        # Convert CSV to JSON for dashboard
-
-# 5. Start development server
-npm run dev                 # Available at http://localhost:3000
-```
-
-## Key Commands
+## Commands
 
 ### Development
 ```bash
-npm run dev                    # Start development server
-npm run build                  # Build for production  
+npm run dev                    # Start development server at localhost:3000
+npm run build                  # Build for production
 npm run start                  # Start production server
 npm run lint                   # Run ESLint
 npm run lint:fix              # Fix ESLint issues
-npm run type-check            # TypeScript type checking
+npm run type-check            # TypeScript type checking (non-strict mode)
 ```
 
 ### Data Processing
 ```bash
-npm run process-data          # Process CSV files to JSON (21 medical device CSV files)
-npm run ingest               # Alias for process-data
-# Output: data/processed/*.json files (dashboard.json, kpis.json, channels.json, raw.json)
+npm run process-data          # Process 21 CSV files to JSON (data/raw/ → data/processed/)
+npm run youtube:process       # Process YouTube data
+node scripts/processYouTubeDataNode.js       # YouTube JSON to CSV conversion
+node scripts/analyzeYoutubeSalesCorrelation.js # YouTube-sales correlation analysis
 ```
 
-### Database (Prisma)
+### Database (Prisma with PostgreSQL)
 ```bash
-npm run db:generate          # Generate Prisma client (run after schema changes)
-npm run db:push             # Push schema to database (development mode)
-npm run db:migrate          # Create and run migrations (development)
-npm run db:migrate:prod     # Deploy migrations to production
-npm run db:seed             # Seed database with initial data
-npm run db:reset            # Reset database (WARNING: destroys all data)
-npm run db:studio           # Open Prisma Studio (GUI at localhost:5555)
-
-# Development workflow:
-# 1. Edit schema.prisma
-# 2. npm run db:generate (update client)
-# 3. npm run db:push (apply to dev DB) OR npm run db:migrate (create migration)
+npm run db:generate          # Generate Prisma client after schema changes
+npm run db:push             # Push schema to database (dev)
+npm run db:migrate          # Create and run migrations
+npm run db:studio           # Open Prisma Studio GUI (localhost:5555)
 ```
+
+### Testing
+```bash
+npm run test                # Run Jest tests (70% coverage requirement)
+npm run test:watch         # Run tests in watch mode
+npx jest [file]            # Run specific test file
+```
+
+## Architecture
+
+### Tech Stack
+- **Next.js 14.2.32** with App Router
+- **React 18** with TypeScript (non-strict mode)
+- **Bootstrap 5.3.3** + SCSS for styling
+- **ApexCharts** for data visualization
+- **PostgreSQL** + Prisma ORM
+- **NextAuth.js** for authentication
+- **Stripe** for payments
+- **Sentry** for error tracking
+
+### Project Structure
+```
+src/
+├── app/                      # Next.js App Router
+│   ├── api/data/            # 21 specialized data endpoints
+│   └── (general)/           # Authenticated route group
+│       ├── channel/         # Marketing channel dashboards (youtube/blog/cafe/news)
+│       ├── market-analysis/ # Market analysis sections
+│       └── product/         # Product analysis
+├── components/
+│   ├── asterasys/           # 39 custom business components
+│   ├── widgetsCharts/       # Chart components (ApexCharts)
+│   └── widgetsStatistics/   # KPI and statistics widgets
+├── hooks/useAsterasysData.js # Custom data fetching hook
+└── lib/data-processing/processor.js # DataProcessor class for CSV→JSON
+```
+
+### Data Pipeline
+1. **Source**: 21 CSV files in `data/raw/asterasys_total_data - *.csv`
+2. **Processing**: `DataProcessor` class converts CSV to structured JSON
+3. **Output**: 4 JSON files (dashboard.json, kpis.json, channels.json, raw.json)
+4. **API Access**: Dynamic filename-based endpoints at `/api/data/files/[filename]`
+5. **Frontend**: `useAsterasysData` hook for React components
+
+### Key Business Context
+
+**Medical Device Market (Korea)**:
+- **RF (고주파)**: 9 products, Asterasys 쿨페이즈 ranked #3
+- **HIFU (초음파)**: 9 products, Asterasys 리프테라 #3, 쿨소닉 #4
+
+**Asterasys Performance (August 2025)**:
+- Market Share: 12.7% of publications, 8.7% of sales
+- 3 products: 쿨페이즈 (159 sales), 리프테라 (492 sales), 쿨소닉 (23 sales)
+- Engagement advantage: 4.08 vs 3.62 industry average
+
+**Marketing Channels**:
+- Cafe: 45.3% | YouTube: 26.4% | News: 20.1% | Blog: 7.9%
+
+### Critical Implementation Rules
+
+1. **Data Integrity**: Use only real CSV data from 21 source files
+2. **Ranking Logic**: Based on 발행량 + 댓글수 (NOT sales data)
+3. **Brand Highlighting**: Asterasys products must be highlighted in visualizations
+4. **Color Scheme**: Blue brand colors (#3b82f6, #1e40af)
+5. **Template Base**: Maximize Duralux premium template components
+
+### Key Files
+- `src/app/page.js` - Main dashboard with data mapping
+- `src/app/(general)/channel/youtube/page.js` - YouTube dashboard
+- `scripts/processData.js` - CSV processing pipeline
+- `src/utils/fackData/asterasysKPIData.js` - Core business data
+- `prisma/schema.prisma` - Database schema
+
+### Development Patterns
+- **Imports**: Use path aliases (@/*, @components/*, @utils/*, @hooks/*)
+- **Charts**: Always use ApexCharts for consistency
+- **Data Fetching**: useAsterasysData hook for CSV data
+- **Components**: CardHeader + CardLoader pattern for widgets
+- **TypeScript**: Non-strict mode (`strict: false`, `noImplicitAny: false`)
 
 ### Testing & Quality
-```bash
-npm run test                # Run all Jest tests
-npm run test:watch         # Run tests in watch mode
-npm run test:coverage      # Generate coverage report
-npx jest [test-name]       # Run single test file
-npx jest --testNamePattern="pattern"  # Run specific test by name
-npm run format             # Format code with Prettier
-npm run format:check       # Check code formatting
-npm run type-check         # TypeScript type checking (no strict mode)
-npm run analyze            # Analyze bundle size
-npm run clean              # Clean build artifacts and node_modules
-npm run clean:install      # Full clean and reinstall
-```
-
-### YouTube Data Processing
-```bash
-npm run youtube:process                       # Process YouTube data (alias)
-node scripts/processYouTubeDataNode.js       # Process YouTube JSON to CSV
-node scripts/extractAsterasysChannels.js     # Extract Asterasys channel data
-node scripts/advancedYouTubeAnalysis.js      # Advanced YouTube analytics
-node scripts/generateDetailedReport.js       # Generate quantitative reports
-node scripts/analyzeYoutubeSalesCorrelation.js # Analyze YouTube-sales correlation
-node scripts/processYoutubeSalesMatching.js    # Process sales matching data
-```
-
-### Additional Development Commands
-```bash
-npm run email:dev          # Start email template development server
-npm run stripe:listen      # Listen for Stripe webhooks (requires Stripe CLI)
-```
-
-## Architecture Overview
-
-### Core Data System
-- **CSV Source**: 21+ medical device marketing CSV files in `data/raw/`
-- **YouTube Data**: `dataset_youtube-scraper_2025-08-28_09-52-54-390.json` (1,159 videos)
-- **Processing Pipeline**: `scripts/processData.js` converts CSV to JSON
-- **YouTube Processing**: Node.js scripts process YouTube data into analytics
-- **Dynamic API**: `src/app/api/data/files/[filename]/route.js` for runtime data access
-- **YouTube APIs**: 4 specialized YouTube analysis endpoints
-- **Data Hooks**: `src/hooks/useAsterasysData.js` for React data fetching
-
-### Component Architecture
-
-**Duralux Template Foundation**:
-- `src/components/widgetsStatistics/` - KPI and statistics widgets
-- `src/components/widgetsCharts/` - Chart components (ApexCharts)
-- `src/components/widgetsList/` - List and progress widgets
-- `src/components/widgetsTables/` - Data table components
-- `src/components/shared/` - Shared UI components
-
-**Custom Asterasys Components**:
-- `src/components/asterasys/` - Asterasys-specific business logic components
-- `AsteraysKPIStatistics.jsx` - Main KPI cards with dropdown interactions
-- `PaymentRecordChart.jsx` - RF/HIFU market analysis (bar + line chart)
-- `LeadsOverviewChart.jsx` - Channel marketing performance (donut chart)
-- `AsteraysProductPortfolio.jsx` - Product portfolio analysis cards
-
-**YouTube Analysis Components**:
-- `YouTubeInsightsCards.jsx` - KPI cards + 3 product performance cards
-- `YouTubeComprehensiveTable.jsx` - 18-product ranking table with sorting
-- `YouTubeSponsorAdCard.jsx` - Paid advertising campaign analysis
-- `YouTubeAnalysisTable.jsx` - Legacy analysis table component
-
-### Data Structure
-
-**21개 CSV 데이터 시트 (전체 목록)**:
-```
-asterasys_total_data - autocomplete.csv
-asterasys_total_data - bad writing.csv
-asterasys_total_data - bloger_Post.csv
-asterasys_total_data - blog_post.csv
-asterasys_total_data - blog_rank.csv
-asterasys_total_data - blog_user_rank.csv
-asterasys_total_data - cafe_comments.csv
-asterasys_total_data - cafe_post.csv
-asterasys_total_data - cafe_rank.csv
-asterasys_total_data - cafe_seo.csv
-asterasys_total_data - facebook_targeting.csv
-asterasys_total_data - kakao_opentalk.csv
-asterasys_total_data - news_rank.csv
-asterasys_total_data - news_release.csv
-asterasys_total_data - ott.csv
-asterasys_total_data - sale.csv
-asterasys_total_data - traffic.csv
-asterasys_total_data - youtube_comments.csv
-asterasys_total_data - youtube_contents.csv
-asterasys_total_data - youtube_rank.csv
-asterasys_total_data - youtube_sponsor ad.csv
-```
-
-**RF (고주파) 9개 제품 전체**:
-1. 써마지 (시장 1위)
-2. 인모드 (시장 2위)
-3. **쿨페이즈** ⭐ (Asterasys, 시장 3위)
-4. 덴서티 (시장 4위)
-5. 올리지오 (시장 5위)
-6. 튠페이스 (시장 6위)
-7. 세르프 (시장 7위)
-8. 텐써마 (시장 8위)
-9. 볼뉴머 (시장 9위)
-
-**HIFU (초음파) 9개 제품 전체**:
-1. 울쎄라 (시장 1위)
-2. 슈링크 (시장 2위)
-3. **쿨소닉** ⭐ (Asterasys, 시장 3위)
-4. **리프테라** ⭐ (Asterasys, 시장 4위)
-5. 리니어지 (시장 5위)
-6. 브이로 (시장 6위)
-7. 텐쎄라 (시장 7위)
-8. 튠라이너 (시장 8위)
-9. 리니어펌 (시장 9위)
-
-**Asterasys 3개 제품 포트폴리오**:
-- **쿨페이즈** (RF): 159대 판매, 발행량 38건, 댓글 1,670개, 검색량 220회
-- **리프테라** (HIFU): 492대 판매, 발행량 63건, 댓글 1,530개, 검색량 202회  
-- **쿨소닉** (HIFU): 23대 판매, 발행량 13건, 댓글 1,813개, 검색량 230회
-
-**마케팅 채널별 성과 데이터**:
-- 카페: 652건 (45.3%)
-- 유튜브: 380건 (26.4%)
-- 뉴스: 290건 (20.1%)
-- 블로그: 114건 (7.9%)
-
-**Market Metrics**: 발행량, 댓글수, 검색량 (순위 산정용) + 판매량 (참고용)
-
-### Layout System
-```
-DuplicateLayout (main wrapper)
-├── Header (navigation + search)
-├── NavigationMenu (sidebar)
-└── main.nxl-container
-    └── div.nxl-content
-        └── PageHeader + main-content
-```
-
-### Next.js App Router Structure
-```
-src/app/
-├── page.js                    # Main dashboard (/)
-├── duplicateLayout.js         # Root layout wrapper
-├── (general)/                 # Route group for authenticated pages
-│   ├── layout.js             # General layout with sidebar
-│   ├── channel/              # Channel performance analysis
-│   │   ├── youtube/          # YouTube analysis dashboard
-│   │   ├── blog/            # Blog analysis
-│   │   ├── cafe/            # Cafe analysis
-│   │   └── news/            # News analysis
-│   ├── market-analysis/     # Market analysis sections
-│   ├── product/             # Product analysis
-│   └── reports/             # Reporting section
-└── api/                     # API routes
-    ├── data/files/[filename]/ # Dynamic CSV data API
-    ├── data/channels/         # Marketing channels data
-    ├── data/kpis/             # KPI data endpoints
-    ├── data/top-products/     # Top products data
-    ├── data/youtube-analysis/ # YouTube market analysis
-    ├── data/youtube-channels/ # YouTube channel data
-    ├── data/youtube-products/ # YouTube product data
-    ├── data/youtube-sales-correlation/ # YouTube-sales correlation
-    └── data/youtube-sponsor/  # YouTube advertising data
-```
-
-### Key Architectural Patterns
-- **File-based Routing**: Next.js 14 App Router with route groups
-- **Component Data Mapping**: Each dashboard component has explicit CSV data sources documented in comments
-- **Mixed Data Strategy**: Combination of static data, API endpoints, and direct CSV processing
-- **Bootstrap + Custom**: Duralux premium template with Asterasys customizations
-- **Path Aliases**: TypeScript imports use `@/*` (src), `@components/*`, `@utils/*`, `@hooks/*`, `@assets/*`, `@contentApi/*`, `@types/*`
-- **Loose TypeScript**: `strict: false`, `noImplicitAny: false` for rapid development
-
-### Data Integration Pattern
-1. CSV files contain real medical device marketing data
-2. YouTube JSON data (1,159 videos) processed into multiple analytics formats
-3. Dynamic filename-based API endpoints for data access  
-4. React hooks abstract data fetching logic
-5. Components use actual data instead of mock data
-6. Rankings calculated from 발행량 + 댓글수 합산 (판매량은 참고용만)
-7. YouTube analysis uses real scraping data with channel URLs and video titles
-
-## Critical Business Rules
-
-### Data Integrity
-- **No Synthetic Data**: Only use real CSV data from the 21 source files
-- **Ranking Logic**: Based on 발행량 + 댓글수 합산, NOT sales data
-- **Asterasys Products**: Must be highlighted in all visualizations
-- **Market Share**: Calculate Asterasys share vs total market for each category
-
-### UI/UX Standards
-- **Duralux Template**: Maximize use of purchased template components
-- **Blue Brand Colors**: Primary brand color for Asterasys elements
-- **Interactive Elements**: Dropdowns, toggles, hover states for data exploration
-- **Responsive Design**: Bootstrap 5.3.3 grid system
-
-### Component Patterns
-- All chart components use ApexCharts for consistency
-- Custom data hooks (`useAsterasysData`) for data fetching
-- CardHeader + CardLoader pattern for all widgets
-- Blue color scheme (#3b82f6, #1e40af) for brand consistency
-
-## Development Notes
-
-### Key Files to Understand
-- `src/app/page.js` - Main dashboard layout with data source mapping comments
-- `src/app/(general)/channel/youtube/page.js` - YouTube analysis dashboard
-- `src/app/duplicateLayout.js` - Root layout wrapper with Bootstrap utilities
-- `src/utils/fackData/asterasysKPIData.js` - Core business data (requires manual updates)
-- `src/utils/chartsLogic/` - Chart configurations  
-- `scripts/processData.js` - CSV to JSON processing pipeline (uses DataProcessor class)
-- `scripts/processYouTubeDataNode.js` - YouTube data processing
-- `src/hooks/useAsterasysData.js` - Custom data fetching hook
-- `prisma/schema.prisma` - Database schema (NextAuth + SaaS models)
-- `data/raw/asterasys_total_data - *.csv` - Source data files (21 files)
-- `data/processed/` - Generated JSON files
-
-### Important Development Context
-- **Total Files**: 492 JavaScript/JSX files in the codebase
-- **Template Base**: Built on Duralux premium admin template
-- **Authentication**: NextAuth.js with Prisma adapter
-- **Email System**: React Email components for transactional emails
-- **Payment Integration**: Stripe with webhook support
-- **Error Tracking**: Sentry for production error monitoring
-- **Analytics**: Vercel Analytics integration
-- **File Uploads**: UploadThing for file management
-
-### Custom Hooks
-- `useCardTitleActions()` - Card interaction state management
-- `useAsterasysData(filename)` - CSV data fetching
-- `useBootstrapUtils()` - Bootstrap integration
-
-### Medical Device Context
-This dashboard analyzes the Korean medical device market with focus on:
-- **RF (고주파)**: Radio frequency treatments (쿨페이즈)
-- **HIFU (초음파)**: High-intensity focused ultrasound (리프테라, 쿨소닉)
-- Marketing channels: Blog, Cafe, YouTube, News, Search
-- Hospital partnerships and content marketing performance
+- Jest with 70% coverage requirement
+- Husky pre-commit hooks with lint-staged
+- ESLint + Prettier for code formatting
+- Bundle analysis with `npm run analyze`
 
 ### YouTube Analysis System
-- **Market Analysis**: 18 medical device brands analyzed from 1,159 real YouTube videos
-- **Asterasys Performance**: 3 products with 11 total videos (0.95% market share)
-- **Channel Intelligence**: Top performing channels per product with real URLs
-- **Content Strategy**: Shorts vs Long-form video analysis
-- **Paid Advertising**: Campaign performance tracking with CPV and ROI metrics
-- **Data Processing**: Automated scripts convert raw YouTube data into actionable insights
+- 1,159 videos analyzed across 18 medical device brands
+- Asterasys: 11 videos (0.95% market share)
+- Automated processing pipeline with correlation analysis
+- 4 specialized YouTube API endpoints
 
-## Available Sub-Agents
-
-This project includes specialized Claude Code agents in `.claude/agents/` for enhanced development workflows:
-
-### Programming Specialists
-- `@frontend-developer` - React components, responsive design, accessibility
-- `@javascript-pro` - Modern JS/TS, async patterns, Node.js APIs
-- `@backend-architect` - Server architecture, API design, database optimization
-
-### Analysis & Quality
-- `@data-analyst` - Quantitative analysis, statistical insights, visualization recommendations
-- `@code-reviewer` - Code quality, best practices, security analysis
-- `@debugger` - Error diagnosis, performance debugging, troubleshooting
-- `@error-detective` - Deep error analysis, root cause investigation
-
-### Design & Research
-- `@ui-ux-designer` - Interface design, user experience, design systems
-- `@technical-researcher` - Technology research, documentation analysis
-
-### Usage
-```bash
-# Explicit agent invocation
-@frontend-developer "Create responsive dashboard component"
-@data-analyst "Analyze medical device market trends"
-
-# Agents auto-activate based on context and keywords
-# - JavaScript/React issues → @frontend-developer, @javascript-pro
-# - Data analysis tasks → @data-analyst  
-# - Code quality issues → @code-reviewer
-# - Error debugging → @debugger, @error-detective
-```
+### Claude Code Agents
+Available specialized agents in `.claude/agents/`:
+- `@frontend-developer` - React, responsive design
+- `@data-analyst` - Quantitative analysis, visualization
+- `@code-reviewer` - Code quality, security
+- `@debugger` - Error diagnosis, performance
