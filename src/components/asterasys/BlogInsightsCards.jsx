@@ -51,60 +51,115 @@ const BlogInsightsCards = () => {
   const summary = overview?.summary
   const technologyBreakdown = overview?.technologyBreakdown || []
   const asterasysProducts = overview?.asterasys || []
+  const totalMarketPosts = summary?.totalPosts || 0
+
+  const technologyShares = useMemo(() => {
+    if (!technologyBreakdown.length) return {}
+
+    const totalsByTech = technologyBreakdown.reduce((acc, item) => {
+      if (!item?.technology) return acc
+      acc[item.technology] = {
+        total: item.posts || 0,
+        label: item.label || item.technology
+      }
+      return acc
+    }, {})
+
+    const asterasysTotals = asterasysProducts.reduce((acc, product) => {
+      if (!product?.technology) return acc
+      acc[product.technology] = (acc[product.technology] || 0) + (product.totalPosts || 0)
+      return acc
+    }, {})
+
+    return Object.keys(totalsByTech).reduce((acc, technology) => {
+      const total = totalsByTech[technology].total
+      const asterasysTotal = asterasysTotals[technology] || 0
+      const share = total ? (asterasysTotal / total) * 100 : null
+
+      acc[technology] = {
+        share,
+        total,
+        asterasys: asterasysTotal,
+        label: totalsByTech[technology].label
+      }
+
+      return acc
+    }, {})
+  }, [technologyBreakdown, asterasysProducts])
+
+  const clampPercent = (value) => {
+    if (typeof value !== 'number' || Number.isNaN(value)) return 0
+    return Math.min(Math.max(value, 0), 100)
+  }
+
+  const formatPercent = (value) => {
+    if (typeof value !== 'number' || Number.isNaN(value)) return '--'
+    return value.toFixed(1)
+  }
 
   const kpiCards = useMemo(() => {
     if (!summary) return []
 
     const totalPosts = summary.totalPosts || 0
     const asterasysPosts = summary.asterasysPosts || 0
-    const participationPercent = (summary.averageParticipation || 0) * 100
-    const postsPerThousand = summary.postsPerThousandSearch || 0
+    const marketShare = typeof summary.asterasysShare === 'number' ? summary.asterasysShare : 0
+
+    const rfStats = technologyShares.RF
+    const hifuStats = technologyShares.HIFU
+
+    const totalEngagement = summary.totalEngagement || 0
+    const asterasysEngagement = summary.asterasysEngagement || 0
+    const engagementShare = totalEngagement ? (asterasysEngagement / totalEngagement) * 100 : null
 
     return [
       {
-        id: 1,
-        title: '블로그 발행량',
-        value: totalPosts ? totalPosts.toLocaleString() : '--',
-        context: `검색량 ${summary.searchVolume?.toLocaleString() || 0}건 대비`,
-        progress: Math.min((asterasysPosts / Math.max(totalPosts, 1)) * 100, 100),
-        progressLabel: `Asterasys ${asterasysPosts.toLocaleString()}건`,
-        icon: 'feather-activity',
+        id: 'market-share',
+        title: '시장 발행 점유율',
+        value: `${formatPercent(marketShare)}%`,
+        context: `Asterasys ${asterasysPosts.toLocaleString()}건 / 전체 ${totalPosts.toLocaleString()}건`,
+        progress: clampPercent(marketShare),
+        progressLabel: '전체 시장 대비',
+        icon: 'feather-target',
         color: 'primary'
       },
       {
-        id: 2,
-        title: 'Asterasys 점유율',
-        value: `${(summary.asterasysShare || 0).toFixed(1)}%`,
-        context: `${asterasysPosts.toLocaleString()}건 / 전체`,
-        progress: Math.min(summary.asterasysShare || 0, 100),
-        progressLabel: '시장 점유율',
-        icon: 'feather-target',
+        id: 'rf-share',
+        title: 'RF 기술군 점유율',
+        value: rfStats?.share != null ? `${formatPercent(rfStats.share)}%` : '--',
+        context: rfStats
+          ? `Asterasys ${rfStats.asterasys.toLocaleString()}건 / RF ${rfStats.total.toLocaleString()}건`
+          : 'RF 데이터 없음',
+        progress: clampPercent(rfStats?.share ?? 0),
+        progressLabel: 'RF 시장 대비',
+        icon: 'feather-radio',
         color: 'success'
       },
       {
-        id: 3,
-        title: '평균 참여도',
-        value: `${participationPercent.toFixed(1)}%`,
-        context: `댓글 ${summary.totalComments?.toLocaleString() || 0} · 대댓글 ${summary.totalReplies?.toLocaleString() || 0}`,
-        progress: Math.min(participationPercent, 100),
-        progressLabel: '댓글 + 대댓글 / 발행량',
-        icon: 'feather-message-circle',
-        color: 'warning'
+        id: 'hifu-share',
+        title: 'HIFU 기술군 점유율',
+        value: hifuStats?.share != null ? `${formatPercent(hifuStats.share)}%` : '--',
+        context: hifuStats
+          ? `Asterasys ${hifuStats.asterasys.toLocaleString()}건 / HIFU ${hifuStats.total.toLocaleString()}건`
+          : 'HIFU 데이터 없음',
+        progress: clampPercent(hifuStats?.share ?? 0),
+        progressLabel: 'HIFU 시장 대비',
+        icon: 'feather-crosshair',
+        color: 'info'
       },
       {
-        id: 4,
-        title: '콘텐츠 생성 지수',
-        value: postsPerThousand ? postsPerThousand.toFixed(1) : '--',
-        context: '검색 1천건당 블로그 수',
-        progress: Math.min(postsPerThousand * 4, 100),
-        progressLabel: '검색 대비 생성 속도',
-        icon: 'feather-trending-up',
-        color: 'info'
+        id: 'engagement-share',
+        title: '시장 참여도 기여율',
+        value: engagementShare != null ? `${formatPercent(engagementShare)}%` : '--',
+        context: totalEngagement
+          ? `Asterasys ${asterasysEngagement.toLocaleString()}건 / 전체 ${totalEngagement.toLocaleString()}건`
+          : '참여 데이터 없음',
+        progress: clampPercent(engagementShare ?? 0),
+        progressLabel: '참여도 대비',
+        icon: 'feather-message-circle',
+        color: 'warning'
       }
     ]
-  }, [summary])
-
-  const totalMarketPosts = summary?.totalPosts || 0
+  }, [summary, technologyShares])
 
   const technologyMap = useMemo(() => {
     const map = new Map()
@@ -327,30 +382,30 @@ const BlogInsightsCards = () => {
                       <button
                         type='button'
                         onClick={() => setActiveProductKey(null)}
-                        className={`btn w-100 rounded-3 py-3 px-3 text-start border ${
+                        className={`btn w-100 rounded-3 py-3 px-3 text-start border d-flex flex-column align-items-start gap-1 ${
                           !activeProductKey ? 'bg-primary-subtle border-primary text-primary fw-semibold' : 'bg-white border-light text-muted'
                         }`}
                       >
-                        <span className='badge bg-primary text-white fs-12 mb-2'>RF/HIFU 전체분포</span>
-                        <span className='d-block fs-12 text-muted'>전체 기술군 기준</span>
+                        <span className='badge bg-primary text-white fs-12 px-2 py-1'>RF/HIFU 전체분포</span>
+                        <span className='fs-12 text-muted'>시장 전체 분포</span>
                       </button>
                     </div>
                     {asterasysProducts.map((product) => {
                       const isActive = activeProductKey === product.keyword
-                      const marketShare = totalMarketPosts ? (product.totalPosts / totalMarketPosts) * 100 : 0
+                      const technologyTotal = technologyMap.get(product.technology)?.posts || 0
+                      const technologyShare = technologyTotal ? (product.totalPosts / technologyTotal) * 100 : 0
 
                       return (
                         <div key={product.keyword} className='col-sm-6 col-md-4 col-lg-3'>
                           <button
                             type='button'
-                            onClick={() => handleProductHighlight(product.keyword)}
-                            className={`btn w-100 rounded-3 py-3 px-3 text-start border ${
-                              isActive ? 'bg-primary-subtle border-primary text-primary shadow-sm' : 'bg-white border-light text-dark'
-                            }`}
-                          >
-                            <span className='badge bg-primary text-white fs-12 mb-2'>{product.keyword}</span>
-                            <span className='d-block fs-12 text-muted'>점유율 {marketShare.toFixed(1)}%</span>
-                            <span className='d-block fs-12 text-muted'>총 {product.totalPosts?.toLocaleString() || 0}건</span>
+                          onClick={() => handleProductHighlight(product.keyword)}
+                          className={`btn w-100 rounded-3 py-3 px-3 text-start border d-flex flex-column align-items-start gap-1 ${
+                            isActive ? 'bg-primary-subtle border-primary text-primary shadow-sm' : 'bg-white border-light text-dark'
+                          }`}
+                        >
+                            <span className='badge bg-primary text-white fs-12 px-2 py-1'>{product.keyword}</span>
+                            <span className='fs-12 text-dark fw-semibold'>기술군 점유율 {technologyShare.toFixed(1)}%</span>
                           </button>
                         </div>
                       )
