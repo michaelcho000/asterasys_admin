@@ -185,7 +185,7 @@ const CafeProductFocusCard = () => {
       title: '카페 발행',
       value: formatNumber(selectedProduct.totalPosts, '건'),
       details: [
-        `발행→판매 ${formatPercent(selectedProduct.salesPerPost)}`,
+        salesPerPostValue != null ? `발행→판매 ${formatPercent(salesPerPostValue)}` : null,
         marketSalesPerPost != null ? `시장 평균 ${formatPercent(marketSalesPerPost)}` : null
       ]
     },
@@ -203,7 +203,7 @@ const CafeProductFocusCard = () => {
   return (
     <div className='col-12'>
       <div className='card stretch stretch-full'>
-        <div className='card-header d-flex flex-column gap-2'>
+        <div className='card-header d-flex justify-content-between align-items-start flex-wrap gap-3'>
           <div>
             <h5 className='card-title mb-1'>Asterasys 제품 집중</h5>
             <p className='text-muted fs-12 mb-0'>검색→발행→판매 퍼널 지표 요약</p>
