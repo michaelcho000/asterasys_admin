@@ -11,32 +11,6 @@ export const asterasysMenuList = [
         dropdownMenu: []
     },
     {
-        id: 1,
-        name: "시장 분석",
-        path: "#",
-        icon: 'feather-trending-up',
-        dropdownMenu: [
-            {
-                id: 1,
-                name: "경쟁사 순위",
-                path: "/market-analysis/rankings",
-                subdropdownMenu: []
-            },
-            {
-                id: 2,
-                name: "시장 점유율",
-                path: "/market-analysis/market-share",
-                subdropdownMenu: []
-            },
-            {
-                id: 3,
-                name: "기술별 비교",
-                path: "/market-analysis/technology",
-                subdropdownMenu: []
-            }
-        ]
-    },
-    {
         id: 2,
         name: "채널 성과",
         path: '#',
@@ -66,39 +40,15 @@ export const asterasysMenuList = [
                 path: "/channel/youtube",
                 subdropdownMenu: []
             },
-            {
-                id: 5,
-                name: "판매 성과",
-                path: "/channel/sales",
-                subdropdownMenu: []
-            }
+            
         ]
     },
     {
         id: 3,
-        name: "Asterasys 제품 분석",
-        path: "#",
-        icon: 'feather-package',
-        dropdownMenu: [
-            {
-                id: 1,
-                name: "포트폴리오 개요",
-                path: "/product/portfolio",
-                subdropdownMenu: []
-            },
-            {
-                id: 2,
-                name: "제품별 성과",
-                path: "/product/performance", 
-                subdropdownMenu: []
-            },
-            {
-                id: 3,
-                name: "경쟁 포지션",
-                path: "/product/position",
-                subdropdownMenu: []
-            }
-        ]
+        name: "마케팅 인사이트",
+        path: "/marketing-insights",
+        icon: 'feather-trending-up',
+        dropdownMenu: []
     },
     {
         id: 4,
