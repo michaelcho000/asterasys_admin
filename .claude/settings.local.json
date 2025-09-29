@@ -31,7 +31,8 @@
       "Bash(bash --version)",
       "Bash(sw_vers)",
       "Bash(echo:*)",
-      "Bash(env)"
+      "Bash(env)",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "ask": []
