@@ -93,11 +93,18 @@ const CafeInsightsCards = () => {
     const rfStats = technologyShares.RF
     const hifuStats = technologyShares.HIFU
 
-    const conversionRate = typeof summary.asterasysSearchToSalesRate === 'number' ? summary.asterasysSearchToSalesRate : null
-    const marketConversionRate = typeof summary.searchToSalesRate === 'number' ? summary.searchToSalesRate : null
-    const conversionProgress = marketConversionRate
-      ? Math.min(clampPercent((conversionRate / marketConversionRate) * 100), 100)
-      : clampPercent(conversionRate ?? 0)
+    const asterasysSalesEfficiency = summary.asterasysPosts
+      ? (summary.asterasysMonthlySales / summary.asterasysPosts) * 100
+      : null
+    const marketSalesEfficiency = summary.totalPosts
+      ? (summary.monthlySales / summary.totalPosts) * 100
+      : null
+    const efficiencyComparison = marketSalesEfficiency
+      ? (asterasysSalesEfficiency / marketSalesEfficiency) * 100
+      : null
+    const efficiencyProgress = efficiencyComparison != null
+      ? clampPercent(efficiencyComparison)
+      : clampPercent(asterasysSalesEfficiency ?? 0)
 
     return [
       {
@@ -135,14 +142,14 @@ const CafeInsightsCards = () => {
         color: 'info'
       },
       {
-        id: 'conversion',
-        title: '검색→판매 전환율',
-        value: conversionRate != null ? `${formatPercent(conversionRate)}%` : '--',
+        id: 'sales-efficiency',
+        title: '발행량 대비 판매효율',
+        value: asterasysSalesEfficiency != null ? `${formatPercent(asterasysSalesEfficiency)}%` : '--',
         context: summary.asterasysMonthlySales != null
-          ? `Asterasys ${summary.asterasysMonthlySales.toLocaleString()}건 / 검색 ${summary.asterasysSearchVolume?.toLocaleString() || '--'}회`
-          : '전환 데이터 없음',
-        progress: conversionProgress,
-        progressLabel: marketConversionRate != null ? `시장 평균 ${formatPercent(marketConversionRate)}%` : '검색 대비',
+          ? `Asterasys ${summary.asterasysMonthlySales.toLocaleString()}건 / 발행 ${summary.asterasysPosts?.toLocaleString() || '--'}건`
+          : '판매 데이터 없음',
+        progress: efficiencyProgress,
+        progressLabel: efficiencyComparison != null ? `시장 대비 ${formatPercent(efficiencyComparison)}%` : '시장 대비 없음',
         icon: 'feather-trending-up',
         color: 'warning'
       }

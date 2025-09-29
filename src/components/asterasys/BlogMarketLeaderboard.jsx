@@ -5,6 +5,7 @@ import { FiArrowDown, FiArrowUp } from 'react-icons/fi'
 import CardLoader from '@/components/shared/CardLoader'
 import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
 import { withMonthParam } from '@/utils/withMonthParam'
+import AsterasysProductBadge from '@/components/asterasys/AsterasysProductBadge'
 
 const TABS = ['ALL', 'RF', 'HIFU']
 
@@ -167,7 +168,7 @@ const BlogMarketLeaderboard = () => {
                       <td className='py-3'>
                         <div className='fw-semibold text-dark d-flex align-items-center'>
                           <span className='fs-6'>{row.keyword}</span>
-                          {row.isAsterasys && <span className='badge bg-primary ms-2'>Asterasys</span>}
+                          {row.isAsterasys && <AsterasysProductBadge />}
                         </div>
                       </td>
                       <td className='py-3'>

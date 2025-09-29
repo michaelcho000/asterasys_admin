@@ -362,6 +362,7 @@ export function mapCafeCorrelation(products) {
     postsPerThousandSearch: product.postsPerThousandSearch,
     monthlySales: product.monthlySales,
     salesPerThousandSearch: product.salesPerThousandSearch,
+    salesPerPost: product.salesPerPost,
     searchToSalesRate: product.searchToSalesRate,
     isAsterasys: product.isAsterasys
   }))

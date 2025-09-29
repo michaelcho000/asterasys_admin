@@ -5,6 +5,7 @@ import { FiArrowDown, FiArrowUp } from 'react-icons/fi'
 import CardLoader from '@/components/shared/CardLoader'
 import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
 import { withMonthParam } from '@/utils/withMonthParam'
+import AsterasysProductBadge from '@/components/asterasys/AsterasysProductBadge'
 
 const TABS = ['ALL', 'RF', 'HIFU']
 
@@ -155,10 +156,10 @@ const CafeMarketLeaderboard = () => {
                         {renderSortIcon('searchToPostRatio')}
                       </div>
                     </th>
-                    <th scope='col' style={{ cursor: 'pointer' }} onClick={() => handleSort('salesPerThousandSearch')}>
+                    <th scope='col' style={{ cursor: 'pointer' }} onClick={() => handleSort('salesPerPost')}>
                       <div className='d-flex align-items-center gap-1 text-nowrap'>
-                        <span className='text-muted text-uppercase fs-12'>검색→판매</span>
-                        {renderSortIcon('salesPerThousandSearch')}
+                        <span className='text-muted text-uppercase fs-12'>발행→판매</span>
+                        {renderSortIcon('salesPerPost')}
                       </div>
                     </th>
                     <th scope='col' style={{ cursor: 'pointer' }} onClick={() => handleSort('monthlySales')}>
@@ -178,9 +179,7 @@ const CafeMarketLeaderboard = () => {
                       <td className='py-3'>
                         <div className='fw-semibold text-dark d-flex align-items-center'>
                           <span className='fs-6'>{row.keyword}</span>
-                          {row.isAsterasys && (
-                            <span className='badge bg-primary-subtle text-primary fw-semibold ms-2'>Asterasys</span>
-                          )}
+                          {row.isAsterasys && <AsterasysProductBadge />}
                         </div>
                       </td>
                       <td className='py-3'>
@@ -194,7 +193,9 @@ const CafeMarketLeaderboard = () => {
                       <td className='py-3 fw-semibold text-dark'>{((row.participation || 0) * 100).toFixed(1)}%</td>
                       <td className='py-3 fw-semibold text-dark'>{row.searchVolume?.toLocaleString() || '--'}</td>
                       <td className='py-3 fw-semibold text-dark'>{(row.searchToPostRatio || 0).toFixed(1)}건/1K</td>
-                      <td className='py-3 fw-semibold text-dark'>{(row.salesPerThousandSearch || 0).toFixed(1)}건/1K</td>
+                      <td className='py-3 fw-semibold text-dark'>
+                        {row.salesPerPost != null ? `${(row.salesPerPost || 0).toFixed(1)}%` : '--'}
+                      </td>
                       <td className='py-3 fw-semibold text-dark'>{row.monthlySales?.toLocaleString() || '--'}</td>
                     </tr>
                   ))}

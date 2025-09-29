@@ -60,7 +60,7 @@ const CafeEngagementCorrelationChart = () => {
     const categories = currentData.map((item) => item.keyword)
     const postSeries = currentData.map((item) => item.totalPosts || 0)
     const participationSeries = currentData.map((item) => Number(((item.participation || 0) * 100).toFixed(1)))
-    const conversionSeries = currentData.map((item) => Number((item.salesPerThousandSearch || 0).toFixed(1)))
+    const conversionSeries = currentData.map((item) => Number((item.salesPerPost || 0).toFixed(1)))
     const labelColors = currentData.map((item) => (item.isAsterasys ? '#2563eb' : '#64748b'))
 
     return {
@@ -76,7 +76,7 @@ const CafeEngagementCorrelationChart = () => {
           data: participationSeries
         },
         {
-          name: '검색→판매 (1K)',
+          name: '발행→판매 (%)',
           type: 'line',
           data: conversionSeries
         }
@@ -145,7 +145,7 @@ const CafeEngagementCorrelationChart = () => {
             formatter: (value, { seriesIndex }) => {
               if (seriesIndex === 0) return `${Math.round(value).toLocaleString()}건`
               if (seriesIndex === 1) return `${value.toFixed(1)}%`
-              return `${value.toFixed(1)}건/1K 검색`
+              return `${value.toFixed(1)}%`
             }
           }
         },
@@ -170,7 +170,7 @@ const CafeEngagementCorrelationChart = () => {
     const avgParticipation =
       currentData.reduce((sum, item) => sum + (item.participation || 0), 0) / currentData.length
     const avgConversion =
-      currentData.reduce((sum, item) => sum + (item.salesPerThousandSearch || 0), 0) / currentData.length
+      currentData.reduce((sum, item) => sum + (item.salesPerPost || 0), 0) / currentData.length
 
     return {
       posts: totalPosts,
@@ -185,7 +185,7 @@ const CafeEngagementCorrelationChart = () => {
         <div className='card-header d-flex align-items-center justify-content-between flex-wrap gap-3'>
           <div>
             <h5 className='card-title mb-1'>검색량 대비 카페 참여 상관관계</h5>
-            <p className='text-muted fs-12 mb-0'>제품별 발행량·참여도·검색→판매 전환 효율 비교</p>
+            <p className='text-muted fs-12 mb-0'>제품별 발행량·참여도·발행→판매 효율 비교</p>
           </div>
           <div className='btn-group btn-group-sm'>
             {CATEGORIES.map((category) => (
@@ -223,8 +223,8 @@ const CafeEngagementCorrelationChart = () => {
                 <small className='text-muted'>댓글+대댓글 / 발행</small>
               </div>
               <div className='col-md-4'>
-                <div className='fw-semibold text-success'>검색→판매 {summaryMetrics.conversion.toFixed(1)}건/1K</div>
-                <small className='text-muted'>1,000 검색 대비 판매</small>
+                <div className='fw-semibold text-success'>발행→판매 {summaryMetrics.conversion.toFixed(1)}%</div>
+                <small className='text-muted'>발행 100건 대비 판매</small>
               </div>
             </div>
           </div>

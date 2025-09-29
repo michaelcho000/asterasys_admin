@@ -68,9 +68,7 @@ const CafeConversionFunnelCard = () => {
       posts,
       sales,
       postsPerThousand: summary.postsPerThousandSearch,
-      salesPerThousand: summary.salesPerThousandSearch,
-      salesPerPost: posts ? (sales / posts) * 100 : null,
-      salesPerSearch: summary.searchToSalesRate
+      salesPerPost: posts ? (sales / posts) * 100 : null
     }
   }, [summary])
 
@@ -80,15 +78,16 @@ const CafeConversionFunnelCard = () => {
     const searchVolume = summary.asterasysSearchVolume || 0
     const posts = summary.asterasysPosts || 0
     const sales = summary.asterasysMonthlySales || 0
+    const marketSalesPerPost = summary.totalPosts ? (summary.monthlySales / summary.totalPosts) * 100 : null
 
     return {
       searchVolume,
       posts,
       sales,
       postsPerThousand: summary.asterasysPostsPerThousandSearch,
-      salesPerThousand: summary.asterasysSalesPerThousandSearch,
       salesPerPost: posts ? (sales / posts) * 100 : null,
-      salesPerSearch: summary.asterasysSearchToSalesRate
+      salesEfficiencyIndex:
+        posts && marketSalesPerPost ? ((sales / posts) * 100) / marketSalesPerPost * 100 : null
     }
   }, [summary])
 
@@ -153,8 +152,8 @@ const CafeConversionFunnelCard = () => {
     <div className='col-xxl-8 col-lg-8'>
       <div className='card stretch stretch-full'>
         <div className='card-header'>
-          <h5 className='card-title mb-1'>검색→카페→판매 퍼널</h5>
-          <p className='text-muted fs-12 mb-0'>1000 검색 대비 발행·판매 전환 흐름 비교</p>
+          <h5 className='card-title mb-1'>검색→발행→판매 퍼널</h5>
+          <p className='text-muted fs-12 mb-0'>검색 대비 발행·판매 전환 흐름 비교</p>
         </div>
         <div className='card-body d-flex flex-column gap-4'>
           {renderStage('검색량',
@@ -171,22 +170,25 @@ const CafeConversionFunnelCard = () => {
           {renderStage('카페 발행',
             {
               primary: `${formatNumber(marketStages.posts)}건`,
-              secondary: `1,000검색 대비 판매 ${formatPerThousand(marketStages.salesPerThousand)}`
+              secondary: `검색→발행 ${formatPerThousand(marketStages.postsPerThousand)}`
             },
             {
               primary: `${formatNumber(asterasysStages.posts)}건`,
-              secondary: `1,000검색 대비 판매 ${formatPerThousand(asterasysStages.salesPerThousand)}`
+              secondary: `검색→발행 ${formatPerThousand(asterasysStages.postsPerThousand)}`
             }
           )}
 
-          {renderStage('월간 판매',
+          {renderStage('발행→판매 효율',
             {
-              primary: `${formatNumber(marketStages.sales)}건`,
-              secondary: `검색→판매 ${formatPercent(marketStages.salesPerSearch)}`
+              primary: formatPercent(marketStages.salesPerPost),
+              secondary: `월간 판매 ${formatNumber(marketStages.sales)}건`
             },
             {
-              primary: `${formatNumber(asterasysStages.sales)}건`,
-              secondary: `검색→판매 ${formatPercent(asterasysStages.salesPerSearch)}`
+              primary: formatPercent(asterasysStages.salesPerPost),
+              secondary:
+                asterasysStages.salesEfficiencyIndex != null
+                  ? `시장 대비 ${formatPercent(asterasysStages.salesEfficiencyIndex)}`
+                  : `월간 판매 ${formatNumber(asterasysStages.sales)}건`
             }
           )}
         </div>

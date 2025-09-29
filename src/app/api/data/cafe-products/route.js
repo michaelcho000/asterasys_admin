@@ -43,7 +43,9 @@ export async function GET(request) {
         totalSales: product.totalSales,
         salesPerPost: product.salesPerPost,
         salesPerThousandSearch: product.salesPerThousandSearch,
-        searchToSalesRate: product.searchToSalesRate
+        searchToSalesRate: product.searchToSalesRate,
+        technologyShare: product.technologyShare,
+        marketShare: product.marketShare
       }))
 
     return NextResponse.json({
@@ -51,6 +53,7 @@ export async function GET(request) {
       month: dataset.month,
       products: asterasysProducts,
       totals: dataset.totals.asterasys,
+      marketTotals: dataset.totals,
       technologyBreakdown: dataset.totals.technologyBreakdown
     })
   } catch (error) {

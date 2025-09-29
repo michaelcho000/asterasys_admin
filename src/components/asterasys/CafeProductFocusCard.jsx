@@ -15,6 +15,11 @@ const formatNumber = (value, suffix = '') => {
   return `${Number(value).toLocaleString()}${suffix}`
 }
 
+const clampPercent = (value, max = 100) => {
+  if (typeof value !== 'number' || Number.isNaN(value)) return 0
+  return Math.min(Math.max(value, 0), max)
+}
+
 const CAFE_PRODUCTS = ['쿨페이즈', '리프테라', '쿨소닉']
 
 const CafeProductFocusCard = () => {
@@ -23,6 +28,7 @@ const CafeProductFocusCard = () => {
   const [error, setError] = useState(null)
   const [products, setProducts] = useState([])
   const [totals, setTotals] = useState(null)
+  const [marketTotals, setMarketTotals] = useState(null)
   const [selectedProductKey, setSelectedProductKey] = useState('ALL')
 
   useEffect(() => {
@@ -45,6 +51,7 @@ const CafeProductFocusCard = () => {
 
         setProducts(data.products || [])
         setTotals(data.totals || null)
+        setMarketTotals(data.marketTotals || null)
       } catch (err) {
         console.error('Cafe product fetch error:', err)
         setError(err.message)
@@ -61,6 +68,7 @@ const CafeProductFocusCard = () => {
 
     if (selectedProductKey === 'ALL') {
       const participation = totals.totalPosts ? totals.totalEngagement / totals.totalPosts : 0
+      const salesPerPost = totals.totalPosts ? (totals.monthlySales / totals.totalPosts) * 100 : null
       return {
         keyword: 'Asterasys 전체 제품',
         technologyLabel: 'RF/HIFU',
@@ -72,8 +80,9 @@ const CafeProductFocusCard = () => {
         monthlySales: totals.monthlySales,
         salesPerThousandSearch: totals.salesPerThousandSearch,
         searchToSalesRate: totals.searchToSalesRate,
-        technologyShare: totals.share,
-        totalSales: totals.totalSales
+        technologyShare: typeof totals.share === 'number' ? totals.share : null,
+        totalSales: totals.totalSales,
+        salesPerPost
       }
     }
 
@@ -109,7 +118,7 @@ const CafeProductFocusCard = () => {
 
   if (!totals || !selectedProduct) {
     return (
-      <div className='col-xxl-4 col-lg-4 col-md-12'>
+      <div className='col-12'>
         <div className='card stretch stretch-full'>
           <div className='card-body text-muted fs-12'>표시할 데이터가 없습니다.</div>
         </div>
@@ -117,13 +126,87 @@ const CafeProductFocusCard = () => {
     )
   }
 
+  const marketPostsPerThousand = marketTotals?.postsPerThousandSearch ?? null
+  const marketSalesPerPost = marketTotals?.totalPosts
+    ? (marketTotals.monthlySales / marketTotals.totalPosts) * 100
+    : null
+
+  const performanceVsMarket =
+    selectedProduct.salesPerPost != null && marketSalesPerPost
+      ? (selectedProduct.salesPerPost / marketSalesPerPost) * 100
+      : null
+
+  const sharePercent =
+    typeof selectedProduct.technologyShare === 'number' ? selectedProduct.technologyShare : null
+  const salesPerPostValue = selectedProduct.salesPerPost ?? null
+
+  const overallMetrics = [
+    {
+      id: 'share',
+      title: '카페 점유율',
+      valueLabel: sharePercent != null ? formatPercent(sharePercent) : '--',
+      progress: clampPercent(sharePercent ?? 0),
+      comparison: 'Asterasys 제품 비중',
+      barClass: 'bg-primary'
+    },
+    {
+      id: 'sales-efficiency',
+      title: '발행→판매 효율',
+      valueLabel: salesPerPostValue != null ? formatPercent(salesPerPostValue) : '--',
+      progress: clampPercent(salesPerPostValue ?? 0),
+      comparison:
+        marketSalesPerPost != null ? `시장 평균 ${formatPercent(marketSalesPerPost)}` : '시장 평균 없음',
+      barClass: 'bg-success'
+    },
+    {
+      id: 'market-index',
+      title: '시장 대비 효율 지수',
+      valueLabel: performanceVsMarket != null ? formatPercent(performanceVsMarket) : '--',
+      progress: clampPercent(performanceVsMarket ?? 0, 150),
+      comparison: '시장=100% 기준',
+      barClass: 'bg-warning'
+    }
+  ]
+
+  const funnelMetrics = [
+    {
+      id: 'search',
+      title: '검색량',
+      value: formatNumber(selectedProduct.searchVolume, '회'),
+      details: [
+        selectedProduct.postsPerThousandSearch != null
+          ? `1K당 발행 ${selectedProduct.postsPerThousandSearch.toFixed(1)}건`
+          : null,
+        marketPostsPerThousand != null ? `시장 1K당 발행 ${marketPostsPerThousand.toFixed(1)}건` : null
+      ]
+    },
+    {
+      id: 'publish',
+      title: '카페 발행',
+      value: formatNumber(selectedProduct.totalPosts, '건'),
+      details: [
+        `발행→판매 ${formatPercent(selectedProduct.salesPerPost)}`,
+        marketSalesPerPost != null ? `시장 평균 ${formatPercent(marketSalesPerPost)}` : null
+      ]
+    },
+    {
+      id: 'sales',
+      title: '월간 판매',
+      value: formatNumber(selectedProduct.monthlySales, '건'),
+      details: [
+        selectedProduct.totalSales != null ? `누적 ${formatNumber(selectedProduct.totalSales, '건')}` : null,
+        performanceVsMarket != null ? `시장 대비 ${formatPercent(performanceVsMarket)}` : null
+      ]
+    }
+  ]
+
   return (
-    <div className='col-xxl-4 col-lg-4 col-md-12'>
+    <div className='col-12'>
       <div className='card stretch stretch-full'>
         <div className='card-header d-flex flex-column gap-2'>
           <div>
             <h5 className='card-title mb-1'>Asterasys 제품 집중</h5>
-            <p className='text-muted fs-12 mb-0'>카페 발행과 검색→판매 전환 지표 요약</p>
+            <p className='text-muted fs-12 mb-0'>검색→발행→판매 퍼널 지표 요약</p>
           </div>
           <div className='btn-group btn-group-sm' role='group'>
             <button
@@ -152,43 +235,47 @@ const CafeProductFocusCard = () => {
                 <h6 className='mb-1 text-dark'>{selectedProduct.keyword}</h6>
                 <p className='text-muted fs-12 mb-0'>{selectedProduct.technologyLabel || '카페 채널'}</p>
               </div>
-              <span className='badge bg-primary-subtle text-primary'>기술군 점유율 {formatPercent(selectedProduct.technologyShare)}</span>
+              {selectedProduct.technologyShare != null && (
+                <span className='badge bg-primary-subtle text-primary'>
+                  기술군 점유율 {formatPercent(selectedProduct.technologyShare)}
+                </span>
+              )}
             </div>
-            <div className='row g-3 mt-2'>
-              <div className='col-6'>
-                <div className='text-muted fs-12 mb-1'>카페 발행량</div>
-                <div className='fw-semibold text-dark fs-5'>{formatNumber(selectedProduct.totalPosts, '건')}</div>
-                <div className='text-muted fs-12'>참여도 {formatPercent((selectedProduct.participation || 0) * 100)}</div>
-              </div>
-              <div className='col-6'>
-                <div className='text-muted fs-12 mb-1'>월간 판매</div>
-                <div className='fw-semibold text-dark fs-5'>{formatNumber(selectedProduct.monthlySales, '건')}</div>
-                <div className='text-muted fs-12'>누적 {formatNumber(selectedProduct.totalSales, '건')}</div>
-              </div>
-              <div className='col-6'>
-                <div className='text-muted fs-12 mb-1'>검색량</div>
-                <div className='fw-semibold text-dark fs-5'>{formatNumber(selectedProduct.searchVolume, '회')}</div>
-                <div className='text-muted fs-12'>1K당 발행 {selectedProduct.postsPerThousandSearch != null ? `${selectedProduct.postsPerThousandSearch.toFixed(1)}건` : '--'}</div>
-              </div>
-              <div className='col-6'>
-                <div className='text-muted fs-12 mb-1'>검색→판매</div>
-                <div className='fw-semibold text-dark fs-5'>
-                  {selectedProduct.salesPerThousandSearch != null
-                    ? `${selectedProduct.salesPerThousandSearch.toFixed(1)}건/1K`
-                    : '--'}
+            <div className='row g-4 mt-1'>
+              {overallMetrics.map((metric) => {
+                const width = Math.min(metric.progress, 100)
+                return (
+                  <div key={metric.id} className='col-lg-4 col-md-6 col-12'>
+                    <div className='d-flex justify-content-between align-items-center gap-2'>
+                      <div className='text-muted fs-12 text-uppercase'>{metric.title}</div>
+                      <span className='fw-semibold text-dark'>{metric.valueLabel}</span>
+                    </div>
+                    <div className='progress progress-thin mt-2' role='progressbar' aria-valuenow={metric.progress}>
+                      <div
+                        className={`progress-bar ${metric.barClass}`}
+                        style={{ width: `${width}%` }}
+                      />
+                    </div>
+                    <div className='text-muted fs-12 mt-1'>{metric.comparison}</div>
+                  </div>
+                )
+              })}
+            </div>
+            <div className='row g-3 mt-3'>
+              {funnelMetrics.map((metric) => (
+                <div key={metric.id} className='col-12 col-lg-4'>
+                  <div className='border rounded-3 p-3 h-100 bg-light-subtle'>
+                    <div className='text-muted fs-12 text-uppercase mb-1'>{metric.title}</div>
+                    <div className='fw-semibold text-dark fs-4'>{metric.value}</div>
+                    <ul className='list-unstyled mb-0 mt-2 fs-12 text-muted d-flex flex-column gap-1'>
+                      {metric.details.filter(Boolean).map((detail, index) => (
+                        <li key={index}>{detail}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <div className='text-muted fs-12'>전환율 {formatPercent(selectedProduct.searchToSalesRate)}</div>
-              </div>
+              ))}
             </div>
-          </div>
-
-          <div className='border rounded-3 border-light-subtle p-3 bg-light-subtle'>
-            <div className='text-muted fs-12 mb-2'>제품별 메모</div>
-            <ul className='list-unstyled mb-0 fs-12 text-muted d-flex flex-column gap-1'>
-              <li>카페 점유율: {formatPercent(selectedProduct.technologyShare)}</li>
-              <li>참여도: {formatPercent((selectedProduct.participation || 0) * 100)}</li>
-              <li>검색→판매: {formatPercent(selectedProduct.searchToSalesRate)}</li>
-            </ul>
           </div>
         </div>
       </div>
