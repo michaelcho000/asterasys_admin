@@ -230,7 +230,8 @@ const ChannelCompetitivePosition = () => {
             strategy: cafePosition.strategy,
             color: cafePosition.color,
             icon: 'feather-message-circle',
-            rawScore: cafePosition.rawScore
+            rawScore: cafePosition.rawScore,
+            insight: '8월 카페 마케팅은 쿨페이즈(789건, 5,255댓글)가 고주파 2위, 쿨소닉(605건, 4,275댓글)이 초음파 2위로 강력한 입지를 보였으나, 9월에는 쿨페이즈(598건, -24.2%), 리프테라(430건, -14.5%), 쿨소닉(522건, -13.7%)로 모두 하락했습니다. 경쟁사인 써마지는 8월 1,258건에서 9월 1,702건(+35.3%)으로 급증하며 1위를 공고히 했고, 울쎄라도 1,321건에서 2,369건(+79.3%)으로 폭발적 성장을 보였습니다. 여우야, 여생남정 카페 외 재잘재잘, 성형위키백과로 카페 다각화가 필요하며, 써마지/울쎄라의 리프팅 효과 비교 후기 콘텐츠에 대응하는 쿨페이즈 vs 써마지 실제 사용자 비교, 리프테라 vs 울쎄라 통증/회복 차이 콘텐츠를 집중 투입해야 합니다.'
           },
           {
             name: '블로그',
@@ -244,7 +245,8 @@ const ChannelCompetitivePosition = () => {
             strategy: blogPosition.strategy,
             color: blogPosition.color,
             icon: 'feather-edit-3',
-            rawScore: blogPosition.rawScore
+            rawScore: blogPosition.rawScore,
+            insight: '8월 블로그는 쿨페이즈(101건, 9위), 리프테라(176건, 6위)로 중하위권이었고, 9월에는 쿨페이즈(132건, +30.7%로 증가했으나 여전히 9위)로 순위 변동이 없었습니다. 경쟁사 분석 시 덴서티는 메디컬 웰니스 저널(8월 16건→9월 27건)과 닥터에버스 계열 블로그를 활용해 전문성 있는 병원블로그 마케팅을 강화했고, 올리지오는 닥터에버스 계열(8월 37건→9월 118건)로 폭발적 증가를 보였습니다. 유어힐의원, 더블에이의원 외에 협력 병원을 10개 이상 확보해 병원블로그 발행량을 월 200건 이상으로 늘리고, 쿨페이즈 시술 후기, 리프테라 효과 지속기간 등 롱테일 키워드 중심의 플레이스블로그 콘텐츠를 강화해야 합니다.'
           },
           {
             name: '뉴스',
@@ -258,7 +260,8 @@ const ChannelCompetitivePosition = () => {
             strategy: newsPosition.strategy,
             color: newsPosition.color,
             icon: 'feather-file-text',
-            rawScore: newsPosition.rawScore
+            rawScore: newsPosition.rawScore,
+            insight: '8월 뉴스는 쿨페이즈(12건, 8위), 쿨소닉(12건, 5위), 리프테라(4건, 6위)로 극히 낮은 노출을 보였고, 9월에도 쿨페이즈(12건, 9위), 쿨소닉(11건, 4위), 리프테라(6건, 6위)로 개선되지 않았습니다. 반면 볼뉴머는 8월 71건(캠페인 강도 HIGH, 74.6% 기업소식)에서 9월 38건으로 감소했지만 여전히 상위권이며, 슈링크는 8월 33건에서 9월 200건(+506%)으로 급증하며 병원발행 중심의 B2B PR을 강화했습니다. 월 1회 이상 쿨페이즈 신규 병원 도입, 리프테라 시술 건수 돌파, 쿨소닉 기술 업데이트 등 기업소식 보도자료를 배포하고, 의학 전문가 추천, 피부과 트렌드 각도의 전문 기사로 신뢰도를 높여야 합니다.'
           },
           {
             name: '유튜브',
@@ -272,7 +275,8 @@ const ChannelCompetitivePosition = () => {
             strategy: youtubePosition.strategy,
             color: youtubePosition.color,
             icon: 'feather-youtube',
-            rawScore: youtubePosition.rawScore
+            rawScore: youtubePosition.rawScore,
+            insight: '8월 YouTube는 쿨페이즈(2건), 리프테라(7건), 쿨소닉(65건)으로 경쟁사 대비 심각하게 낮았으며, 9월에는 쿨페이즈(62건, +3,000%), 리프테라(203건, +2,800%), 쿨소닉(65건, 유지)로 폭발적 증가를 보였습니다. 그러나 여전히 써마지(8월 1,010건→9월 457건), 덴서티(8월 355건→9월 245건), 인모드(8월 306건→9월 200건) 대비 낮은 수준입니다. 스위츠, 비본영, 리마인드, 유어힐 외에 인플루언서 협력을 확대하고, 쿨페이즈 500샷 실제 효과, 리프테라 vs 울쎄라 통증 비교, 쿨소닉 시술 과정 전격 공개 등 실사용자 관점의 롱폼 콘텐츠(10분 이상)를 월 10개 이상 제작해야 합니다.'
           }
         ]
 
@@ -432,12 +436,24 @@ const ChannelCompetitivePosition = () => {
                 </div>
 
                 {/* Strategy */}
-                <div>
+                <div className="mb-3">
                   <p className="fs-12 text-muted mb-0">
                     <i className="feather-target me-1"></i>
                     {channel.strategy}
                   </p>
                 </div>
+
+                {/* Channel Insights */}
+                {channel.insight && (
+                  <div className="mt-3 pt-3 border-top">
+                    <div className="d-flex align-items-start">
+                      <i className="feather-info fs-14 text-info me-2 mt-1"></i>
+                      <p className="fs-11 text-dark mb-0" style={{ lineHeight: '1.6' }}>
+                        {channel.insight}
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
