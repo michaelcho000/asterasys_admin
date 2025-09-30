@@ -15,8 +15,8 @@ const CafeMarketLeaderboard = () => {
   const [error, setError] = useState(null)
   const [leaderboard, setLeaderboard] = useState(null)
   const [activeTab, setActiveTab] = useState('ALL')
-  const [sortField, setSortField] = useState('rank')
-  const [sortOrder, setSortOrder] = useState('asc')
+  const [sortField, setSortField] = useState('totalPosts')
+  const [sortOrder, setSortOrder] = useState('desc')
 
   useEffect(() => {
     if (!month) return
@@ -56,16 +56,11 @@ const CafeMarketLeaderboard = () => {
       const aValue = a[sortField] ?? 0
       const bValue = b[sortField] ?? 0
 
+      // 항상 내림차순 정렬 (높은 값 → 낮은 값)
       if (typeof aValue === 'string') {
-        if (sortOrder === 'asc') {
-          return aValue.localeCompare(bValue)
-        }
         return bValue.localeCompare(aValue)
       }
 
-      if (sortOrder === 'asc') {
-        return aValue - bValue
-      }
       return bValue - aValue
     })
 
@@ -77,17 +72,20 @@ const CafeMarketLeaderboard = () => {
   }, [leaderboard, activeTab, sortField, sortOrder])
 
   const handleSort = (field) => {
+    // 같은 칼럼을 다시 클릭하면 기본 정렬(발행량 내림차순)로 복귀
     if (sortField === field) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+      setSortField('totalPosts')
+      setSortOrder('desc')
     } else {
+      // 새로운 칼럼 클릭 시 내림차순만 적용
       setSortField(field)
-      setSortOrder(field === 'keyword' ? 'asc' : 'desc')
+      setSortOrder('desc')
     }
   }
 
   const renderSortIcon = (field) => {
     if (sortField !== field) return null
-    return sortOrder === 'asc' ? <FiArrowUp className='ms-1 text-primary' /> : <FiArrowDown className='ms-1 text-primary' />
+    return <FiArrowDown className='ms-1 text-primary' />
   }
 
   return (

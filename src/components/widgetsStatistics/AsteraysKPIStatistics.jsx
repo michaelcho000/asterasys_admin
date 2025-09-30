@@ -206,7 +206,8 @@ const AsteraysKPIStatistics = () => {
                 icon: "feather-shopping-cart",
                 color: "danger",
                 trend: saleMetrics.trend,
-                changePercent: saleMetrics.changePercent
+                changeInUnits: saleMetrics.changeInUnits,
+                isSalesCard: true
             }
         ]
     }
@@ -222,7 +223,7 @@ const AsteraysKPIStatistics = () => {
                     <CardLoader />
                 </div>
             ) : (
-                kpiData.map(({ id, total_number, progress, progress_info, title, context, icon, color, trend, changePercent }) => (
+                kpiData.map(({ id, total_number, progress, progress_info, title, context, icon, color, trend, changePercent, changeInUnits, isSalesCard }) => (
                     <div key={id} className="col-xxl col-md-6 position-relative">
                         <div className="card stretch stretch-full short-info-card">
                             <div className="card-body">
@@ -273,7 +274,11 @@ const AsteraysKPIStatistics = () => {
                                                 <i className="fs-12 me-1">
                                                     {trend === 'up' ? <FiTrendingUp /> : <FiTrendingDown />}
                                                 </i>
-                                                <span>{changePercent > 0 ? '+' : ''}{changePercent}%</span>
+                                                {isSalesCard ? (
+                                                    <span>{changeInUnits > 0 ? '+' : ''}{changeInUnits}대</span>
+                                                ) : (
+                                                    <span>{changePercent > 0 ? '+' : ''}{changePercent}%</span>
+                                                )}
                                             </span>
                                         </div>
                                     )}

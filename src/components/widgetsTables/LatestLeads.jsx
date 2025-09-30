@@ -141,10 +141,14 @@ const LatestLeads = ({title}) => {
     }
 
     const handleSort = (key) => {
-        setSortConfig(prevConfig => ({
-            key,
-            direction: prevConfig.key === key && prevConfig.direction === 'desc' ? 'asc' : 'desc'
-        }))
+        setSortConfig(prevConfig => {
+            // 같은 칼럼을 다시 클릭하면 기본 정렬(종합점수)로 복귀
+            if (prevConfig.key === key) {
+                return { key: 'totalScore', direction: 'desc' }
+            }
+            // 새로운 칼럼 클릭 시 내림차순만 적용
+            return { key, direction: 'desc' }
+        })
     }
 
     const getSortedData = (data) => {
@@ -153,15 +157,12 @@ const LatestLeads = ({title}) => {
         return [...data].sort((a, b) => {
             const aValue = a[sortConfig.key] || 0
             const bValue = b[sortConfig.key] || 0
-            
+
+            // 항상 내림차순 정렬 (높은 값 → 낮은 값)
             if (sortConfig.key === 'keyword') {
-                return sortConfig.direction === 'asc' 
-                    ? aValue.localeCompare(bValue)
-                    : bValue.localeCompare(aValue)
+                return bValue.localeCompare(aValue)
             } else {
-                return sortConfig.direction === 'asc' 
-                    ? aValue - bValue
-                    : bValue - aValue
+                return bValue - aValue
             }
         })
     }
@@ -242,32 +243,32 @@ const LatestLeads = ({title}) => {
                                     <tr className="border-b">
                                         <th scope="row">순위</th>
                                         <th style={{cursor: 'pointer'}} onClick={() => handleSort('keyword')}>
-                                            브랜드 {sortConfig.key === 'keyword' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                            브랜드 {sortConfig.key === 'keyword' && '↓'}
                                         </th>
                                         <th>분야</th>
                                         <th style={{cursor: 'pointer'}} onClick={() => handleSort('cafeScore')}>
-                                            카페점수 {sortConfig.key === 'cafeScore' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                            카페점수 {sortConfig.key === 'cafeScore' && '↓'}
                                         </th>
                                         <th style={{cursor: 'pointer'}} onClick={() => handleSort('youtubeScore')}>
-                                            유튜브점수 {sortConfig.key === 'youtubeScore' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                            유튜브점수 {sortConfig.key === 'youtubeScore' && '↓'}
                                         </th>
                                         <th style={{cursor: 'pointer'}} onClick={() => handleSort('blogScore')}>
-                                            블로그점수 {sortConfig.key === 'blogScore' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                            블로그점수 {sortConfig.key === 'blogScore' && '↓'}
                                         </th>
                                         <th style={{cursor: 'pointer'}} onClick={() => handleSort('newsScore')}>
-                                            뉴스점수 {sortConfig.key === 'newsScore' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                            뉴스점수 {sortConfig.key === 'newsScore' && '↓'}
                                         </th>
                                         <th style={{cursor: 'pointer'}} onClick={() => handleSort('searchScore')}>
-                                            검색량 {sortConfig.key === 'searchScore' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                            검색량 {sortConfig.key === 'searchScore' && '↓'}
                                         </th>
                                         <th style={{cursor: 'pointer'}} onClick={() => handleSort('totalSales')}>
-                                            총판매량 {sortConfig.key === 'totalSales' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                            총판매량 {sortConfig.key === 'totalSales' && '↓'}
                                         </th>
                                         <th style={{cursor: 'pointer'}} onClick={() => handleSort('monthlySales')}>
-                                            {monthlySalesLabel} 판매 {sortConfig.key === 'monthlySales' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                            {monthlySalesLabel} 판매 {sortConfig.key === 'monthlySales' && '↓'}
                                         </th>
                                         <th style={{cursor: 'pointer'}} onClick={() => handleSort('totalScore')}>
-                                            종합점수 {sortConfig.key === 'totalScore' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                                            종합점수 {sortConfig.key === 'totalScore' && '↓'}
                                         </th>
                                         <th>상태</th>
                                     </tr>

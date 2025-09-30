@@ -245,13 +245,37 @@ const KPICalculations = {
     const marketShare = marketTotalSales > 0 ? (asterasysTotalSales / marketTotalSales) * 100 : 0;
     const monthMarketShare = marketMonthSales > 0 ? (asterasysMonthSales / marketMonthSales) * 100 : 0;
 
-    // Calculate MoM change (총 판매량 기준)
-    let momMetrics = { change: 0, changePercent: 0, trend: 'neutral' };
+    // Calculate MoM change (월간 판매량 기준 - 대 단위)
+    let momMetrics = { change: 0, changePercent: 0, trend: 'neutral', changeInUnits: 0 };
     if (prevSalesData) {
+      // 이전 월의 월간 판매량 추출
+      let prevMonthlyColumnName = null;
+      if (prevSalesData.length > 0) {
+        const firstItem = prevSalesData[0];
+        const monthColumns = Object.keys(firstItem).filter(key => key.includes('월 판매량'));
+        if (monthColumns.length > 0) {
+          prevMonthlyColumnName = monthColumns[0];
+        }
+      }
+
       const prevAsterasysData = filterAsterasysProducts(prevSalesData);
-      const prevAsterasysTotalSales = prevAsterasysData.reduce((sum, item) =>
-        sum + parseValue(item['총 판매량']), 0);
-      momMetrics = calculateMoMChange(asterasysTotalSales, prevAsterasysTotalSales);
+      const prevAsterasysMonthSales = prevMonthlyColumnName
+        ? prevAsterasysData.reduce((sum, item) => sum + parseValue(item[prevMonthlyColumnName]), 0)
+        : 0;
+
+      // 월간 판매량 대 단위 변화량 계산
+      const changeInUnits = asterasysMonthSales - prevAsterasysMonthSales;
+      const changePercent = prevAsterasysMonthSales > 0
+        ? ((changeInUnits / prevAsterasysMonthSales) * 100).toFixed(1)
+        : 0;
+      const trend = changeInUnits > 0 ? 'up' : changeInUnits < 0 ? 'down' : 'neutral';
+
+      momMetrics = {
+        change: changeInUnits,
+        changePercent: parseFloat(changePercent),
+        trend,
+        changeInUnits
+      };
     }
 
     return {
