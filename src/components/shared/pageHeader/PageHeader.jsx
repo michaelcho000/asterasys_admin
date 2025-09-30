@@ -23,7 +23,8 @@ const PageHeader = ({ children }) => {
         // 경로별 한글 매핑
         const pathMapping = {
             'channel': '채널 성과',
-            'market-analysis': '시장 분석', 
+            'market-analysis': '시장 분석',
+            'marketing-insights': '마케팅 인사이트',
             'product': 'Asterasys 제품 분석',
             'reports': '운영 리포트',
             'dashboard': '대시보드',
