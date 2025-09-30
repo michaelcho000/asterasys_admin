@@ -36,72 +36,243 @@ const ChannelCompetitivePosition = () => {
         ])
 
         const asterasysKeywords = ['쿨페이즈', '리프테라', '쿨소닉']
+        const competitorKeywords = ['덴서티', '세르프', '올리지오', '볼뉴머', '텐써마']
+        const leaderKeywords = ['울쎄라', '슈링크', '써마지', '인모드']
+
+        // CAFE CHANNEL ANALYSIS
+        const asterasysCafe = (cafeData.marketData || []).filter(item => asterasysKeywords.includes(item.키워드))
+
+        const asterasysCafeData = asterasysCafe.map(item => parseInt(item['총 발행량'] || 0))
+        const asterasysCafeAvg = asterasysCafeData.length > 0
+          ? Math.round(asterasysCafeData.reduce((sum, val) => sum + val, 0) / asterasysCafeData.length)
+          : 0
+
+        const competitorCafeData = competitorKeywords.map(keyword => {
+          const data = (cafeData.marketData || []).find(item => item.키워드 === keyword)
+          return parseInt(data?.['총 발행량'] || 0)
+        })
+        const competitorCafeAvg = competitorCafeData.length > 0
+          ? Math.round(competitorCafeData.reduce((sum, val) => sum + val, 0) / competitorCafeData.length)
+          : 0
+
+        const leaderCafeData = leaderKeywords.map(keyword => {
+          const data = (cafeData.marketData || []).find(item => item.키워드 === keyword)
+          return parseInt(data?.['총 발행량'] || 0)
+        })
+        const leaderCafeAvg = leaderCafeData.length > 0
+          ? Math.round(leaderCafeData.reduce((sum, val) => sum + val, 0) / leaderCafeData.length)
+          : 0
+
+        // BLOG CHANNEL ANALYSIS
+        const asterasysBlog = (blogData.marketData || []).filter(item => asterasysKeywords.includes(item.키워드))
+
+        const asterasysBlogData = asterasysKeywords.map(keyword => {
+          const keywordData = (blogData.marketData || []).filter(item => item.키워드 === keyword)
+          return keywordData.reduce((sum, item) => {
+            const value = String(item['발행량합'] || '0').replace(/,/g, '')
+            return sum + parseInt(value || 0)
+          }, 0)
+        })
+        const asterasysBlogAvg = asterasysBlogData.length > 0
+          ? Math.round(asterasysBlogData.reduce((sum, val) => sum + val, 0) / asterasysBlogData.length)
+          : 0
+
+        const competitorBlogData = competitorKeywords.map(keyword => {
+          const keywordData = (blogData.marketData || []).filter(item => item.키워드 === keyword)
+          return keywordData.reduce((sum, item) => {
+            const value = String(item['발행량합'] || '0').replace(/,/g, '')
+            return sum + parseInt(value || 0)
+          }, 0)
+        })
+        const competitorBlogAvg = competitorBlogData.length > 0
+          ? Math.round(competitorBlogData.reduce((sum, val) => sum + val, 0) / competitorBlogData.length)
+          : 0
+
+        const leaderBlogData = leaderKeywords.map(keyword => {
+          const keywordData = (blogData.marketData || []).filter(item => item.키워드 === keyword)
+          return keywordData.reduce((sum, item) => {
+            const value = String(item['발행량합'] || '0').replace(/,/g, '')
+            return sum + parseInt(value || 0)
+          }, 0)
+        })
+        const leaderBlogAvg = leaderBlogData.length > 0
+          ? Math.round(leaderBlogData.reduce((sum, val) => sum + val, 0) / leaderBlogData.length)
+          : 0
+
+        // NEWS CHANNEL ANALYSIS
+        const asterasysNewsData = asterasysKeywords.map(keyword => {
+          const data = (newsData.marketData || []).find(item => item.키워드 === keyword)
+          return parseInt(data?.['총 발행량'] || 0)
+        })
+        const asterasysNewsAvg = asterasysNewsData.length > 0
+          ? Math.round(asterasysNewsData.reduce((sum, val) => sum + val, 0) / asterasysNewsData.length)
+          : 0
+
+        const competitorNewsData = competitorKeywords.map(keyword => {
+          const data = (newsData.marketData || []).find(item => item.키워드 === keyword)
+          return parseInt(data?.['총 발행량'] || 0)
+        })
+        const competitorNewsAvg = competitorNewsData.length > 0
+          ? Math.round(competitorNewsData.reduce((sum, val) => sum + val, 0) / competitorNewsData.length)
+          : 0
+
+        const leaderNewsData = leaderKeywords.map(keyword => {
+          const data = (newsData.marketData || []).find(item => item.키워드 === keyword)
+          return parseInt(data?.['총 발행량'] || 0)
+        })
+        const leaderNewsAvg = leaderNewsData.length > 0
+          ? Math.round(leaderNewsData.reduce((sum, val) => sum + val, 0) / leaderNewsData.length)
+          : 0
+
+        // YOUTUBE CHANNEL ANALYSIS
+        const asterasysYoutubeData = asterasysKeywords.map(keyword => {
+          const data = (youtubeData.marketData || []).find(item => item.키워드 === keyword)
+          return parseInt(data?.['총 발행량'] || 0)
+        })
+        const asterasysYoutubeAvg = asterasysYoutubeData.length > 0
+          ? Math.round(asterasysYoutubeData.reduce((sum, val) => sum + val, 0) / asterasysYoutubeData.length)
+          : 0
+
+        const competitorYoutubeData = competitorKeywords.map(keyword => {
+          const data = (youtubeData.marketData || []).find(item => item.키워드 === keyword)
+          return parseInt(data?.['총 발행량'] || 0)
+        })
+        const competitorYoutubeAvg = competitorYoutubeData.length > 0
+          ? Math.round(competitorYoutubeData.reduce((sum, val) => sum + val, 0) / competitorYoutubeData.length)
+          : 0
+
+        const leaderYoutubeData = leaderKeywords.map(keyword => {
+          const data = (youtubeData.marketData || []).find(item => item.키워드 === keyword)
+          return parseInt(data?.['총 발행량'] || 0)
+        })
+        const leaderYoutubeAvg = leaderYoutubeData.length > 0
+          ? Math.round(leaderYoutubeData.reduce((sum, val) => sum + val, 0) / leaderYoutubeData.length)
+          : 0
+
+        // Calculate competitive scores using weighted average (competitor 50% + leader 50%)
+        // Cafe
+        const cafeCompetitorScore = competitorCafeAvg > 0 ? Math.round((asterasysCafeAvg / competitorCafeAvg) * 100) : 0
+        const cafeLeaderScore = leaderCafeAvg > 0 ? Math.round((asterasysCafeAvg / leaderCafeAvg) * 100) : 0
+        const cafeRawScore = Math.round((cafeCompetitorScore * 0.5) + (cafeLeaderScore * 0.5))
+        const cafeScore = Math.min(cafeRawScore, 100)
+
+        // Blog
+        const blogCompetitorScore = competitorBlogAvg > 0 ? Math.round((asterasysBlogAvg / competitorBlogAvg) * 100) : 0
+        const blogLeaderScore = leaderBlogAvg > 0 ? Math.round((asterasysBlogAvg / leaderBlogAvg) * 100) : 0
+        const blogRawScore = Math.round((blogCompetitorScore * 0.5) + (blogLeaderScore * 0.5))
+        const blogScore = Math.min(blogRawScore, 100)
+
+        // News
+        const newsCompetitorScore = competitorNewsAvg > 0 ? Math.round((asterasysNewsAvg / competitorNewsAvg) * 100) : 0
+        const newsLeaderScore = leaderNewsAvg > 0 ? Math.round((asterasysNewsAvg / leaderNewsAvg) * 100) : 0
+        const newsRawScore = Math.round((newsCompetitorScore * 0.5) + (newsLeaderScore * 0.5))
+        const newsScore = Math.min(newsRawScore, 100)
+
+        // YouTube
+        const youtubeCompetitorScore = competitorYoutubeAvg > 0 ? Math.round((asterasysYoutubeAvg / competitorYoutubeAvg) * 100) : 0
+        const youtubeLeaderScore = leaderYoutubeAvg > 0 ? Math.round((asterasysYoutubeAvg / leaderYoutubeAvg) * 100) : 0
+        const youtubeRawScore = Math.round((youtubeCompetitorScore * 0.5) + (youtubeLeaderScore * 0.5))
+        const youtubeScore = Math.min(youtubeRawScore, 100)
+
+        // Determine position and strategy based on score
+        const getPositionAndStrategy = (score, rawScore, channel, asterasysAvg, competitorAvg, leaderAvg) => {
+          if (score >= 80) {
+            const ratio = (asterasysAvg / competitorAvg).toFixed(1)
+            const vsLeader = asterasysAvg >= leaderAvg
+              ? '리더 포지션'
+              : `리더 그룹 평균(${leaderAvg}건) 대비 ${Math.round((asterasysAvg/leaderAvg)*100)}%`
+            return {
+              position: '강점',
+              color: 'success',
+              strategy: `경쟁 그룹의 ${ratio}배 (${asterasysAvg}건 vs ${competitorAvg}건) · ${vsLeader}`,
+              rawScore
+            }
+          } else if (score >= 50) {
+            return {
+              position: '경쟁력 확보',
+              color: 'info',
+              strategy: `현재 수준 유지 및 점진적 확대 (${asterasysAvg}건 → ${competitorAvg + 50}건)`,
+              rawScore
+            }
+          } else if (score >= 25) {
+            return {
+              position: '성장 필요',
+              color: 'warning',
+              strategy: `2배 증량 목표 (${asterasysAvg}건 → ${Math.round(competitorAvg * 2)}건)`,
+              rawScore
+            }
+          } else {
+            return {
+              position: '전략 재검토',
+              color: 'danger',
+              strategy: `집중 투자 필요 (${asterasysAvg}건 → ${Math.round(competitorAvg * 0.8)}건)`,
+              rawScore
+            }
+          }
+        }
+
+        const cafePosition = getPositionAndStrategy(cafeScore, cafeRawScore, '카페', asterasysCafeAvg, competitorCafeAvg, leaderCafeAvg)
+        const blogPosition = getPositionAndStrategy(blogScore, blogRawScore, '블로그', asterasysBlogAvg, competitorBlogAvg, leaderBlogAvg)
+        const newsPosition = getPositionAndStrategy(newsScore, newsRawScore, '뉴스', asterasysNewsAvg, competitorNewsAvg, leaderNewsAvg)
+        const youtubePosition = getPositionAndStrategy(youtubeScore, youtubeRawScore, '유튜브', asterasysYoutubeAvg, competitorYoutubeAvg, leaderYoutubeAvg)
 
         // Calculate metrics for each channel
         const channels = [
           {
             name: '카페',
-            position: '강점',
-            score: 85,
+            position: cafePosition.position,
+            score: cafeScore,
             data: {
-              asterasys: (cafeData.marketData || [])
-                .filter(item => asterasysKeywords.includes(item.키워드))
-                .reduce((sum, item) => sum + parseInt(item['총 발행량'] || 0), 0),
-              average: 400,
-              leader: 800
+              asterasys: asterasysCafeAvg,
+              competitor: competitorCafeAvg,
+              leader: leaderCafeAvg
             },
-            engagement: 4.08,
-            strategy: '현재 전략 유지 + 자연 바이럴 증가',
-            color: 'success',
-            icon: 'feather-message-circle'
+            strategy: cafePosition.strategy,
+            color: cafePosition.color,
+            icon: 'feather-message-circle',
+            rawScore: cafePosition.rawScore
           },
           {
             name: '블로그',
-            position: '성장 기회',
-            score: 38,
+            position: blogPosition.position,
+            score: blogScore,
             data: {
-              asterasys: (blogData.marketData || [])
-                .filter(item => asterasysKeywords.includes(item.키워드))
-                .reduce((sum, item) => sum + parseInt(item['발행량합'] || 0), 0),
-              average: 300,
-              leader: 941
+              asterasys: asterasysBlogAvg,
+              competitor: competitorBlogAvg,
+              leader: leaderBlogAvg
             },
-            engagement: 3.9,
-            strategy: '3배 증량 (114건 → 300건)',
-            color: 'warning',
-            icon: 'feather-edit-3'
+            strategy: blogPosition.strategy,
+            color: blogPosition.color,
+            icon: 'feather-edit-3',
+            rawScore: blogPosition.rawScore
           },
           {
             name: '뉴스',
-            position: '최대 약점',
-            score: 14,
+            position: newsPosition.position,
+            score: newsScore,
             data: {
-              asterasys: (newsData.marketData || [])
-                .filter(item => asterasysKeywords.includes(item.키워드))
-                .reduce((sum, item) => sum + parseInt(item['총 발행량'] || 0), 0),
-              average: 60,
-              leader: 198
+              asterasys: asterasysNewsAvg,
+              competitor: competitorNewsAvg,
+              leader: leaderNewsAvg
             },
-            engagement: 3.5,
-            strategy: '병원 네트워크 구축 (28건 → 50건)',
-            color: 'danger',
-            icon: 'feather-file-text'
+            strategy: newsPosition.strategy,
+            color: newsPosition.color,
+            icon: 'feather-file-text',
+            rawScore: newsPosition.rawScore
           },
           {
             name: '유튜브',
-            position: '미개척',
-            score: 0,
+            position: youtubePosition.position,
+            score: youtubeScore,
             data: {
-              asterasys: (youtubeData.marketData || [])
-                .filter(item => asterasysKeywords.includes(item.키워드))
-                .reduce((sum, item) => sum + parseInt(item['총 발행량'] || 0), 0),
-              average: 50,
-              leader: 200
+              asterasys: asterasysYoutubeAvg,
+              competitor: competitorYoutubeAvg,
+              leader: leaderYoutubeAvg
             },
-            engagement: 3.8,
-            strategy: '브랜드 채널 론칭 필수',
-            color: 'info',
-            icon: 'feather-youtube'
+            strategy: youtubePosition.strategy,
+            color: youtubePosition.color,
+            icon: 'feather-youtube',
+            rawScore: youtubePosition.rawScore
           }
         ]
 
@@ -170,10 +341,10 @@ const ChannelCompetitivePosition = () => {
             enabled: false
           },
           xaxis: {
-            categories: ['우리', '평균', '리더'],
+            categories: ['아스테라시스', '경쟁 그룹 평균', '리더 그룹 평균'],
             labels: {
               style: {
-                fontSize: '11px'
+                fontSize: '10px'
               }
             }
           },
@@ -212,7 +383,12 @@ const ChannelCompetitivePosition = () => {
                 <div className="mb-3">
                   <div className="d-flex justify-content-between mb-2">
                     <span className="fs-11 text-muted">경쟁력 점수</span>
-                    <span className="fs-11 fw-bold text-dark">{channel.score}점</span>
+                    <span className="fs-11 fw-bold text-dark">
+                      {channel.score}점
+                      {channel.rawScore && channel.rawScore > 100 && (
+                        <span className="text-muted ms-1">({channel.rawScore})</span>
+                      )}
+                    </span>
                   </div>
                   <div className="progress" style={{ height: '8px' }}>
                     <div
@@ -227,10 +403,10 @@ const ChannelCompetitivePosition = () => {
                   <Chart
                     options={chartOptions}
                     series={[{
-                      name: '발행량',
+                      name: '발행량 평균',
                       data: [
                         channel.data.asterasys,
-                        channel.data.average,
+                        channel.data.competitor,
                         channel.data.leader
                       ]
                     }]}
@@ -242,26 +418,16 @@ const ChannelCompetitivePosition = () => {
                 {/* Stats */}
                 <div className="mb-3 pb-3 border-bottom">
                   <div className="d-flex justify-content-between mb-2">
-                    <span className="fs-11 text-muted">우리</span>
+                    <span className="fs-11 text-muted">아스테라시스 평균</span>
                     <span className="fs-11 fw-bold text-dark">{channel.data.asterasys.toLocaleString()}건</span>
                   </div>
                   <div className="d-flex justify-content-between mb-2">
-                    <span className="fs-11 text-muted">평균</span>
-                    <span className="fs-11 fw-semibold">{channel.data.average.toLocaleString()}건</span>
+                    <span className="fs-11 text-muted">경쟁 그룹 평균</span>
+                    <span className="fs-11 fw-semibold">{channel.data.competitor.toLocaleString()}건</span>
                   </div>
                   <div className="d-flex justify-content-between">
-                    <span className="fs-11 text-muted">리더</span>
+                    <span className="fs-11 text-muted">리더 그룹 평균</span>
                     <span className="fs-11 fw-semibold">{channel.data.leader.toLocaleString()}건</span>
-                  </div>
-                </div>
-
-                {/* Engagement */}
-                <div className="mb-3">
-                  <div className="d-flex justify-content-between">
-                    <span className="fs-11 text-muted">참여도</span>
-                    <span className={`badge bg-soft-${channel.color} text-${channel.color} fs-11`}>
-                      {channel.engagement}
-                    </span>
                   </div>
                 </div>
 
