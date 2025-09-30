@@ -66,7 +66,11 @@ const BlogMarketLeaderboard = () => {
       return bValue - aValue
     })
 
-    return sorted
+    // Re-assign sequential rank numbers after sorting
+    return sorted.map((item, index) => ({
+      ...item,
+      displayRank: index + 1  // Always show 1, 2, 3... regardless of sort
+    }))
   }, [leaderboard, activeTab, sortField, sortOrder])
 
   const handleSort = (field) => {
@@ -89,7 +93,7 @@ const BlogMarketLeaderboard = () => {
         <div className='card-header d-flex align-items-center justify-content-between flex-wrap gap-3'>
           <div>
             <h5 className='card-title mb-1'>블로그 시장 순위 현황</h5>
-            <p className='text-muted fs-12 mb-0'>18개 RF/HIFU 제품 발행량과 참여 지표 비교</p>
+            <p className='text-muted fs-12 mb-0'>18개 RF/HIFU 제품 발행량·검색·판매 효율 비교</p>
           </div>
           <div className='btn-group btn-group-sm'>
             {TABS.map((tab) => (
@@ -136,10 +140,10 @@ const BlogMarketLeaderboard = () => {
                         {renderSortIcon('totalPosts')}
                       </div>
                     </th>
-                    <th scope='col' style={{ cursor: 'pointer' }} onClick={() => handleSort('participation')}>
+                    <th scope='col' style={{ cursor: 'pointer' }} onClick={() => handleSort('monthlySales')}>
                       <div className='d-flex align-items-center gap-1 text-nowrap'>
-                        <span className='text-muted text-uppercase fs-12'>참여도</span>
-                        {renderSortIcon('participation')}
+                        <span className='text-muted text-uppercase fs-12'>월간 판매</span>
+                        {renderSortIcon('monthlySales')}
                       </div>
                     </th>
                     <th scope='col' style={{ cursor: 'pointer' }} onClick={() => handleSort('searchVolume')}>
@@ -154,16 +158,19 @@ const BlogMarketLeaderboard = () => {
                         {renderSortIcon('searchToPostRatio')}
                       </div>
                     </th>
-                    <th scope='col'>
-                      <span className='text-muted text-uppercase fs-12'>참여 합산</span>
+                    <th scope='col' style={{ cursor: 'pointer' }} onClick={() => handleSort('salesEfficiency')}>
+                      <div className='d-flex align-items-center gap-1 text-nowrap'>
+                        <span className='text-muted text-uppercase fs-12'>판매효율</span>
+                        {renderSortIcon('salesEfficiency')}
+                      </div>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {rows.map((row) => (
-                    <tr key={`${row.keyword}-${row.rank}`} className={`align-middle ${row.isAsterasys ? 'table-primary' : ''}`}>
+                    <tr key={`${row.keyword}-${row.displayRank}`} className={`align-middle ${row.isAsterasys ? 'table-primary' : ''}`}>
                       <td className='py-3'>
-                        <div className='fw-bold text-dark fs-6'>{row.rank}</div>
+                        <div className='fw-bold text-dark fs-6'>{row.displayRank}</div>
                       </td>
                       <td className='py-3'>
                         <div className='fw-semibold text-dark d-flex align-items-center'>
@@ -179,10 +186,10 @@ const BlogMarketLeaderboard = () => {
                         </span>
                       </td>
                       <td className='py-3 fw-semibold text-dark'>{row.totalPosts?.toLocaleString()}</td>
-                      <td className='py-3 fw-semibold text-dark'>{((row.participation || 0) * 100).toFixed(1)}%</td>
+                      <td className='py-3 fw-semibold text-dark'>{row.monthlySales?.toLocaleString() || 0}건</td>
                       <td className='py-3 fw-semibold text-dark'>{row.searchVolume?.toLocaleString() || '--'}</td>
                       <td className='py-3 fw-semibold text-dark'>{(row.searchToPostRatio || 0).toFixed(1)}건/1K</td>
-                      <td className='py-3 fw-semibold text-dark'>{row.totalEngagement?.toLocaleString()}</td>
+                      <td className='py-3 fw-semibold text-dark'>{(row.salesEfficiency || 0).toFixed(1)}%</td>
                     </tr>
                   ))}
                 </tbody>

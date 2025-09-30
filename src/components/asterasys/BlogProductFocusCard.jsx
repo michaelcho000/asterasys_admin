@@ -14,46 +14,40 @@ function aggregateProducts(products) {
   const totals = products.reduce(
     (acc, product) => {
       acc.totalPosts += product.totalPosts
-      acc.totalEngagement += product.totalEngagement
-      acc.comments += product.comments
-      acc.replies += product.replies
+      acc.monthlySales += product.monthlySales || 0
+      acc.totalSales += product.totalSales || 0
       acc.searchVolume += product.searchVolume || 0
       acc.searchToPostValues.push(product.searchToPostRatio || 0)
-      acc.participations.push(product.participation || 0)
+      acc.salesEfficiencies.push(product.salesEfficiency || 0)
 
       product.blogTypes.forEach((type) => {
         if (!acc.blogTypeMap[type.type]) {
-          acc.blogTypeMap[type.type] = { posts: 0, comments: 0, replies: 0 }
+          acc.blogTypeMap[type.type] = { posts: 0 }
         }
         acc.blogTypeMap[type.type].posts += type.posts
-        acc.blogTypeMap[type.type].comments += type.comments
-        acc.blogTypeMap[type.type].replies += type.replies
       })
 
       return acc
     },
     {
       totalPosts: 0,
-      totalEngagement: 0,
-      comments: 0,
-      replies: 0,
+      monthlySales: 0,
+      totalSales: 0,
       searchVolume: 0,
       searchToPostValues: [],
-      participations: [],
+      salesEfficiencies: [],
       blogTypeMap: {}
     }
   )
 
   const blogTypes = Object.entries(totals.blogTypeMap).map(([type, values]) => ({
     type,
-    posts: values.posts,
-    comments: values.comments,
-    replies: values.replies
+    posts: values.posts
   }))
 
-  const participation = totals.totalPosts
-    ? totals.totalEngagement / totals.totalPosts
-    : totals.participations.reduce((sum, value) => sum + value, 0) / Math.max(totals.participations.length, 1)
+  const salesEfficiency = totals.totalPosts
+    ? (totals.monthlySales / totals.totalPosts) * 100
+    : totals.salesEfficiencies.reduce((sum, value) => sum + value, 0) / Math.max(totals.salesEfficiencies.length, 1)
 
   const searchToPostRatio = totals.searchVolume
     ? (totals.totalPosts / totals.searchVolume) * 1000
@@ -65,10 +59,9 @@ function aggregateProducts(products) {
     technologyLabel: 'Asterasys',
     rank: null,
     totalPosts: totals.totalPosts,
-    totalEngagement: totals.totalEngagement,
-    comments: totals.comments,
-    replies: totals.replies,
-    participation,
+    monthlySales: totals.monthlySales,
+    totalSales: totals.totalSales,
+    salesEfficiency,
     searchVolume: totals.searchVolume,
     searchRank: null,
     searchToPostRatio,
@@ -76,14 +69,14 @@ function aggregateProducts(products) {
   }
 }
 
-function enrichBlogTypes(blogTypes, totalPosts) {
+function enrichBlogTypes(blogTypes, totalPosts, monthlySales) {
   if (!Array.isArray(blogTypes)) return []
   return blogTypes
     .filter((entry) => entry.posts > 0)
     .map((entry) => ({
       ...entry,
       share: totalPosts ? (entry.posts / totalPosts) * 100 : 0,
-      participation: entry.posts ? ((entry.comments + entry.replies) / entry.posts) * 100 : 0
+      salesPerPost: entry.posts && monthlySales ? (monthlySales / totalPosts * entry.share / 100).toFixed(1) : 0
     }))
     .sort((a, b) => b.posts - a.posts)
 }
@@ -136,7 +129,7 @@ const BlogProductFocusCard = () => {
 
   const blogTypeBreakdown = useMemo(() => {
     if (!selectedProduct) return []
-    return enrichBlogTypes(selectedProduct.blogTypes, selectedProduct.totalPosts)
+    return enrichBlogTypes(selectedProduct.blogTypes, selectedProduct.totalPosts, selectedProduct.monthlySales)
   }, [selectedProduct])
 
   const conversionProgress = useMemo(() => {
@@ -197,9 +190,9 @@ const BlogProductFocusCard = () => {
                     </p>
                     <div className='d-flex gap-3 text-dark fw-semibold fs-12'>
                       <span>발행 {selectedProduct.totalPosts?.toLocaleString()}건</span>
-                      <span>댓글 {(selectedProduct.comments || 0).toLocaleString()}개</span>
+                      <span>월간 판매 {(selectedProduct.monthlySales || 0).toLocaleString()}건</span>
                       <span>
-                        참여도 {((selectedProduct.participation || 0) * 100).toFixed(1)}%
+                        발행→판매 {(selectedProduct.salesEfficiency || 0).toFixed(1)}%
                       </span>
                     </div>
                   </div>
@@ -221,7 +214,7 @@ const BlogProductFocusCard = () => {
                         <div className='d-flex justify-content-between align-items-center mb-1'>
                           <span className='text-dark fw-semibold'>{item.type}</span>
                           <span className='text-muted fs-12'>
-                            {item.posts.toLocaleString()}건 · {item.share.toFixed(1)}% · 참여도 {item.participation.toFixed(1)}%
+                            {item.posts.toLocaleString()}건 · {item.share.toFixed(1)}% · 발행당 판매 {item.salesPerPost}건
                           </span>
                         </div>
                         <div className='progress ht-3'>

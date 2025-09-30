@@ -102,11 +102,22 @@ export class CSVParser {
    */
   parseSales() {
     const records = this.parseCSV('asterasys_total_data - sale.csv');
-    
+
+    // Auto-detect monthly sales column (e.g., "9월 판매량")
+    let monthlyColumnName = null;
+    if (records.length > 0) {
+      const firstRecord = records[0];
+      const monthColumns = Object.keys(firstRecord).filter(key => key.includes('월 판매량'));
+      if (monthColumns.length > 0) {
+        monthlyColumnName = monthColumns[0];
+      }
+    }
+
     return records.map(record => ({
       keyword: record['키워드']?.trim() || '',
       group: record['그룹']?.trim() || '',
-      sales: this.parseNumber(record['판매량']),
+      totalSales: this.parseNumber(record['총 판매량']),
+      monthlySales: monthlyColumnName ? this.parseNumber(record[monthlyColumnName]) : 0,
       source: 'sales'
     })).filter(record => record.keyword);
   }

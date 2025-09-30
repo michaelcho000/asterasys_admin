@@ -180,8 +180,14 @@ const LatestLeads = ({title}) => {
                     categoryRank: index + 1  // 카테고리별 순위 (1~9위)
                 }))
         }
-        
-        return getSortedData(filteredData)
+
+        const sorted = getSortedData(filteredData)
+
+        // Re-assign sequential rank numbers after sorting (always 1, 2, 3...)
+        return sorted.map((item, index) => ({
+            ...item,
+            displayRank: index + 1  // Display rank always starts from 1
+        }))
     }
 
     const getStatusColor = (status) => {
@@ -272,7 +278,7 @@ const LatestLeads = ({title}) => {
                                             <tr key={item.keyword} className={`chat-single-item ${item.isAsterasys ? 'table-primary' : ''}`}>
                                                 <td>
                                                     <div className="fw-bold text-dark">
-                                                        {activeTab === 'ALL' ? item.overallRank : item.categoryRank}
+                                                        {item.displayRank}
                                                     </div>
                                                 </td>
                                                 <td>

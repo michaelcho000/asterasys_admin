@@ -11,8 +11,8 @@ function mapCorrelation(products) {
     technology: product.technology,
     technologyLabel: product.technologyLabel,
     totalPosts: product.totalPosts,
-    totalEngagement: product.totalEngagement,
-    participation: product.participation,
+    monthlySales: product.monthlySales,
+    salesEfficiency: product.salesEfficiency,
     searchVolume: product.searchVolume,
     searchToPostRatio: product.searchToPostRatio,
     isAsterasys: product.isAsterasys

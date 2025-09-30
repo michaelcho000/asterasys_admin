@@ -331,7 +331,8 @@ export function buildCafeLeaderboard(products) {
   const sorted = [...products].sort((a, b) => b.totalPosts - a.totalPosts)
 
   return sorted.map((product, index) => ({
-    rank: product.rank || index + 1,
+    rank: index + 1,  // Always use sequential ranking based on current sort
+    originalRank: product.rank,  // Keep original rank for reference
     keyword: product.keyword,
     technology: product.technology,
     technologyLabel: product.technologyLabel,

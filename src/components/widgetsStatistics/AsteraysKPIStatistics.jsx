@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect, useMemo } from 'react'
-import { FiMoreVertical } from 'react-icons/fi'
+import { FiMoreVertical, FiTrendingUp, FiTrendingDown } from 'react-icons/fi'
 import getIcon from '@/utils/getIcon'
 import Link from 'next/link'
 import CardLoader from '@/components/shared/CardLoader'
@@ -29,6 +29,15 @@ const AsteraysKPIStatistics = () => {
     const month = useSelectedMonthStore((state) => state.selectedMonth)
     const monthLabel = useMemo(() => formatMonthLabel(month), [month])
 
+    // 이전 월 계산 헬퍼 함수
+    const getPreviousMonth = (currentMonth) => {
+        if (!currentMonth) return null
+        const [year, month] = currentMonth.split('-')
+        const date = new Date(parseInt(year), parseInt(month) - 1, 1)
+        date.setMonth(date.getMonth() - 1)
+        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+    }
+
     // 데이터 로드 함수를 별도로 정의하여 재사용 가능하게 만듦
     const loadKPIData = async (selectedMonth) => {
             if (!selectedMonth) {
@@ -38,7 +47,7 @@ const AsteraysKPIStatistics = () => {
             }
             try {
                 setLoading(true)
-                
+
                 // 5개 CSV 파일 동시 로드
                 // 캐시 무효화를 위해 timestamp 추가 및 fetch 옵션 설정
                 const timestamp = Date.now()
@@ -49,7 +58,11 @@ const AsteraysKPIStatistics = () => {
                         'Pragma': 'no-cache'
                     }
                 }
-                
+
+                // 이전 월 계산
+                const previousMonth = getPreviousMonth(selectedMonth)
+
+                // 현재 월 데이터 로드
                 const [blogResponse, cafeResponse, newsResponse, trafficResponse, saleResponse] = await Promise.all([
                     fetch(withMonthParam(`/api/data/files/blog_rank?t=${timestamp}`, selectedMonth), fetchOptions),
                     fetch(withMonthParam(`/api/data/files/cafe_rank?t=${timestamp}`, selectedMonth), fetchOptions),
@@ -57,29 +70,48 @@ const AsteraysKPIStatistics = () => {
                     fetch(withMonthParam(`/api/data/files/traffic?t=${timestamp}`, selectedMonth), fetchOptions),
                     fetch(withMonthParam(`/api/data/files/sale?t=${timestamp}`, selectedMonth), fetchOptions)
                 ])
-                
+
                 const [blogData, cafeData, newsData, trafficData, saleData] = await Promise.all([
                     blogResponse.json(),
-                    cafeResponse.json(), 
+                    cafeResponse.json(),
                     newsResponse.json(),
                     trafficResponse.json(),
                     saleResponse.json()
                 ])
-                
-                // 상세 디버깅 로그
-                console.log('=== KPI Data Loading ===')
-                console.log('Traffic API Response:', trafficData)
-                console.log('Traffic Market Data:', trafficData.marketData)
-                console.log('Traffic Asterasys Data:', trafficData.asterasysData)
-                
-                // KPI 데이터 실시간 계산
-                const calculatedKPI = calculateKPIFromCSV(blogData, cafeData, newsData, trafficData, saleData)
-                console.log('Calculated KPI:', calculatedKPI)
-                console.log('Traffic KPI Card:', calculatedKPI.find(item => item.title === "검색량"))
+
+                // 이전 월 데이터 로드 (있는 경우)
+                let prevBlogData = null, prevCafeData = null, prevNewsData = null, prevTrafficData = null, prevSaleData = null
+
+                if (previousMonth) {
+                    try {
+                        const [prevBlogRes, prevCafeRes, prevNewsRes, prevTrafficRes, prevSaleRes] = await Promise.all([
+                            fetch(withMonthParam(`/api/data/files/blog_rank?t=${timestamp}`, previousMonth), { ...fetchOptions, signal: AbortSignal.timeout(3000) }),
+                            fetch(withMonthParam(`/api/data/files/cafe_rank?t=${timestamp}`, previousMonth), { ...fetchOptions, signal: AbortSignal.timeout(3000) }),
+                            fetch(withMonthParam(`/api/data/files/news_rank?t=${timestamp}`, previousMonth), { ...fetchOptions, signal: AbortSignal.timeout(3000) }),
+                            fetch(withMonthParam(`/api/data/files/traffic?t=${timestamp}`, previousMonth), { ...fetchOptions, signal: AbortSignal.timeout(3000) }),
+                            fetch(withMonthParam(`/api/data/files/sale?t=${timestamp}`, previousMonth), { ...fetchOptions, signal: AbortSignal.timeout(3000) })
+                        ])
+
+                        if (prevBlogRes.ok) prevBlogData = await prevBlogRes.json()
+                        if (prevCafeRes.ok) prevCafeData = await prevCafeRes.json()
+                        if (prevNewsRes.ok) prevNewsData = await prevNewsRes.json()
+                        if (prevTrafficRes.ok) prevTrafficData = await prevTrafficRes.json()
+                        if (prevSaleRes.ok) prevSaleData = await prevSaleRes.json()
+                    } catch (prevError) {
+                        console.warn('이전 월 데이터 로드 실패 (정상 동작):', prevError.message)
+                    }
+                }
+
+                // KPI 데이터 실시간 계산 (이전 월 데이터 포함)
+                const calculatedKPI = calculateKPIFromCSV(
+                    blogData, cafeData, newsData, trafficData, saleData,
+                    prevBlogData, prevCafeData, prevNewsData, prevTrafficData, prevSaleData
+                )
+
                 setKpiData(calculatedKPI)
                 const labelForUpdate = formatMonthLabel(selectedMonth)
                 setLastUpdated(`${labelForUpdate} • ${new Date().toLocaleTimeString()}`)
-                
+
             } catch (error) {
                 console.error('KPI 데이터 로드 실패:', error)
             } finally {
@@ -92,22 +124,28 @@ const AsteraysKPIStatistics = () => {
         loadKPIData(month)
     }, [month])
 
-    const calculateKPIFromCSV = (blogData, cafeData, newsData, trafficData, saleData) => {
-        // Use centralized calculation functions
-        const blogMetrics = KPICalculations.blogPublish(blogData.marketData || [])
-        const cafeMetrics = KPICalculations.cafePublish(cafeData.marketData || [])
-        const newsMetrics = KPICalculations.newsPublish(newsData.marketData || [])
-        const trafficMetrics = KPICalculations.searchVolume(trafficData.marketData || [])
-        const saleMetrics = KPICalculations.salesVolume(saleData.marketData || [])
-        
-        // Debug logging
-        console.log('Traffic Data:', {
-            raw: trafficData,
-            marketData: trafficData.marketData,
-            calculated: trafficMetrics,
-            asterasysTotal: trafficMetrics.asterasysTotal,
-            percentage: trafficMetrics.percentage
-        })
+    const calculateKPIFromCSV = (blogData, cafeData, newsData, trafficData, saleData, prevBlogData, prevCafeData, prevNewsData, prevTrafficData, prevSaleData) => {
+        // Use centralized calculation functions with previous month data
+        const blogMetrics = KPICalculations.blogPublish(
+            blogData.marketData || [],
+            prevBlogData?.marketData || null
+        )
+        const cafeMetrics = KPICalculations.cafePublish(
+            cafeData.marketData || [],
+            prevCafeData?.marketData || null
+        )
+        const newsMetrics = KPICalculations.newsPublish(
+            newsData.marketData || [],
+            prevNewsData?.marketData || null
+        )
+        const trafficMetrics = KPICalculations.searchVolume(
+            trafficData.marketData || [],
+            prevTrafficData?.marketData || null
+        )
+        const saleMetrics = KPICalculations.salesVolume(
+            saleData.marketData || [],
+            prevSaleData?.marketData || null
+        )
 
         return [
             {
@@ -118,37 +156,45 @@ const AsteraysKPIStatistics = () => {
                 progress_info: "실시간 CSV 데이터 기반",
                 context: blogMetrics.context,
                 icon: "feather-edit-3",
-                color: "primary"
+                color: "primary",
+                trend: blogMetrics.trend,
+                changePercent: blogMetrics.changePercent
             },
             {
                 id: 2,
-                title: "카페 발행량", 
+                title: "카페 발행량",
                 total_number: formatNumber(cafeMetrics.asterasysTotal),
                 progress: cafeMetrics.percentage + "%",
                 progress_info: "실시간 CSV 데이터 기반",
                 context: cafeMetrics.context,
                 icon: "feather-message-circle",
-                color: "success"
+                color: "success",
+                trend: cafeMetrics.trend,
+                changePercent: cafeMetrics.changePercent
             },
             {
                 id: 3,
                 title: "뉴스 발행량",
                 total_number: formatNumber(newsMetrics.asterasysTotal),
-                progress: newsMetrics.percentage + "%", 
+                progress: newsMetrics.percentage + "%",
                 progress_info: "실시간 CSV 데이터 기반",
                 context: newsMetrics.context,
                 icon: "feather-file-text",
-                color: "info"
+                color: "info",
+                trend: newsMetrics.trend,
+                changePercent: newsMetrics.changePercent
             },
             {
                 id: 4,
                 title: "검색량",
                 total_number: formatNumber(trafficMetrics.asterasysTotal),
                 progress: trafficMetrics.percentage + "%",
-                progress_info: "실시간 CSV 데이터 기반", 
+                progress_info: "실시간 CSV 데이터 기반",
                 context: trafficMetrics.context,
                 icon: "feather-search",
-                color: "warning"
+                color: "warning",
+                trend: trafficMetrics.trend,
+                changePercent: trafficMetrics.changePercent
             },
             {
                 id: 5,
@@ -157,8 +203,10 @@ const AsteraysKPIStatistics = () => {
                 progress: saleMetrics.percentage + "%",
                 progress_info: "실시간 CSV 데이터 기반",
                 context: saleMetrics.context,
-                icon: "feather-shopping-cart", 
-                color: "danger"
+                icon: "feather-shopping-cart",
+                color: "danger",
+                trend: saleMetrics.trend,
+                changePercent: saleMetrics.changePercent
             }
         ]
     }
@@ -174,7 +222,7 @@ const AsteraysKPIStatistics = () => {
                     <CardLoader />
                 </div>
             ) : (
-                kpiData.map(({ id, total_number, progress, progress_info, title, context, icon, color }) => (
+                kpiData.map(({ id, total_number, progress, progress_info, title, context, icon, color, trend, changePercent }) => (
                     <div key={id} className="col-xxl col-md-6 position-relative">
                         <div className="card stretch stretch-full short-info-card">
                             <div className="card-body">
@@ -191,7 +239,7 @@ const AsteraysKPIStatistics = () => {
                                         </div>
                                     </div>
                                     <div className="position-relative">
-                                        <button 
+                                        <button
                                             className="btn btn-sm p-1 lh-1"
                                             onClick={() => toggleDropdown(id)}
                                         >
@@ -217,6 +265,18 @@ const AsteraysKPIStatistics = () => {
                                     <div className="progress mt-2 ht-3">
                                         <div className={`progress-bar bg-${color}`} role="progressbar" style={{ width: progress }}></div>
                                     </div>
+                                    {/* Month-over-Month Badge */}
+                                    {trend && trend !== 'neutral' && (
+                                        <div className="hstack gap-2 mt-3 justify-content-end">
+                                            <span className="fs-11 text-muted">전월대비</span>
+                                            <span className={`badge ${trend === 'up' ? 'bg-success' : 'bg-danger'} text-white fs-11`}>
+                                                <i className="fs-12 me-1">
+                                                    {trend === 'up' ? <FiTrendingUp /> : <FiTrendingDown />}
+                                                </i>
+                                                <span>{changePercent > 0 ? '+' : ''}{changePercent}%</span>
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -17,6 +17,7 @@ const CafeEngagementCorrelationChart = () => {
   const [activeTab, setActiveTab] = useState('ALL')
   const [correlation, setCorrelation] = useState(null)
   const [totals, setTotals] = useState(null)
+  const [excludeTop2, setExcludeTop2] = useState(false)
 
   useEffect(() => {
     if (!month) return
@@ -51,8 +52,16 @@ const CafeEngagementCorrelationChart = () => {
 
   const currentData = useMemo(() => {
     if (!correlation) return []
-    return correlation[activeTab] || []
-  }, [correlation, activeTab])
+    const data = correlation[activeTab] || []
+
+    // Top2 제외 처리: 발행량 기준으로 정렬 후 상위 2개 제외
+    if (excludeTop2 && data.length > 2) {
+      const sorted = [...data].sort((a, b) => b.totalPosts - a.totalPosts)
+      return sorted.slice(2)
+    }
+
+    return data
+  }, [correlation, activeTab, excludeTop2])
 
   const apexConfig = useMemo(() => {
     if (!currentData.length) return null
@@ -187,17 +196,31 @@ const CafeEngagementCorrelationChart = () => {
             <h5 className='card-title mb-1'>검색량 대비 카페 참여 상관관계</h5>
             <p className='text-muted fs-12 mb-0'>제품별 발행량·참여도·발행→판매 효율 비교</p>
           </div>
-          <div className='btn-group btn-group-sm'>
-            {CATEGORIES.map((category) => (
-              <button
-                key={category}
-                type='button'
-                className={`btn ${activeTab === category ? 'btn-primary' : 'btn-outline-primary'}`}
-                onClick={() => setActiveTab(category)}
-              >
-                {category}
-              </button>
-            ))}
+          <div className='d-flex gap-2 align-items-center'>
+            <div className='form-check form-switch me-3'>
+              <input
+                className='form-check-input'
+                type='checkbox'
+                id='excludeTop2Switch'
+                checked={excludeTop2}
+                onChange={(e) => setExcludeTop2(e.target.checked)}
+              />
+              <label className='form-check-label small' htmlFor='excludeTop2Switch'>
+                TOP 2 제외
+              </label>
+            </div>
+            <div className='btn-group btn-group-sm'>
+              {CATEGORIES.map((category) => (
+                <button
+                  key={category}
+                  type='button'
+                  className={`btn ${activeTab === category ? 'btn-primary' : 'btn-outline-primary'}`}
+                  onClick={() => setActiveTab(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
         <div className='card-body'>

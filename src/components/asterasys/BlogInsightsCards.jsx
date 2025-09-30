@@ -107,9 +107,11 @@ const BlogInsightsCards = () => {
     const rfStats = technologyShares.RF
     const hifuStats = technologyShares.HIFU
 
-    const totalEngagement = summary.totalEngagement || 0
-    const asterasysEngagement = summary.asterasysEngagement || 0
-    const engagementShare = totalEngagement ? (asterasysEngagement / totalEngagement) * 100 : null
+    const monthlySales = summary.monthlySales || 0
+    const asterasysMonthlySales = summary.asterasysMonthlySales || 0
+    const asterasysSalesEfficiency = asterasysPosts ? (asterasysMonthlySales / asterasysPosts) * 100 : null
+    const marketSalesEfficiency = totalPosts ? (monthlySales / totalPosts) * 100 : null
+    const efficiencyComparison = marketSalesEfficiency ? (asterasysSalesEfficiency / marketSalesEfficiency) * 100 : null
 
     return [
       {
@@ -147,15 +149,15 @@ const BlogInsightsCards = () => {
         color: 'info'
       },
       {
-        id: 'engagement-share',
-        title: '시장 참여도 기여율',
-        value: engagementShare != null ? `${formatPercent(engagementShare)}%` : '--',
-        context: totalEngagement
-          ? `Asterasys ${asterasysEngagement.toLocaleString()}건 / 전체 ${totalEngagement.toLocaleString()}건`
-          : '참여 데이터 없음',
-        progress: clampPercent(engagementShare ?? 0),
-        progressLabel: '참여도 대비',
-        icon: 'feather-message-circle',
+        id: 'sales-efficiency',
+        title: '발행량 대비 판매효율',
+        value: asterasysSalesEfficiency != null ? `${formatPercent(asterasysSalesEfficiency)}%` : '--',
+        context: asterasysMonthlySales != null
+          ? `Asterasys ${asterasysMonthlySales.toLocaleString()}건 / 발행 ${asterasysPosts.toLocaleString()}건`
+          : '판매 데이터 없음',
+        progress: clampPercent(asterasysSalesEfficiency ?? 0),
+        progressLabel: efficiencyComparison != null ? `시장 대비 ${formatPercent(efficiencyComparison)}%` : '시장 대비',
+        icon: 'feather-trending-up',
         color: 'warning'
       }
     ]
@@ -343,7 +345,7 @@ const BlogInsightsCards = () => {
           </div>
           <div className='card-body'>
             <div className='row align-items-center'>
-              <div className='col-lg-5 border-end border-light-subtle'>
+              <div className='col-lg-5 border-end border-light-subtle pe-3 pe-lg-4'>
                 {loading && <CardLoader />}
                 {!loading && chartOptions && (
                   <ReactApexChart
@@ -355,7 +357,7 @@ const BlogInsightsCards = () => {
                   />
                 )}
               </div>
-              <div className='col-lg-7'>
+              <div className='col-lg-7 ps-3 ps-lg-4'>
                 <div className='row g-3'>
                   {technologyBreakdown.map((item) => (
                     <div key={item.technology} className='col-12'>

@@ -69,7 +69,11 @@ const CafeMarketLeaderboard = () => {
       return bValue - aValue
     })
 
-    return sorted
+    // Re-assign sequential rank numbers after sorting
+    return sorted.map((item, index) => ({
+      ...item,
+      displayRank: index + 1  // Always show 1, 2, 3... regardless of sort
+    }))
   }, [leaderboard, activeTab, sortField, sortOrder])
 
   const handleSort = (field) => {
@@ -172,9 +176,9 @@ const CafeMarketLeaderboard = () => {
                 </thead>
                 <tbody>
                   {rows.map((row) => (
-                    <tr key={`${row.keyword}-${row.rank}`} className={`align-middle ${row.isAsterasys ? 'table-primary' : ''}`}>
+                    <tr key={`${row.keyword}-${row.displayRank}`} className={`align-middle ${row.isAsterasys ? 'table-primary' : ''}`}>
                       <td className='py-3'>
-                        <div className='fw-bold text-dark fs-6'>{row.rank}</div>
+                        <div className='fw-bold text-dark fs-6'>{row.displayRank}</div>
                       </td>
                       <td className='py-3'>
                         <div className='fw-semibold text-dark d-flex align-items-center'>

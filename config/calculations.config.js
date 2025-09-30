@@ -72,18 +72,42 @@ const calculateProductRanking = (products) => {
 };
 
 /**
+ * Calculate month-over-month change metrics
+ */
+const calculateMoMChange = (current, previous) => {
+  if (!previous || previous === 0) {
+    return { change: 0, changePercent: 0, trend: 'neutral' };
+  }
+
+  const change = current - previous;
+  const changePercent = ((change / previous) * 100).toFixed(1);
+  const trend = change > 0 ? 'up' : change < 0 ? 'down' : 'neutral';
+
+  return { change, changePercent: parseFloat(changePercent), trend };
+};
+
+/**
  * KPI Card Calculations
  */
 const KPICalculations = {
   // 블로그 발행량
-  blogPublish: (blogData) => {
+  blogPublish: (blogData, prevBlogData = null) => {
     const asterasysData = filterAsterasysProducts(blogData);
-    const asterasysTotal = asterasysData.reduce((sum, item) => 
+    const asterasysTotal = asterasysData.reduce((sum, item) =>
       sum + parseValue(item['발행량합']), 0);
-    const marketTotal = blogData.reduce((sum, item) => 
+    const marketTotal = blogData.reduce((sum, item) =>
       sum + parseValue(item['발행량합']), 0);
     const marketShare = marketTotal > 0 ? (asterasysTotal / marketTotal) * 100 : 0;
-    
+
+    // Calculate MoM change
+    let momMetrics = { change: 0, changePercent: 0, trend: 'neutral' };
+    if (prevBlogData) {
+      const prevAsterasysData = filterAsterasysProducts(prevBlogData);
+      const prevAsterasysTotal = prevAsterasysData.reduce((sum, item) =>
+        sum + parseValue(item['발행량합']), 0);
+      momMetrics = calculateMoMChange(asterasysTotal, prevAsterasysTotal);
+    }
+
     return {
       asterasysTotal,
       marketTotal,
@@ -91,19 +115,29 @@ const KPICalculations = {
       value: asterasysTotal,
       total: marketTotal,
       percentage: calculateMarketShare(asterasysTotal, marketTotal),
-      context: formatContext('전체 블로그 대비', calculateMarketShare(asterasysTotal, marketTotal), asterasysTotal, marketTotal, '건')
+      context: formatContext('전체 블로그 대비', calculateMarketShare(asterasysTotal, marketTotal), asterasysTotal, marketTotal, '건'),
+      ...momMetrics
     };
   },
   
   // 카페 발행량
-  cafePublish: (cafeData) => {
+  cafePublish: (cafeData, prevCafeData = null) => {
     const asterasysData = filterAsterasysProducts(cafeData);
-    const asterasysTotal = asterasysData.reduce((sum, item) => 
+    const asterasysTotal = asterasysData.reduce((sum, item) =>
       sum + parseValue(item['총 발행량']), 0);
-    const marketTotal = cafeData.reduce((sum, item) => 
+    const marketTotal = cafeData.reduce((sum, item) =>
       sum + parseValue(item['총 발행량']), 0);
     const marketShare = marketTotal > 0 ? (asterasysTotal / marketTotal) * 100 : 0;
-    
+
+    // Calculate MoM change
+    let momMetrics = { change: 0, changePercent: 0, trend: 'neutral' };
+    if (prevCafeData) {
+      const prevAsterasysData = filterAsterasysProducts(prevCafeData);
+      const prevAsterasysTotal = prevAsterasysData.reduce((sum, item) =>
+        sum + parseValue(item['총 발행량']), 0);
+      momMetrics = calculateMoMChange(asterasysTotal, prevAsterasysTotal);
+    }
+
     return {
       asterasysTotal,
       marketTotal,
@@ -111,19 +145,29 @@ const KPICalculations = {
       value: asterasysTotal,
       total: marketTotal,
       percentage: calculateMarketShare(asterasysTotal, marketTotal),
-      context: formatContext('전체 카페 대비', calculateMarketShare(asterasysTotal, marketTotal), asterasysTotal, marketTotal, '건')
+      context: formatContext('전체 카페 대비', calculateMarketShare(asterasysTotal, marketTotal), asterasysTotal, marketTotal, '건'),
+      ...momMetrics
     };
   },
   
   // 뉴스 발행량
-  newsPublish: (newsData) => {
+  newsPublish: (newsData, prevNewsData = null) => {
     const asterasysData = filterAsterasysProducts(newsData);
-    const asterasysTotal = asterasysData.reduce((sum, item) => 
+    const asterasysTotal = asterasysData.reduce((sum, item) =>
       sum + parseValue(item['총 발행량']), 0);
-    const marketTotal = newsData.reduce((sum, item) => 
+    const marketTotal = newsData.reduce((sum, item) =>
       sum + parseValue(item['총 발행량']), 0);
     const marketShare = marketTotal > 0 ? (asterasysTotal / marketTotal) * 100 : 0;
-    
+
+    // Calculate MoM change
+    let momMetrics = { change: 0, changePercent: 0, trend: 'neutral' };
+    if (prevNewsData) {
+      const prevAsterasysData = filterAsterasysProducts(prevNewsData);
+      const prevAsterasysTotal = prevAsterasysData.reduce((sum, item) =>
+        sum + parseValue(item['총 발행량']), 0);
+      momMetrics = calculateMoMChange(asterasysTotal, prevAsterasysTotal);
+    }
+
     return {
       asterasysTotal,
       marketTotal,
@@ -131,33 +175,29 @@ const KPICalculations = {
       value: asterasysTotal,
       total: marketTotal,
       percentage: calculateMarketShare(asterasysTotal, marketTotal),
-      context: formatContext('전체 뉴스 대비', calculateMarketShare(asterasysTotal, marketTotal), asterasysTotal, marketTotal, '건')
+      context: formatContext('전체 뉴스 대비', calculateMarketShare(asterasysTotal, marketTotal), asterasysTotal, marketTotal, '건'),
+      ...momMetrics
     };
   },
   
   // 검색량 (from traffic.csv)
-  searchVolume: (trafficData) => {
-    console.log('=== searchVolume Calculation ===');
-    console.log('Input trafficData:', trafficData);
-    console.log('trafficData length:', trafficData ? trafficData.length : 0);
-    
+  searchVolume: (trafficData, prevTrafficData = null) => {
     const asterasysData = filterAsterasysProducts(trafficData);
-    console.log('Filtered Asterasys products:', asterasysData);
-    
-    const asterasysTotal = asterasysData.reduce((sum, item) => {
-      const value = parseValue(item['월간 검색량']);
-      console.log(`Product: ${item['키워드']}, Raw: ${item['월간 검색량']}, Parsed: ${value}`);
-      return sum + value;
-    }, 0);
-
+    const asterasysTotal = asterasysData.reduce((sum, item) =>
+      sum + parseValue(item['월간 검색량']), 0);
     const marketTotal = trafficData.reduce((sum, item) =>
       sum + parseValue(item['월간 검색량']), 0);
     const marketShare = marketTotal > 0 ? (asterasysTotal / marketTotal) * 100 : 0;
-    
-    console.log('Asterasys Total:', asterasysTotal);
-    console.log('Market Total:', marketTotal);
-    console.log('Market Share:', marketShare);
-    
+
+    // Calculate MoM change
+    let momMetrics = { change: 0, changePercent: 0, trend: 'neutral' };
+    if (prevTrafficData) {
+      const prevAsterasysData = filterAsterasysProducts(prevTrafficData);
+      const prevAsterasysTotal = prevAsterasysData.reduce((sum, item) =>
+        sum + parseValue(item['월간 검색량']), 0);
+      momMetrics = calculateMoMChange(asterasysTotal, prevAsterasysTotal);
+    }
+
     return {
       asterasysTotal,
       marketTotal,
@@ -165,12 +205,13 @@ const KPICalculations = {
       value: asterasysTotal,
       total: marketTotal,
       percentage: calculateMarketShare(asterasysTotal, marketTotal),
-      context: formatContext('전체 검색 대비', calculateMarketShare(asterasysTotal, marketTotal), asterasysTotal, marketTotal, '회')
+      context: formatContext('전체 검색 대비', calculateMarketShare(asterasysTotal, marketTotal), asterasysTotal, marketTotal, '회'),
+      ...momMetrics
     };
   },
   
   // 판매량 (새로운 CSV 형식: 총 판매량과 월간 판매량으로 구분)
-  salesVolume: (salesData, monthNumber = null) => {
+  salesVolume: (salesData, prevSalesData = null) => {
     const asterasysData = filterAsterasysProducts(salesData);
 
     // 총 판매량 기준 계산
@@ -204,6 +245,15 @@ const KPICalculations = {
     const marketShare = marketTotalSales > 0 ? (asterasysTotalSales / marketTotalSales) * 100 : 0;
     const monthMarketShare = marketMonthSales > 0 ? (asterasysMonthSales / marketMonthSales) * 100 : 0;
 
+    // Calculate MoM change (총 판매량 기준)
+    let momMetrics = { change: 0, changePercent: 0, trend: 'neutral' };
+    if (prevSalesData) {
+      const prevAsterasysData = filterAsterasysProducts(prevSalesData);
+      const prevAsterasysTotalSales = prevAsterasysData.reduce((sum, item) =>
+        sum + parseValue(item['총 판매량']), 0);
+      momMetrics = calculateMoMChange(asterasysTotalSales, prevAsterasysTotalSales);
+    }
+
     return {
       asterasysTotal: asterasysTotalSales,
       marketTotal: marketTotalSales,
@@ -216,7 +266,8 @@ const KPICalculations = {
       total: marketTotalSales,
       percentage: calculateMarketShare(asterasysTotalSales, marketTotalSales),
       context: formatContext('전체 시장 대비', calculateMarketShare(asterasysTotalSales, marketTotalSales), asterasysTotalSales, marketTotalSales, '대') +
-               ` | ${monthLabel}: ${asterasysMonthSales}대 (시장 점유율 ${monthMarketShare.toFixed(1)}%)`
+               ` | ${monthLabel}: ${asterasysMonthSales}대 (시장 점유율 ${monthMarketShare.toFixed(1)}%)`,
+      ...momMetrics
     };
   }
 };

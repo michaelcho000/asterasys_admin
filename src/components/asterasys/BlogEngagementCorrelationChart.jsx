@@ -19,6 +19,7 @@ const BlogEngagementCorrelationChart = () => {
   const [activeTab, setActiveTab] = useState('ALL')
   const [correlation, setCorrelation] = useState(null)
   const [totals, setTotals] = useState(null)
+  const [excludeTop2, setExcludeTop2] = useState(false)
 
   useEffect(() => {
     if (!month) return
@@ -50,16 +51,24 @@ const BlogEngagementCorrelationChart = () => {
 
   const currentData = useMemo(() => {
     if (!correlation) return []
-    return correlation[activeTab] || []
-  }, [correlation, activeTab])
+    const data = correlation[activeTab] || []
+
+    // Top2 제외 처리: 발행량 기준으로 정렬 후 상위 2개 제외
+    if (excludeTop2 && data.length > 2) {
+      const sorted = [...data].sort((a, b) => b.totalPosts - a.totalPosts)
+      return sorted.slice(2)
+    }
+
+    return data
+  }, [correlation, activeTab, excludeTop2])
 
   const apexConfig = useMemo(() => {
     if (!currentData.length) return null
 
     const categories = currentData.map((item) => item.keyword)
     const postSeries = currentData.map((item) => item.totalPosts)
-    const participationSeries = currentData.map((item) => Number(((item.participation || 0) * 100).toFixed(1)))
-    const efficiencySeries = currentData.map((item) => Number(((item.searchToPostRatio || 0)).toFixed(1)))
+    const salesEfficiencySeries = currentData.map((item) => Number((item.salesEfficiency || 0).toFixed(1)))
+    const searchEfficiencySeries = currentData.map((item) => Number(((item.searchToPostRatio || 0)).toFixed(1)))
     const labelColors = currentData.map((item) => (item.isAsterasys ? '#2563eb' : '#64748b'))
 
     return {
@@ -70,14 +79,14 @@ const BlogEngagementCorrelationChart = () => {
           data: postSeries
         },
         {
-          name: '참여도(%)',
+          name: '판매효율(%)',
           type: 'line',
-          data: participationSeries
+          data: salesEfficiencySeries
         },
         {
           name: '검색→발행 (1K단위)',
           type: 'line',
-          data: efficiencySeries
+          data: searchEfficiencySeries
         }
       ],
       options: {
@@ -126,7 +135,7 @@ const BlogEngagementCorrelationChart = () => {
           {
             opposite: true,
             title: {
-              text: '참여도(%)'
+              text: '판매효율(%)'
             },
             labels: {
               formatter: (value) => `${value.toFixed(0)}%`
@@ -163,20 +172,34 @@ const BlogEngagementCorrelationChart = () => {
       <div className={`card stretch stretch-full ${isExpanded ? 'card-expand' : ''} ${refreshKey ? 'card-loading' : ''}`}>
         <div className='card-header d-flex align-items-center justify-content-between flex-wrap gap-3'>
           <div>
-            <h5 className='card-title mb-1'>검색량 대비 블로그 참여 상관관계</h5>
-            <p className='text-muted fs-12 mb-0'>제품별 발행량·참여도·검색 전환 효율 비교</p>
+            <h5 className='card-title mb-1'>블로그 발행 대비 판매효율 분석</h5>
+            <p className='text-muted fs-12 mb-0'>제품별 발행량·판매효율·검색 전환 효율 비교</p>
           </div>
-          <div className='btn-group btn-group-sm'>
-            {CATEGORIES.map((category) => (
-              <button
-                key={category}
-                type='button'
-                className={`btn ${activeTab === category ? 'btn-primary' : 'btn-outline-primary'}`}
-                onClick={() => setActiveTab(category)}
-              >
-                {category}
-              </button>
-            ))}
+          <div className='d-flex gap-2 align-items-center'>
+            <div className='form-check form-switch me-3'>
+              <input
+                className='form-check-input'
+                type='checkbox'
+                id='excludeTop2Switch'
+                checked={excludeTop2}
+                onChange={(e) => setExcludeTop2(e.target.checked)}
+              />
+              <label className='form-check-label small' htmlFor='excludeTop2Switch'>
+                TOP 2 제외
+              </label>
+            </div>
+            <div className='btn-group btn-group-sm'>
+              {CATEGORIES.map((category) => (
+                <button
+                  key={category}
+                  type='button'
+                  className={`btn ${activeTab === category ? 'btn-primary' : 'btn-outline-primary'}`}
+                  onClick={() => setActiveTab(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -200,8 +223,8 @@ const BlogEngagementCorrelationChart = () => {
                 <small className='text-muted'>카테고리 합계</small>
               </div>
               <div className='col-md-4'>
-                <div className='fw-semibold text-primary'>평균 참여 {(currentData.reduce((sum, item) => sum + (item.participation || 0), 0) / currentData.length * 100).toFixed(1)}%</div>
-                <small className='text-muted'>댓글+대댓글 / 발행</small>
+                <div className='fw-semibold text-primary'>평균 효율 {(currentData.reduce((sum, item) => sum + (item.salesEfficiency || 0), 0) / currentData.length).toFixed(1)}%</div>
+                <small className='text-muted'>판매 / 발행</small>
               </div>
               <div className='col-md-4'>
                 <div className='fw-semibold text-success'>효율 {(currentData.reduce((sum, item) => sum + (item.searchToPostRatio || 0), 0) / currentData.length).toFixed(1)}건/1K</div>

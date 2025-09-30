@@ -87,7 +87,7 @@ const AsteraysProductPortfolio = () => {
                     // Calculate rankings from market data
                     const blogRank = parseInt(blogItem['발행량 순위']) || 0
                     const cafeRank = parseInt(cafeItem['발행량 순위']) || 0
-                    const searchRank = parseInt(trafficItem['검색량 순위']) || 0  // Fixed field name
+                    const searchRank = parseInt(trafficItem['검색량 순위'] || trafficItem[' 검색량 순위']) || 0  // Handle column name with/without leading space
                     
                     // Parse numbers with comma removal
                     const parseNumber = (value) => {
@@ -115,7 +115,7 @@ const AsteraysProductPortfolio = () => {
                                 marketRank: cafeRank
                             },
                             search: {
-                                count: parseNumber(trafficItem['월감 검색량']),  // Fixed parsing with comma
+                                count: parseNumber(trafficItem['월간 검색량'] || trafficItem['월간 검색량 ']),  // Handle column name with/without trailing space
                                 marketRank: searchRank
                             },
                             sales: {

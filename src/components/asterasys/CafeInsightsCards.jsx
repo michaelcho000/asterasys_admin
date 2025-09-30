@@ -334,7 +334,7 @@ const CafeInsightsCards = () => {
           </div>
           <div className='card-body'>
             <div className='row align-items-center'>
-              <div className='col-lg-5 border-end border-light-subtle'>
+              <div className='col-lg-5 border-end border-light-subtle pe-3 pe-lg-4'>
                 {loading && <CardLoader />}
                 {!loading && chartOptions && (
                   <ReactApexChart
@@ -346,7 +346,7 @@ const CafeInsightsCards = () => {
                   />
                 )}
               </div>
-              <div className='col-lg-7'>
+              <div className='col-lg-7 ps-3 ps-lg-4'>
                 <div className='row g-3'>
                   {technologyBreakdown.map((item) => (
                     <div key={item.technology} className='col-12'>

@@ -30,13 +30,13 @@ export async function GET(request) {
 
     const summary = {
       totalPosts: totals.totalPosts,
-      totalEngagement: totals.totalEngagement,
-      totalComments: totals.totalComments,
-      totalReplies: totals.totalReplies,
+      monthlySales: totals.monthlySales,
+      totalSales: totals.totalSales,
       asterasysPosts: totals.asterasys.totalPosts,
-      asterasysEngagement: totals.asterasys.totalEngagement,
+      asterasysMonthlySales: totals.asterasys.monthlySales,
+      asterasysTotalSales: totals.asterasys.totalSales,
       asterasysShare: totals.asterasysShare,
-      averageParticipation: totals.averageParticipation,
+      averageSalesEfficiency: totals.averageSalesEfficiency,
       postsPerThousandSearch: totals.postsPerThousandSearch,
       searchVolume: totals.searchVolume
     }

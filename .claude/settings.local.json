@@ -32,7 +32,15 @@
       "Bash(sw_vers)",
       "Bash(echo:*)",
       "Bash(env)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Bash(git clean:*)",
+      "Bash(git submodule:*)",
+      "Bash(rm:*)",
+      "Bash(git restore:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(npm audit:*)",
+      "Bash(npm --version)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []

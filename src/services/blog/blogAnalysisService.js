@@ -23,9 +23,9 @@ function formatBlogType(value) {
   return BLOG_TYPE_LABEL[value] || value
 }
 
-function calculateParticipation(totalComments, totalReplies, totalCount) {
-  if (!totalCount) return 0
-  return (totalComments + totalReplies) / totalCount
+function calculateSalesEfficiency(monthlySales, totalPosts) {
+  if (!totalPosts) return null
+  return (monthlySales / totalPosts) * 100
 }
 
 function safeDivide(numerator, denominator) {
@@ -38,29 +38,37 @@ function postsPerThousandSearch(posts, searchVolume) {
   return (posts / searchVolume) * 1000
 }
 
-function enrichProductsWithSearch(products, trafficMap) {
+function enrichProductsWithSearch(products, trafficMap, salesMap) {
   return products.map((product) => {
     const traffic = trafficMap.get(product.keyword)
     const searchVolume = traffic?.monthlySearchVolume || 0
     const searchRank = traffic?.searchRank || null
     const ratio = postsPerThousandSearch(product.totalPosts, searchVolume)
 
+    const sales = salesMap.get(product.keyword)
+    const monthlySales = sales?.monthlySales || 0
+    const totalSales = sales?.totalSales || 0
+    const salesEfficiency = calculateSalesEfficiency(monthlySales, product.totalPosts)
+
     return {
       ...product,
       searchVolume,
       searchRank,
       searchToPostRatio: ratio,
-      searchToPostRatioPercent: ratio != null ? ratio : null
+      searchToPostRatioPercent: ratio != null ? ratio : null,
+      monthlySales,
+      totalSales,
+      salesEfficiency
     }
   })
 }
 
 function calculatePerformanceScore(product) {
-  const weights = { posts: 0.5, participation: 0.3, searchEfficiency: 0.2 }
-  const participationScore = Math.min(product.participation * 100, 200)
+  const weights = { posts: 0.5, salesEfficiency: 0.3, searchEfficiency: 0.2 }
+  const salesEfficiencyScore = product.salesEfficiency != null ? Math.min(product.salesEfficiency * 2, 200) : 0
   const searchEfficiency = product.searchToPostRatio != null ? Math.min(product.searchToPostRatio * 10, 200) : 50
   return Math.round(
-    product.totalPosts * weights.posts + participationScore * weights.participation + searchEfficiency * weights.searchEfficiency
+    product.totalPosts * weights.posts + salesEfficiencyScore * weights.salesEfficiency + searchEfficiency * weights.searchEfficiency
   )
 }
 
@@ -70,11 +78,24 @@ export function buildBlogDataset(month) {
   const rawBlog = parser.parseCSV('asterasys_total_data - blog_rank.csv')
   const rawAuthors = parser.parseCSV('asterasys_total_data - blog_user_rank.csv')
   const trafficRecords = parser.parseTraffic()
+  const salesRecords = parser.parseSales()
 
   const trafficMap = new Map()
   trafficRecords.forEach((record) => {
     trafficMap.set(record.keyword, record)
   })
+
+  const salesMap = new Map()
+  salesRecords.forEach((record) => {
+    salesMap.set(record.keyword, record)
+  })
+
+  // Debug log for sales data
+  console.log(`[Blog Analysis] Month: ${month}, Sales records loaded: ${salesRecords.length}`)
+  if (salesRecords.length > 0) {
+    const asterasysSales = salesRecords.filter(r => ['쿨페이즈', '리프테라', '쿨소닉'].includes(r.keyword))
+    console.log('[Blog Analysis] Asterasys sales data:', asterasysSales)
+  }
 
   const productMap = new Map()
   let currentKeyword = ''
@@ -103,8 +124,6 @@ export function buildBlogDataset(month) {
 
     const blogTypeRaw = row['블로그유형']?.trim()
     const typeCount = parser.parseNumber(row['총 개수'])
-    const comments = parser.parseNumber(row['댓글 총 개수'])
-    const replies = parser.parseNumber(row['대댓글 총 개수'])
     const aggregateTotal = parser.parseNumber(row['발행량합'])
 
     if (!productMap.has(keyword)) {
@@ -115,8 +134,6 @@ export function buildBlogDataset(month) {
         rank: lastRank || null,
         totalPosts: 0,
         totalByTypes: 0,
-        totalComments: 0,
-        totalReplies: 0,
         blogTypes: [],
         isAsterasys: ASTERASYS_PRODUCTS.has(keyword)
       })
@@ -129,25 +146,18 @@ export function buildBlogDataset(month) {
     }
 
     product.totalByTypes += typeCount
-    product.totalComments += comments
-    product.totalReplies += replies
     product.technologyLabel = technologyLabel || product.technologyLabel
     product.technology = normalizeTechnology(product.technologyLabel)
     product.rank = product.rank || lastRank || null
 
     product.blogTypes.push({
       type: formatBlogType(blogTypeRaw),
-      posts: typeCount,
-      comments,
-      replies,
-      participation: calculateParticipation(comments, replies, typeCount)
+      posts: typeCount
     })
   })
 
   const products = Array.from(productMap.values()).map((product) => {
     const totalPosts = product.totalPosts || product.totalByTypes
-    const totalEngagement = product.totalComments + product.totalReplies
-    const participation = calculateParticipation(product.totalComments, product.totalReplies, totalPosts)
 
     const blogTypes = product.blogTypes
       .filter((entry) => entry.posts > 0)
@@ -159,21 +169,18 @@ export function buildBlogDataset(month) {
     return {
       ...product,
       totalPosts,
-      totalEngagement,
-      participation,
       blogTypes,
       blogTypeSummary: blogTypes.map((entry) => ({ type: entry.type, posts: entry.posts, share: entry.share }))
     }
   })
 
-  const enrichedProducts = enrichProductsWithSearch(products, trafficMap)
+  const enrichedProducts = enrichProductsWithSearch(products, trafficMap, salesMap)
 
   const totals = enrichedProducts.reduce(
     (acc, product) => {
       acc.totalPosts += product.totalPosts
-      acc.totalComments += product.totalComments
-      acc.totalReplies += product.totalReplies
-      acc.totalEngagement += product.totalEngagement
+      acc.monthlySales += product.monthlySales || 0
+      acc.totalSales += product.totalSales || 0
       acc.searchVolume += product.searchVolume || 0
 
       const technologyKey = product.technology || 'UNKNOWN'
@@ -182,21 +189,24 @@ export function buildBlogDataset(month) {
           technology: technologyKey,
           label: product.technologyLabel || technologyKey,
           posts: 0,
-          engagement: 0
+          sales: 0
         }
       }
 
       acc.technologyBreakdown[technologyKey].posts += product.totalPosts
-      acc.technologyBreakdown[technologyKey].engagement += product.totalEngagement
+      acc.technologyBreakdown[technologyKey].sales += product.monthlySales || 0
 
       if (product.isAsterasys) {
         acc.asterasys.totalPosts += product.totalPosts
-        acc.asterasys.totalEngagement += product.totalEngagement
+        acc.asterasys.monthlySales += product.monthlySales || 0
+        acc.asterasys.totalSales += product.totalSales || 0
         acc.asterasys.products.push({
           keyword: product.keyword,
           technology: product.technology,
           totalPosts: product.totalPosts,
-          participation: product.participation,
+          salesEfficiency: product.salesEfficiency,
+          monthlySales: product.monthlySales,
+          totalSales: product.totalSales,
           searchVolume: product.searchVolume,
           searchToPostRatio: product.searchToPostRatio
         })
@@ -206,14 +216,14 @@ export function buildBlogDataset(month) {
     },
     {
       totalPosts: 0,
-      totalComments: 0,
-      totalReplies: 0,
-      totalEngagement: 0,
+      monthlySales: 0,
+      totalSales: 0,
       searchVolume: 0,
       technologyBreakdown: {},
       asterasys: {
         totalPosts: 0,
-        totalEngagement: 0,
+        monthlySales: 0,
+        totalSales: 0,
         products: []
       }
     }
@@ -257,10 +267,9 @@ export function buildBlogDataset(month) {
     products: enrichedProducts.sort((a, b) => a.rank - b.rank),
     totals: {
       totalPosts: totals.totalPosts,
-      totalComments: totals.totalComments,
-      totalReplies: totals.totalReplies,
-      totalEngagement: totals.totalEngagement,
-      averageParticipation: totals.totalPosts ? totals.totalEngagement / totals.totalPosts : 0,
+      monthlySales: totals.monthlySales,
+      totalSales: totals.totalSales,
+      averageSalesEfficiency: totals.totalPosts ? calculateSalesEfficiency(totals.monthlySales, totals.totalPosts) : null,
       searchVolume: totals.searchVolume,
       postsPerThousandSearch: postsPerThousandSearch(totals.totalPosts, totals.searchVolume),
       asterasysShare: totals.totalPosts ? (totals.asterasys.totalPosts / totals.totalPosts) * 100 : 0,
@@ -293,16 +302,16 @@ export function splitProductsByTechnology(products) {
 export function buildLeaderboard(products) {
   const sorted = [...products].sort((a, b) => b.totalPosts - a.totalPosts)
   return sorted.map((product, index) => ({
-    rank: index + 1,
+    rank: index + 1,  // Always use sequential ranking based on current sort
+    originalRank: product.rank,  // Keep original rank for reference
     keyword: product.keyword,
     technology: product.technology,
     totalPosts: product.totalPosts,
-    participation: product.participation,
+    salesEfficiency: product.salesEfficiency,
+    monthlySales: product.monthlySales,
+    totalSales: product.totalSales,
     searchVolume: product.searchVolume,
     searchToPostRatio: product.searchToPostRatio,
-    totalEngagement: product.totalEngagement,
-    comments: product.totalComments,
-    replies: product.totalReplies,
     isAsterasys: product.isAsterasys,
     performanceScore: calculatePerformanceScore(product)
   }))
