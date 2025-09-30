@@ -54,3 +54,7 @@ Thumbs.db
 *.test.jsx.snap
 *.test.ts.snap
 *.test.tsx.snap
+
+# LLM Insights (검수 전 파일은 커밋하지 않음)
+data/processed/llm-insights.json
+data/processed/llm-insights-raw.txt

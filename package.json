@@ -30,9 +30,12 @@
     "process-data": "node scripts/processData.js",
     "ingest": "npm run process-data",
     "youtube:process": "node scripts/processYoutubeData.cjs",
-    "youtube:channels": "node scripts/extractAsterasysChannels.js"
+    "youtube:channels": "node scripts/extractAsterasysChannels.js",
+    "analyze-insights": "node scripts/analyzeLLMInsights.js",
+    "analyze-insights-enhanced": "node scripts/analyzeLLMInsightsEnhanced.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.65.0",
     "@auth/prisma-adapter": "^2.10.0",
     "@fullcalendar/core": "^6.1.19",
     "@fullcalendar/daygrid": "^6.1.15",

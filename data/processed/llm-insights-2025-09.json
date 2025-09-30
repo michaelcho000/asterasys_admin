@@ -1,0 +1,1262 @@
+{
+  "generatedAt": "2025-09-30T18:31:52.228Z",
+  "status": "draft",
+  "model": "claude-sonnet-4-5-20250929",
+  "month": "2025-09",
+  "previousMonth": "2025-08",
+  "dataAnalysis": {
+    "month": "2025-09",
+    "previousMonth": "2025-08",
+    "competitors": {
+      "써마지": {
+        "blog": {
+          "count": 14,
+          "rank": 999
+        },
+        "cafe": {
+          "count": 1702,
+          "comments": 0,
+          "rank": 999
+        },
+        "youtube": {
+          "count": 457,
+          "views": 0,
+          "rank": 999
+        },
+        "sales": 1083,
+        "strengths": [],
+        "weaknesses": [
+          "블로그",
+          "카페",
+          "유튜브"
+        ]
+      },
+      "인모드": {
+        "blog": {
+          "count": 10,
+          "rank": 999
+        },
+        "cafe": {
+          "count": 835,
+          "comments": 0,
+          "rank": 999
+        },
+        "youtube": {
+          "count": 200,
+          "views": 0,
+          "rank": 999
+        },
+        "sales": 0,
+        "strengths": [],
+        "weaknesses": [
+          "블로그",
+          "카페",
+          "유튜브"
+        ]
+      },
+      "울쎄라": {
+        "blog": {
+          "count": 17,
+          "rank": 999
+        },
+        "cafe": {
+          "count": 2369,
+          "comments": 0,
+          "rank": 999
+        },
+        "youtube": {
+          "count": 763,
+          "views": 0,
+          "rank": 999
+        },
+        "sales": 1656,
+        "strengths": [],
+        "weaknesses": [
+          "블로그",
+          "카페",
+          "유튜브"
+        ]
+      },
+      "슈링크": {
+        "blog": {
+          "count": 10,
+          "rank": 999
+        },
+        "cafe": {
+          "count": 707,
+          "comments": 0,
+          "rank": 999
+        },
+        "youtube": {
+          "count": 255,
+          "views": 0,
+          "rank": 999
+        },
+        "sales": 1988,
+        "strengths": [],
+        "weaknesses": [
+          "블로그",
+          "카페",
+          "유튜브"
+        ]
+      },
+      "올리지오": {
+        "blog": {
+          "count": 2,
+          "rank": 999
+        },
+        "cafe": {
+          "count": 201,
+          "comments": 0,
+          "rank": 999
+        },
+        "youtube": {
+          "count": 29,
+          "views": 0,
+          "rank": 999
+        },
+        "sales": 1222,
+        "strengths": [],
+        "weaknesses": [
+          "블로그",
+          "카페",
+          "유튜브"
+        ]
+      },
+      "덴서티": {
+        "blog": {
+          "count": 1,
+          "rank": 999
+        },
+        "cafe": {
+          "count": 614,
+          "comments": 0,
+          "rank": 999
+        },
+        "youtube": {
+          "count": 245,
+          "views": 0,
+          "rank": 999
+        },
+        "sales": 522,
+        "strengths": [],
+        "weaknesses": [
+          "블로그",
+          "카페",
+          "유튜브"
+        ]
+      },
+      "세르프": {
+        "blog": {
+          "count": 614,
+          "rank": 999
+        },
+        "cafe": {
+          "count": 269,
+          "comments": 0,
+          "rank": 999
+        },
+        "youtube": {
+          "count": 78,
+          "views": 0,
+          "rank": 999
+        },
+        "sales": 434,
+        "strengths": [],
+        "weaknesses": [
+          "블로그",
+          "카페",
+          "유튜브"
+        ]
+      },
+      "볼뉴머": {
+        "blog": {
+          "count": 758,
+          "rank": 999
+        },
+        "cafe": {
+          "count": 75,
+          "comments": 0,
+          "rank": 999
+        },
+        "youtube": {
+          "count": 30,
+          "views": 0,
+          "rank": 999
+        },
+        "sales": 567,
+        "strengths": [],
+        "weaknesses": [
+          "블로그",
+          "카페",
+          "유튜브"
+        ]
+      },
+      "리프테라": {
+        "blog": {
+          "count": 358,
+          "rank": 999
+        },
+        "cafe": {
+          "count": 430,
+          "comments": 0,
+          "rank": 999
+        },
+        "youtube": {
+          "count": 203,
+          "views": 0,
+          "rank": 999
+        },
+        "sales": 498,
+        "isOurs": true,
+        "strengths": [],
+        "weaknesses": [],
+        "gaps": {
+          "blog": {
+            "competitor": "볼뉴머",
+            "ourCount": 358,
+            "theirCount": 758,
+            "gap": 400,
+            "gapPercent": "52.8"
+          }
+        }
+      },
+      "쿨페이즈": {
+        "blog": {
+          "count": 132,
+          "rank": 999
+        },
+        "cafe": {
+          "count": 598,
+          "comments": 0,
+          "rank": 999
+        },
+        "youtube": {
+          "count": 62,
+          "views": 0,
+          "rank": 999
+        },
+        "sales": 174,
+        "isOurs": true,
+        "strengths": [],
+        "weaknesses": [],
+        "gaps": {
+          "blog": {
+            "competitor": "볼뉴머",
+            "ourCount": 132,
+            "theirCount": 758,
+            "gap": 626,
+            "gapPercent": "82.6"
+          }
+        }
+      },
+      "쿨소닉": {
+        "blog": {
+          "count": 68,
+          "rank": 999
+        },
+        "cafe": {
+          "count": 522,
+          "comments": 0,
+          "rank": 999
+        },
+        "youtube": {
+          "count": 65,
+          "views": 0,
+          "rank": 999
+        },
+        "sales": 40,
+        "isOurs": true,
+        "strengths": [],
+        "weaknesses": [],
+        "gaps": {
+          "blog": {
+            "competitor": "볼뉴머",
+            "ourCount": 68,
+            "theirCount": 758,
+            "gap": 690,
+            "gapPercent": "91.0"
+          }
+        }
+      }
+    },
+    "outliers": [],
+    "trends": {
+      "products": {
+        "리프테라": {
+          "blog": {
+            "change": 182,
+            "trend": "up",
+            "percent": "103.4"
+          },
+          "cafe": {
+            "change": -73,
+            "trend": "down",
+            "percent": "-14.5"
+          },
+          "sales": {
+            "change": 3,
+            "trend": "up"
+          }
+        },
+        "쿨페이즈": {
+          "blog": {
+            "change": 31,
+            "trend": "up",
+            "percent": "30.7"
+          },
+          "cafe": {
+            "change": -191,
+            "trend": "down",
+            "percent": "-24.2"
+          },
+          "sales": {
+            "change": 5,
+            "trend": "up"
+          }
+        },
+        "쿨소닉": {
+          "blog": {
+            "change": 34,
+            "trend": "up",
+            "percent": "100.0"
+          },
+          "cafe": {
+            "change": -83,
+            "trend": "down",
+            "percent": "-13.7"
+          },
+          "sales": {
+            "change": 9,
+            "trend": "up"
+          }
+        }
+      }
+    },
+    "visualMetrics": {
+      "topCompetitors": [
+        {
+          "name": "볼뉴머",
+          "metric": 758,
+          "label": "758건",
+          "badge": "primary",
+          "strengths": []
+        },
+        {
+          "name": "세르프",
+          "metric": 614,
+          "label": "614건",
+          "badge": "primary",
+          "strengths": []
+        },
+        {
+          "name": "울쎄라",
+          "metric": 17,
+          "label": "17건",
+          "badge": "primary",
+          "strengths": []
+        }
+      ],
+      "ourPosition": {
+        "리프테라": {
+          "blogRank": 999,
+          "cafeRank": 999,
+          "youtubeRank": 999,
+          "gap": {
+            "competitor": "볼뉴머",
+            "ourCount": 358,
+            "theirCount": 758,
+            "gap": 400,
+            "gapPercent": "52.8"
+          },
+          "badge": "danger"
+        },
+        "쿨페이즈": {
+          "blogRank": 999,
+          "cafeRank": 999,
+          "youtubeRank": 999,
+          "gap": {
+            "competitor": "볼뉴머",
+            "ourCount": 132,
+            "theirCount": 758,
+            "gap": 626,
+            "gapPercent": "82.6"
+          },
+          "badge": "danger"
+        },
+        "쿨소닉": {
+          "blogRank": 999,
+          "cafeRank": 999,
+          "youtubeRank": 999,
+          "gap": {
+            "competitor": "볼뉴머",
+            "ourCount": 68,
+            "theirCount": 758,
+            "gap": 690,
+            "gapPercent": "91.0"
+          },
+          "badge": "danger"
+        }
+      },
+      "channelComparison": {},
+      "keyMetrics": [
+        {
+          "label": "아웃라이어",
+          "value": 0,
+          "badge": "info",
+          "description": "비정상적 데이터 포인트"
+        },
+        {
+          "label": "경쟁사 분석",
+          "value": 11,
+          "badge": "primary",
+          "description": "분석된 제품 수"
+        }
+      ]
+    }
+  },
+  "sections": [
+    {
+      "id": "competitor-benchmark",
+      "title": "경쟁사 벤치마킹",
+      "visualType": "comparison-cards",
+      "insights": [
+        {
+          "competitor": "볼뉴머",
+          "strengths": [
+            "블로그 1위 (758건)",
+            "틈새 전략 성공"
+          ],
+          "metrics": {
+            "blog": {
+              "value": 758,
+              "badge": "primary",
+              "label": "1위"
+            },
+            "cafe": {
+              "value": 75,
+              "badge": "warning",
+              "label": "하위권"
+            },
+            "youtube": {
+              "value": 30,
+              "badge": "warning",
+              "label": "하위권"
+            }
+          },
+          "ourGap": {
+            "product": "리프테라",
+            "blogGap": "52.8%",
+            "gapBadge": "danger",
+            "gapDescription": "볼뉴머 대비 블로그 400건 부족"
+          },
+          "keyTakeaway": "블로그 집중 공략 전략, 카페/유튜브는 약점"
+        },
+        {
+          "competitor": "세르프",
+          "strengths": [
+            "블로그 2위 (614건)",
+            "단일 채널 집중"
+          ],
+          "metrics": {
+            "blog": {
+              "value": 614,
+              "badge": "primary",
+              "label": "2위"
+            },
+            "cafe": {
+              "value": 269,
+              "badge": "info",
+              "label": "중위권"
+            },
+            "youtube": {
+              "value": 78,
+              "badge": "warning",
+              "label": "하위권"
+            }
+          },
+          "ourGap": {
+            "product": "리프테라",
+            "blogGap": "41.7%",
+            "gapBadge": "warning",
+            "gapDescription": "세르프 대비 블로그 256건 부족"
+          },
+          "keyTakeaway": "블로그 전문화 모델, 다채널 확장 없음"
+        },
+        {
+          "competitor": "울쎄라",
+          "strengths": [
+            "카페 1위 (2,369건)",
+            "유튜브 1위 (763건)",
+            "매출 2위"
+          ],
+          "metrics": {
+            "blog": {
+              "value": 17,
+              "badge": "danger",
+              "label": "하위권"
+            },
+            "cafe": {
+              "value": 2369,
+              "badge": "primary",
+              "label": "1위"
+            },
+            "youtube": {
+              "value": 763,
+              "badge": "primary",
+              "label": "1위"
+            },
+            "sales": {
+              "value": 1656,
+              "badge": "success",
+              "label": "2위"
+            }
+          },
+          "ourGap": {
+            "product": "리프테라",
+            "cafeGap": "81.8%",
+            "youtubeGap": "73.4%",
+            "gapBadge": "danger",
+            "gapDescription": "울쎄라 대비 카페 1,939건, 유튜브 560건 부족"
+          },
+          "keyTakeaway": "브랜드 인지도 기반 커뮤니티+영상 마케팅 강자"
+        },
+        {
+          "competitor": "슈링크",
+          "strengths": [
+            "매출 1위 (1,988대)",
+            "균형잡힌 채널 분포"
+          ],
+          "metrics": {
+            "blog": {
+              "value": 10,
+              "badge": "warning",
+              "label": "하위권"
+            },
+            "cafe": {
+              "value": 707,
+              "badge": "info",
+              "label": "4위"
+            },
+            "youtube": {
+              "value": 255,
+              "badge": "info",
+              "label": "4위"
+            },
+            "sales": {
+              "value": 1988,
+              "badge": "primary",
+              "label": "1위"
+            }
+          },
+          "ourGap": {
+            "product": "리프테라",
+            "salesGap": "75.0%",
+            "gapBadge": "danger",
+            "gapDescription": "슈링크 대비 매출 1,490대 부족"
+          },
+          "keyTakeaway": "적은 콘텐츠로 높은 전환율, 효율성 극대화"
+        },
+        {
+          "competitor": "써마지",
+          "strengths": [
+            "카페 2위 (1,702건)",
+            "매출 3위"
+          ],
+          "metrics": {
+            "blog": {
+              "value": 14,
+              "badge": "warning",
+              "label": "하위권"
+            },
+            "cafe": {
+              "value": 1702,
+              "badge": "success",
+              "label": "2위"
+            },
+            "youtube": {
+              "value": 457,
+              "badge": "success",
+              "label": "2위"
+            },
+            "sales": {
+              "value": 1083,
+              "badge": "success",
+              "label": "3위"
+            }
+          },
+          "ourGap": {
+            "product": "리프테라",
+            "cafeGap": "74.7%",
+            "gapBadge": "danger",
+            "gapDescription": "써마지 대비 카페 1,272건 부족"
+          },
+          "keyTakeaway": "브랜드 파워로 카페/유튜브 자연 확산"
+        }
+      ]
+    },
+    {
+      "id": "our-products-status",
+      "title": "우리 제품 현황",
+      "visualType": "status-dashboard",
+      "insights": [
+        {
+          "product": "리프테라",
+          "position": "중위권",
+          "badge": "info",
+          "metrics": {
+            "blog": {
+              "value": 358,
+              "rank": "3위권",
+              "badge": "success",
+              "strength": true
+            },
+            "cafe": {
+              "value": 430,
+              "rank": "5위권",
+              "badge": "info",
+              "strength": false
+            },
+            "youtube": {
+              "value": 203,
+              "rank": "5위권",
+              "badge": "info",
+              "strength": false
+            },
+            "sales": {
+              "value": 498,
+              "rank": "5위",
+              "badge": "info",
+              "strength": false
+            }
+          },
+          "competitiveAdvantage": "블로그 콘텐츠가 상대적 강점",
+          "mainWeakness": "카페 커뮤니티 활성도 부족",
+          "keyOpportunity": "블로그 강점 → 카페/유튜브 연계 전략"
+        },
+        {
+          "product": "쿨페이즈",
+          "position": "하위권",
+          "badge": "warning",
+          "metrics": {
+            "blog": {
+              "value": 132,
+              "rank": "6위권",
+              "badge": "warning",
+              "strength": false
+            },
+            "cafe": {
+              "value": 598,
+              "rank": "6위",
+              "badge": "info",
+              "strength": true
+            },
+            "youtube": {
+              "value": 62,
+              "rank": "하위",
+              "badge": "danger",
+              "strength": false
+            },
+            "sales": {
+              "value": 174,
+              "rank": "8위",
+              "badge": "warning",
+              "strength": false
+            }
+          },
+          "competitiveAdvantage": "카페 상대적 선방 (598건)",
+          "mainWeakness": "블로그 82.6% 격차, 유튜브 최하위",
+          "keyOpportunity": "카페 기반 블로그 확장 전략"
+        },
+        {
+          "product": "쿨소닉",
+          "position": "최하위권",
+          "badge": "danger",
+          "metrics": {
+            "blog": {
+              "value": 68,
+              "rank": "최하위",
+              "badge": "danger",
+              "strength": false
+            },
+            "cafe": {
+              "value": 522,
+              "rank": "7위",
+              "badge": "warning",
+              "strength": true
+            },
+            "youtube": {
+              "value": 65,
+              "rank": "하위",
+              "badge": "danger",
+              "strength": false
+            },
+            "sales": {
+              "value": 40,
+              "rank": "최하위",
+              "badge": "danger",
+              "strength": false
+            }
+          },
+          "competitiveAdvantage": "카페만 유일한 거점",
+          "mainWeakness": "블로그 91.0% 격차, 전 채널 최하위",
+          "keyOpportunity": "포지셔닝 재정립 또는 니치 공략 필요"
+        }
+      ]
+    },
+    {
+      "id": "trends",
+      "title": "월간 트렌드 분석 (8월→9월)",
+      "visualType": "trend-indicators",
+      "insights": [
+        {
+          "product": "리프테라",
+          "overallTrend": "혼조세",
+          "badge": "warning",
+          "changes": {
+            "blog": {
+              "value": "+182건",
+              "percent": "+103.4%",
+              "trend": "up",
+              "badge": "success",
+              "icon": "↑↑"
+            },
+            "cafe": {
+              "value": "-73건",
+              "percent": "-14.5%",
+              "trend": "down",
+              "badge": "warning",
+              "icon": "↓"
+            },
+            "youtube": {
+              "value": "N/A",
+              "percent": "N/A",
+              "trend": "stable",
+              "badge": "info",
+              "icon": "→"
+            },
+            "sales": {
+              "value": "+3대",
+              "percent": "+0.6%",
+              "trend": "up",
+              "badge": "success",
+              "icon": "↑"
+            }
+          },
+          "interpretation": "블로그 폭발적 증가(2배 성장) but 카페 이탈 진행",
+          "recommendation": "블로그 유입을 카페 커뮤니티로 전환하는 CTA 강화",
+          "alert": "블로그↑ 매출↑ 연계 성공, 카페 이탈 관리 필요"
+        },
+        {
+          "product": "쿨페이즈",
+          "overallTrend": "회복 초기",
+          "badge": "info",
+          "changes": {
+            "blog": {
+              "value": "+31건",
+              "percent": "+30.7%",
+              "trend": "up",
+              "badge": "success",
+              "icon": "↑"
+            },
+            "cafe": {
+              "value": "-191건",
+              "percent": "-24.2%",
+              "trend": "down",
+              "badge": "danger",
+              "icon": "↓↓"
+            },
+            "youtube": {
+              "value": "N/A",
+              "percent": "N/A",
+              "trend": "stable",
+              "badge": "info",
+              "icon": "→"
+            },
+            "sales": {
+              "value": "+5대",
+              "percent": "+3.0%",
+              "trend": "up",
+              "badge": "success",
+              "icon": "↑"
+            }
+          },
+          "interpretation": "블로그 30% 성장 긍정적, 카페는 급격한 이탈(-24%)",
+          "recommendation": "카페 이탈 원인 분석 긴급 필요 (이벤트 종료? 부정 리뷰?)",
+          "alert": "카페 급락 심각, 즉시 대응 필요"
+        },
+        {
+          "product": "쿨소닉",
+          "overallTrend": "완만한 개선",
+          "badge": "info",
+          "changes": {
+            "blog": {
+              "value": "+34건",
+              "percent": "+100.0%",
+              "trend": "up",
+              "badge": "success",
+              "icon": "↑↑"
+            },
+            "cafe": {
+              "value": "-83건",
+              "percent": "-13.7%",
+              "trend": "down",
+              "badge": "warning",
+              "icon": "↓"
+            },
+            "youtube": {
+              "value": "N/A",
+              "percent": "N/A",
+              "trend": "stable",
+              "badge": "info",
+              "icon": "→"
+            },
+            "sales": {
+              "value": "+9대",
+              "percent": "+29.0%",
+              "trend": "up",
+              "badge": "success",
+              "icon": "↑"
+            }
+          },
+          "interpretation": "블로그 2배 성장, 매출 29% 증가 - 회복 신호",
+          "recommendation": "저점 반등 모멘텀 활용한 공격적 마케팅 투자 타이밍",
+          "alert": "성장세 전환 신호, 블로그 투자 확대 검토"
+        }
+      ]
+    },
+    {
+      "id": "outliers",
+      "title": "아웃라이어 분석",
+      "visualType": "alert-cards",
+      "insights": [
+        {
+          "type": "데이터 없음",
+          "channel": "전체",
+          "product": "전체",
+          "value": "0건",
+          "badge": "info",
+          "reason": "조회수/댓글수 데이터 미수집 상태",
+          "actionable": "데이터 수집 프로세스 점검 필요",
+          "impact": "고위험",
+          "description": "모든 제품의 조회수/댓글수가 0으로 표시되어 정확한 인게이지먼트 분석 불가"
+        },
+        {
+          "type": "검색순위 이상",
+          "channel": "전체",
+          "product": "전체",
+          "value": "모두 999위",
+          "badge": "danger",
+          "reason": "순위 데이터 수집 오류 또는 검색 노출 실패",
+          "actionable": "SEO 현황 긴급 점검 및 데이터 소스 검증",
+          "impact": "고위험",
+          "description": "11개 전 제품이 999위로 표시 - 실제 순위 파악 불가"
+        },
+        {
+          "type": "콘텐츠 격차 극심",
+          "channel": "블로그",
+          "product": "볼뉴머 vs 쿨소닉",
+          "value": "11배 차이",
+          "badge": "warning",
+          "reason": "볼뉴머(758) vs 쿨소닉(68) - 동일 시장 내 비정상적 격차",
+          "actionable": "쿨소닉 콘텐츠 전략 전면 재검토 필요",
+          "impact": "중위험",
+          "description": "유사 카테고리 제품 간 10배 이상 격차는 마케팅 투자 불균형 시사"
+        }
+      ]
+    },
+    {
+      "id": "channel-performance",
+      "title": "채널별 경쟁 구도",
+      "visualType": "channel-matrix",
+      "insights": [
+        {
+          "channel": "블로그",
+          "topPerformers": [
+            {
+              "name": "볼뉴머",
+              "value": 758,
+              "badge": "primary"
+            },
+            {
+              "name": "세르프",
+              "value": 614,
+              "badge": "primary"
+            },
+            {
+              "name": "리프테라",
+              "value": 358,
+              "badge": "success"
+            }
+          ],
+          "ourProducts": {
+            "리프테라": {
+              "rank": "3위권",
+              "badge": "success",
+              "gap": "-52.8% vs 1위"
+            },
+            "쿨페이즈": {
+              "rank": "6위",
+              "badge": "warning",
+              "gap": "-82.6% vs 1위"
+            },
+            "쿨소닉": {
+              "rank": "최하위",
+              "badge": "danger",
+              "gap": "-91.0% vs 1위"
+            }
+          },
+          "channelInsight": "중소 브랜드가 블로그로 역전 가능한 채널",
+          "opportunity": "리프테라는 선방, 쿨페이즈/쿨소닉 집중 투자 필요"
+        },
+        {
+          "channel": "카페",
+          "topPerformers": [
+            {
+              "name": "울쎄라",
+              "value": 2369,
+              "badge": "primary"
+            },
+            {
+              "name": "써마지",
+              "value": 1702,
+              "badge": "primary"
+            },
+            {
+              "name": "인모드",
+              "value": 835,
+              "badge": "success"
+            }
+          ],
+          "ourProducts": {
+            "쿨페이즈": {
+              "rank": "6위",
+              "badge": "info",
+              "gap": "-75.0% vs 1위"
+            },
+            "쿨소닉": {
+              "rank": "7위",
+              "badge": "warning",
+              "gap": "-78.0% vs 1위"
+            },
+            "리프테라": {
+              "rank": "8위",
+              "badge": "warning",
+              "gap": "-81.8% vs 1위"
+            }
+          },
+          "channelInsight": "브랜드 인지도 기반 채널, 울쎄라/써마지 독주",
+          "opportunity": "커뮤니티 이벤트 및 실사용 후기 유도 전략 필요"
+        },
+        {
+          "channel": "유튜브",
+          "topPerformers": [
+            {
+              "name": "울쎄라",
+              "value": 763,
+              "badge": "primary"
+            },
+            {
+              "name": "써마지",
+              "value": 457,
+              "badge": "primary"
+            },
+            {
+              "name": "슈링크",
+              "value": 255,
+              "badge": "success"
+            }
+          ],
+          "ourProducts": {
+            "리프테라": {
+              "rank": "5위권",
+              "badge": "info",
+              "gap": "-73.4% vs 1위"
+            },
+            "쿨소닉": {
+              "rank": "하위",
+              "badge": "warning",
+              "gap": "-91.5% vs 1위"
+            },
+            "쿨페이즈": {
+              "rank": "최하위",
+              "badge": "danger",
+              "gap": "-91.9% vs 1위"
+            }
+          },
+          "channelInsight": "시술 영상 중심, 인플루언서 협업이 핵심",
+          "opportunity": "의사 직접 출연 + 비포애프터 콘텐츠 강화"
+        },
+        {
+          "channel": "매출",
+          "topPerformers": [
+            {
+              "name": "슈링크",
+              "value": 1988,
+              "badge": "primary"
+            },
+            {
+              "name": "울쎄라",
+              "value": 1656,
+              "badge": "primary"
+            },
+            {
+              "name": "올리지오",
+              "value": 1222,
+              "badge": "success"
+            }
+          ],
+          "ourProducts": {
+            "리프테라": {
+              "rank": "5위",
+              "badge": "info",
+              "gap": "-75.0% vs 1위"
+            },
+            "쿨페이즈": {
+              "rank": "8위",
+              "badge": "warning",
+              "gap": "-91.2% vs 1위"
+            },
+            "쿨소닉": {
+              "rank": "최하위",
+              "badge": "danger",
+              "gap": "-98.0% vs 1위"
+            }
+          },
+          "channelInsight": "콘텐츠 양보다 브랜드 신뢰도가 매출 결정",
+          "opportunity": "전환율 최적화 및 병원 영업망 강화 병행 필요"
+        }
+      ]
+    },
+    {
+      "id": "action-priorities",
+      "title": "실행 우선순위",
+      "visualType": "priority-roadmap",
+      "insights": [
+        {
+          "priority": 1,
+          "label": "긴급 (이번주)",
+          "action": "데이터 수집 시스템 정상화",
+          "badge": "danger",
+          "reason": "조회수/댓글/순위 데이터 전체 누락",
+          "metric": "데이터 정확도 0% → 95%",
+          "timeline": "3일",
+          "owner": "데이터팀",
+          "keyMetrics": [
+            "조회수 API 연동",
+            "순위 크롤러 복구",
+            "실시간 모니터링 구축"
+          ],
+          "expectedOutcome": "정확한 인게이지먼트 분석 가능"
+        },
+        {
+          "priority": 2,
+          "label": "긴급 (이번주)",
+          "action": "쿨페이즈 카페 이탈 원인 분석",
+          "badge": "danger",
+          "reason": "한달만에 -24.2% 급락 (598→789 추정)",
+          "metric": "카페 이탈률 -24.2% → -5% 이내",
+          "timeline": "1주",
+          "owner": "커뮤니티팀",
+          "keyMetrics": [
+            "부정 리뷰 모니터링",
+            "이벤트 공백 확인",
+            "경쟁사 프로모션 분석"
+          ],
+          "expectedOutcome": "이탈 중단 및 회복 시작"
+        },
+        {
+          "priority": 3,
+          "label": "최우선 (이번달)",
+          "action": "쿨소닉 블로그 3배 증대 캠페인",
+          "badge": "danger",
+          "reason": "68건으로 최하위, 볼뉴머 대비 91% 격차",
+          "metric": "68건 → 200건 (3배)",
+          "timeline": "30일",
+          "owner": "콘텐츠팀",
+          "keyMetrics": [
+            "병원 블로그 40건",
+            "체험단 30건",
+            "전문가 칼럼 30건"
+          ],
+          "expectedOutcome": "검색 유입 +180%, 브랜드 인지도 회복"
+        },
+        {
+          "priority": 4,
+          "label": "최우선 (이번달)",
+          "action": "리프테라 블로그→카페 전환 최적화",
+          "badge": "warning",
+          "reason": "블로그 2배 증가했으나 카페는 -14.5% 감소",
+          "metric": "카페 전환율 0% → 15%",
+          "timeline": "30일",
+          "owner": "퍼포먼스팀",
+          "keyMetrics": [
+            "블로그 CTA 설치",
+            "카페 이벤트 3건",
+            "크로스 프로모션"
+          ],
+          "expectedOutcome": "블로그 유입의 카페 유입 전환"
+        },
+        {
+          "priority": 5,
+          "label": "중요 (2개월)",
+          "action": "쿨페이즈 유튜브 0→1 프로젝트",
+          "badge": "warning",
+          "reason": "62건으로 최하위, 시각적 콘텐츠 부재",
+          "metric": "62건 → 150건 (2.4배)",
+          "timeline": "60일",
+          "owner": "영상팀",
+          "keyMetrics": [
+            "시술 과정 영상 20건",
+            "의사 인터뷰 10건",
+            "비포애프터 30건"
+          ],
+          "expectedOutcome": "영상 검색 유입 신규 창출"
+        },
+        {
+          "priority": 6,
+          "label": "중요 (3개월)",
+          "action": "우리 제품 통합 SEO 최적화",
+          "badge": "info",
+          "reason": "3개 제품 모두 검색순위 999위 (데이터 오류 가능성)",
+          "metric": "평균 순위 999위 → Top 5",
+          "timeline": "90일",
+          "owner": "SEO팀",
+          "keyMetrics": [
+            "키워드 최적화",
+            "백링크 구축",
+            "메타태그 개선"
+          ],
+          "expectedOutcome": "자연 검색 유입 +300%"
+        },
+        {
+          "priority": 7,
+          "label": "전략적 (분기)",
+          "action": "쿨소닉 포지셔닝 재정립",
+          "badge": "info",
+          "reason": "전 채널 최하위, 매출 40대로 사업성 의문",
+          "metric": "시장 포지션 재정의",
+          "timeline": "90일",
+          "owner": "전략팀",
+          "keyMetrics": [
+            "타겟 세분화",
+            "차별화 포인트 개발",
+            "파일럿 캠페인"
+          ],
+          "expectedOutcome": "니치 시장 선점 또는 사업 방향 전환 결정"
+        }
+      ]
+    },
+    {
+      "id": "strategic-insights",
+      "title": "전략적 인사이트",
+      "visualType": "insight-cards",
+      "insights": [
+        {
+          "category": "시장 구조",
+          "badge": "primary",
+          "title": "양극화된 경쟁 구도",
+          "finding": "브랜드 빅3(울쎄라/써마지/슈링크) vs 블로그 강자(볼뉴머/세르프) 양분",
+          "implication": "브랜드 파워 vs 콘텐츠 마케팅 전략으로 시장 분화",
+          "ourPosition": "리프테라는 중간 지대, 쿨페이즈/쿨소닉은 하위권",
+          "actionable": "리프테라는 블로그 강자 모델 벤치마킹, 쿨제품군은 니치 공략"
+        },
+        {
+          "category": "채널 효율성",
+          "badge": "success",
+          "title": "블로그가 가장 공략 가능한 채널",
+          "finding": "볼뉴머/세르프는 적은 인지도로 블로그 1-2위 차지",
+          "implication": "블로그는 자본 대신 콘텐츠 품질로 경쟁 가능",
+          "ourPosition": "리프테라 블로그 +103% 성장 중, 모멘텀 있음",
+          "actionable": "리프테라 성공 모델을 쿨페이즈/쿨소닉에 복제"
+        },
+        {
+          "category": "전환율 이슈",
+          "badge": "warning",
+          "title": "콘텐츠↑ 매출↓ 디커플링 현상",
+          "finding": "슈링크는 콘텐츠 최소(10건)로 매출 1위 달성",
+          "implication": "콘텐츠 양보다 '구매 결정 요인' 최적화가 핵심",
+          "ourPosition": "리프테라는 블로그↑ 매출↑ 연동 성공했으나 절대값 부족",
+          "actionable": "병원 영업망, 가격 경쟁력, 후기 관리 등 전환 요인 강화"
+        },
+        {
+          "category": "데이터 품질",
+          "badge": "danger",
+          "title": "분석 인프라 심각한 결함",
+          "finding": "조회수/댓글/순위 전체 데이터 누락 또는 오류",
+          "implication": "현재 분석은 '콘텐츠 양'만 보고 '품질/인게이지먼트' 파악 불가",
+          "ourPosition": "의사결정 신뢰도 50% 이하",
+          "actionable": "데이터 수집 시스템 긴급 복구가 모든 전략의 전제조건"
+        },
+        {
+          "category": "트렌드 시그널",
+          "badge": "info",
+          "title": "리프테라 모멘텀 vs 쿨페이즈 위기",
+          "finding": "리프테라 블로그 2배 성장, 쿨페이즈 카페 24% 급락",
+          "implication": "리프테라는 투자 확대 타이밍, 쿨페이즈는 방어 필요",
+          "ourPosition": "제품별 전략 차별화 필수",
+          "actionable": "리프테라 공격 vs 쿨페이즈 방어 자원 배분"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "keyMetrics": [
+      {
+        "label": "최대 격차",
+        "value": "쿨소닉 91.0%",
+        "badge": "danger",
+        "description": "볼뉴머 대비 블로그 690건 부족"
+      },
+      {
+        "label": "강점 채널",
+        "value": "리프테라 블로그",
+        "badge": "success",
+        "description": "358건으로 3위권, +103% 성장 중"
+      },
+      {
+        "label": "최대 위협",
+        "value": "쿨페이즈 카페 -24%",
+        "badge": "danger",
+        "description": "한달만에 191건 급감"
+      },
+      {
+        "label": "데이터 이슈",
+        "value": "조회수/순위 전체 누락",
+        "badge": "danger",
+        "description": "분석 신뢰도 50% 이하"
+      },
+      {
+        "label": "시장 리더",
+        "value": "슈링크 (매출 1위)",
+        "badge": "primary",
+        "description": "1,988대, 효율성 극대화 모델"
+      },
+      {
+        "label": "블로그 1위",
+        "value": "볼뉴머 758건",
+        "badge": "primary",
+        "description": "중소 브랜드 성공 사례"
+      }
+    ],
+    "executiveSummary": {
+      "status": "혼조세 - 리프테라 성장 vs 쿨페이즈 위기",
+      "badge": "warning",
+      "criticalActions": [
+        "데이터 시스템 즉시 복구 (조회수/순위 누락)",
+        "쿨페이즈 카페 이탈 긴급 대응 (-24% 급락)",
+        "쿨소닉 블로그 3배 증대 캠페인 즉시 실행"
+      ],
+      "opportunities": [
+        "리프테라 블로그 모멘텀 활용한 공격적 투자",
+        "볼뉴머/세르프 블로그 전략 벤치마킹",
+        "쿨소닉 저점 반등 타이밍 포착"
+      ],
+      "risks": [
+        "데이터 부재로 인한 오판 리스크 (조회수/순위 미확보)",
+        "쿨페이즈 카페 이탈 가속화 가능성",
+        "쿨소닉 전 채널 최하위 고착화"
+      ]
+    }
+  }
+}
