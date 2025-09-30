@@ -89,7 +89,7 @@ const LatestLeads = ({title}) => {
             const youtubeScore = parseInt(youtubeItem['총 발행량']) || 0
             const blogScore = parseInt(blogItem['발행량합']) || 0  // blog_rank는 '발행량합' 컬럼 사용
             const newsScore = parseInt(newsItem['총 발행량']) || 0
-            const searchScore = parseInt(trafficItem['월감 검색량']?.replace(/,/g, '') || 0)
+            const searchScore = parseInt(trafficItem['월간 검색량']?.replace(/,/g, '') || 0)
             
             // 판매량 처리: 데이터가 있는 경우만 숫자로, 없으면 null
             const monthlyRawValue = salesItem ? (salesItem[monthlySalesColumn] ?? salesItem['8월 판매량']) : null

@@ -127,7 +127,7 @@ const useCompetitorAnalysis = () => {
         // 3. 검색량 점수 추가
         trafficData.forEach(item => {
             if (competitors.has(item.키워드)) {
-                const searchVolume = parseInt(item['월감 검색량']?.replace(/,/g, '') || 0)
+                const searchVolume = parseInt(item['월간 검색량']?.replace(/,/g, '') || 0)
                 const competitor = competitors.get(item.키워드)
                 competitor.searchScore = searchVolume
                 competitor.rawData.search = { 검색량: searchVolume }

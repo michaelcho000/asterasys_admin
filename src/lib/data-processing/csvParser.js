@@ -87,11 +87,11 @@ export class CSVParser {
    */
   parseTraffic() {
     const records = this.parseCSV('asterasys_total_data - traffic.csv');
-    
+
     return records.map(record => ({
       keyword: record['키워드']?.trim() || '',
-      group: record['그룹']?.trim() || '', 
-      monthlySearchVolume: this.parseNumber(record['월감 검색량']),
+      group: record['그룹']?.trim() || '',
+      monthlySearchVolume: this.parseNumber(record['월간 검색량']),
       searchRank: this.parseNumber(record['검색량 순위']),
       source: 'traffic'
     })).filter(record => record.keyword);

@@ -145,13 +145,13 @@ const KPICalculations = {
     console.log('Filtered Asterasys products:', asterasysData);
     
     const asterasysTotal = asterasysData.reduce((sum, item) => {
-      const value = parseValue(item['월감 검색량']);
-      console.log(`Product: ${item['키워드']}, Raw: ${item['월감 검색량']}, Parsed: ${value}`);
+      const value = parseValue(item['월간 검색량']);
+      console.log(`Product: ${item['키워드']}, Raw: ${item['월간 검색량']}, Parsed: ${value}`);
       return sum + value;
     }, 0);
-    
-    const marketTotal = trafficData.reduce((sum, item) => 
-      sum + parseValue(item['월감 검색량']), 0);
+
+    const marketTotal = trafficData.reduce((sum, item) =>
+      sum + parseValue(item['월간 검색량']), 0);
     const marketShare = marketTotal > 0 ? (asterasysTotal / marketTotal) * 100 : 0;
     
     console.log('Asterasys Total:', asterasysTotal);
@@ -169,37 +169,54 @@ const KPICalculations = {
     };
   },
   
-  // 판매량 (새로운 CSV 형식: 총 판매량과 8월 판매량으로 구분)
-  salesVolume: (salesData) => {
+  // 판매량 (새로운 CSV 형식: 총 판매량과 월간 판매량으로 구분)
+  salesVolume: (salesData, monthNumber = null) => {
     const asterasysData = filterAsterasysProducts(salesData);
-    
+
     // 총 판매량 기준 계산
-    const asterasysTotalSales = asterasysData.reduce((sum, item) => 
+    const asterasysTotalSales = asterasysData.reduce((sum, item) =>
       sum + parseValue(item['총 판매량']), 0);
-    const marketTotalSales = salesData.reduce((sum, item) => 
+    const marketTotalSales = salesData.reduce((sum, item) =>
       sum + parseValue(item['총 판매량']), 0);
-    
-    // 8월 판매량 기준 계산 (월간 성과 참고용)
-    const asterasysAugustSales = asterasysData.reduce((sum, item) => 
-      sum + parseValue(item['8월 판매량']), 0);
-    const marketAugustSales = salesData.reduce((sum, item) => 
-      sum + parseValue(item['8월 판매량']), 0);
-    
+
+    // 월간 판매량 컬럼명 동적 감지
+    let monthlyColumnName = null;
+    let monthLabel = '해당월';
+
+    if (salesData.length > 0) {
+      const firstItem = salesData[0];
+      const monthColumns = Object.keys(firstItem).filter(key => key.includes('월 판매량'));
+      if (monthColumns.length > 0) {
+        monthlyColumnName = monthColumns[0];
+        // "8월 판매량" -> "8월" 추출
+        monthLabel = monthlyColumnName.replace(' 판매량', '');
+      }
+    }
+
+    // 월간 판매량 기준 계산
+    const asterasysMonthSales = monthlyColumnName
+      ? asterasysData.reduce((sum, item) => sum + parseValue(item[monthlyColumnName]), 0)
+      : 0;
+    const marketMonthSales = monthlyColumnName
+      ? salesData.reduce((sum, item) => sum + parseValue(item[monthlyColumnName]), 0)
+      : 0;
+
     const marketShare = marketTotalSales > 0 ? (asterasysTotalSales / marketTotalSales) * 100 : 0;
-    const augustMarketShare = marketAugustSales > 0 ? (asterasysAugustSales / marketAugustSales) * 100 : 0;
-    
+    const monthMarketShare = marketMonthSales > 0 ? (asterasysMonthSales / marketMonthSales) * 100 : 0;
+
     return {
       asterasysTotal: asterasysTotalSales,
       marketTotal: marketTotalSales,
-      asterasysAugust: asterasysAugustSales,
-      marketAugust: marketAugustSales,
+      asterasysMonth: asterasysMonthSales,
+      marketMonth: marketMonthSales,
+      monthLabel,
       marketShare,
-      augustMarketShare,
+      monthMarketShare,
       value: asterasysTotalSales,
       total: marketTotalSales,
       percentage: calculateMarketShare(asterasysTotalSales, marketTotalSales),
       context: formatContext('전체 시장 대비', calculateMarketShare(asterasysTotalSales, marketTotalSales), asterasysTotalSales, marketTotalSales, '대') +
-               ` | 8월: ${asterasysAugustSales}대 (시장 점유율 ${augustMarketShare.toFixed(1)}%)`
+               ` | ${monthLabel}: ${asterasysMonthSales}대 (시장 점유율 ${monthMarketShare.toFixed(1)}%)`
     };
   }
 };
