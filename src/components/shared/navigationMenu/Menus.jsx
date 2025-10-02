@@ -30,6 +30,13 @@ const Menus = () => {
         }
     };
 
+    const handleDisabledLink = (e, path) => {
+        if (path === "#disabled") {
+            e.preventDefault();
+            alert("내보내기 기능은 준비 중입니다.");
+        }
+    };
+
     useEffect(() => {
         if (pathName !== "/") {
             const x = pathName.split("/");
@@ -106,7 +113,12 @@ const Menus = () => {
                                             </li>
                                         ) : (
                                             <li className={`nxl-item ${pathName === path ? "active" : ""}`}>
-                                                <Link className="nxl-link" href={path} target={target}>
+                                                <Link
+                                                    className="nxl-link"
+                                                    href={path}
+                                                    target={target}
+                                                    onClick={(e) => handleDisabledLink(e, path)}
+                                                >
                                                     {name}
                                                 </Link>
                                             </li>

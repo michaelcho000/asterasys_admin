@@ -109,13 +109,14 @@ export const asterasysMenuList = [
                 name: "옥외 광고",
                 path: "/reports/outdoor-ads",
                 subdropdownMenu: []
-            },
-            {
-                id: 10,
-                name: "자동완성 작업",
-                path: "/reports/auto-complete",
-                subdropdownMenu: []
             }
+            // HIDDEN: 자동완성 작업 메뉴 - 필요시 주석 해제하여 복원
+            // {
+            //     id: 10,
+            //     name: "자동완성 작업",
+            //     path: "/reports/auto-complete",
+            //     subdropdownMenu: []
+            // }
         ]
     },
     {
@@ -127,19 +128,19 @@ export const asterasysMenuList = [
             {
                 id: 1,
                 name: "경영진 리포트",
-                path: "/export/executive",
+                path: "#disabled",
                 subdropdownMenu: []
             },
             {
                 id: 2,
                 name: "상세 분석 리포트",
-                path: "/export/detailed",
+                path: "#disabled",
                 subdropdownMenu: []
             },
             {
                 id: 3,
                 name: "원본 데이터 (CSV)",
-                path: "/export/raw-data",
+                path: "#disabled",
                 subdropdownMenu: []
             }
         ]
