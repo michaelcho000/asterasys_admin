@@ -40,7 +40,10 @@
       "Bash(git ls-tree:*)",
       "Bash(npm audit:*)",
       "Bash(npm --version)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(git fetch:*)",
+      "Bash(git stash:*)",
+      "Bash(git reset:*)"
     ],
     "deny": [],
     "ask": []

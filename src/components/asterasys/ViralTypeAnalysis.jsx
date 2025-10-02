@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import { useSelectedMonthStore } from '@/store/useSelectedMonthStore'
 import { withMonthParam } from '@/utils/withMonthParam'
 import CardLoader from '@/components/shared/CardLoader'
+import InsightRenderer from './InsightRenderer'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -16,6 +17,7 @@ const ViralTypeAnalysis = () => {
     competitor: { organic: 43, managed: 57 },
     target: { organic: 35, managed: 65 }
   })
+  const [llmInsights, setLlmInsights] = useState(null)
 
   useEffect(() => {
     if (!month) return
@@ -39,6 +41,18 @@ const ViralTypeAnalysis = () => {
           competitor: { organic: competitorOrganic, managed: competitorManaged },
           target: { organic: 35, managed: 65 }
         })
+
+        // Load LLM-generated insights
+        try {
+          const insightsRes = await fetch(`/api/llm-insights?month=${month}`)
+          if (insightsRes.ok) {
+            const insights = await insightsRes.json()
+            setLlmInsights(insights)
+          }
+        } catch (insightError) {
+          console.warn('LLM 인사이트 로드 실패:', insightError)
+        }
+
       } catch (error) {
         console.error('브랜딩 전략 데이터 로드 실패:', error)
         // Fallback to calculated values from analysis
@@ -200,70 +214,76 @@ const ViralTypeAnalysis = () => {
           </div>
         </div>
 
-        {/* Monthly Insights */}
-        <div className="mt-4 pt-4 border-top">
-          <div className="row g-3">
-            <div className="col-md-6">
-              <div className="d-flex align-items-start">
-                <div className="flex-shrink-0">
-                  <span className="badge bg-soft-primary text-primary" style={{ minWidth: '80px' }}>8월 분석</span>
+        {/* LLM Generated Insights - 2x2 Grid */}
+        {llmInsights?.viral && (
+          <div className="mt-4 pt-4 border-top">
+            <div className="row g-3">
+              {/* 현재 분석 */}
+              {llmInsights.viral.current && (
+                <div className="col-md-6">
+                  <div className="d-flex align-items-start">
+                    <div className="flex-shrink-0">
+                      <span className="badge bg-soft-primary text-primary" style={{ whiteSpace: 'nowrap' }}>
+                        {llmInsights.viral.current.title}
+                      </span>
+                    </div>
+                    <div className="flex-grow-1 ms-3">
+                      <InsightRenderer content={llmInsights.viral.current.content} />
+                    </div>
+                  </div>
                 </div>
-                <div className="flex-grow-1 ms-3">
-                  <p className="fs-12 text-dark mb-0">
-                    8월은 카페 중심의 댓글 마케팅이 전체 발행량의 45.3%를 차지하며 리프테라(503건), 쿨소닉(605건)이 초음파 그룹 내 2~4위를 유지했습니다. 고주파 시장에서는 쿨페이즈(789건)가 2위로 강세를 보였으나, 뉴스 채널에서는 12건으로 8위에 그쳐 언론 노출이 매우 부족했습니다. YouTube는 쿨페이즈(2건), 리프테라(7건)로 경쟁사 대비 심각하게 낮은 수준이며, 볼뉴머(71건 뉴스 기사, 캠페인 강도 HIGH)와 울쎄라(198건 뉴스)가 압도적 미디어 점유율을 보였습니다.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="d-flex align-items-start">
-                <div className="flex-shrink-0">
-                  <span className="badge bg-soft-warning text-warning" style={{ minWidth: '80px' }}>9월 분석</span>
-                </div>
-                <div className="flex-grow-1 ms-3">
-                  <p className="fs-12 text-dark mb-0">
-                    9월은 슈링크(200건 뉴스)가 울쎄라(161건)를 제치고 뉴스 채널 1위로 급부상하며 병원발행 64.3%로 B2B 마케팅을 강화했습니다. Asterasys는 카페에서 쿨페이즈(598건→4위), 리프테라(430건→4위)로 하락했고, 블로그는 쿨페이즈(132건→9위)로 8월 대비 발행량이 크게 감소했습니다. YouTube는 쿨페이즈(62건), 리프테라(203건)로 증가했으나 써마지(457건), 덴서티(245건) 대비 여전히 낮습니다. 경쟁사인 세르프(44건, 캠페인 강도 MEDIUM)가 적극적 PR을 전개했습니다.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+              )}
 
-        {/* Key Insights */}
-        <div className="mt-4 pt-4 border-top">
-          <div className="row g-3">
-            <div className="col-md-6">
-              <div className="d-flex align-items-start">
-                <div className="flex-shrink-0">
-                  <span className="badge bg-soft-info text-info" style={{ minWidth: '80px' }}>현재 상황</span>
+              {/* 향후 전략 */}
+              {llmInsights.viral.strategy && (
+                <div className="col-md-6">
+                  <div className="d-flex align-items-start">
+                    <div className="flex-shrink-0">
+                      <span className="badge bg-soft-success text-success" style={{ whiteSpace: 'nowrap' }}>
+                        {llmInsights.viral.strategy.title}
+                      </span>
+                    </div>
+                    <div className="flex-grow-1 ms-3">
+                      <InsightRenderer content={llmInsights.viral.strategy.content} />
+                    </div>
+                  </div>
                 </div>
-                <div className="flex-grow-1 ms-3">
-                  <p className="fs-12 text-dark mb-0">
-                    <strong>Organic {brandingData.current.organic}% / Managed {brandingData.current.managed}%</strong>로
-                    경쟁사 평균(Organic {brandingData.competitor.organic}%)보다 <strong className="text-danger">{Math.abs(brandingData.current.organic - brandingData.competitor.organic)}%p 낮습니다.</strong>
-                    카페 1,550건(전체 Managed의 85%)을 통한 인위 바이럴 전략에 집중하고 있으며, 이는 시장 초기 진입 단계에서 빠른 인지도 확산을 위한 적절한 선택입니다.
-                  </p>
+              )}
+
+              {/* 현재 상황 */}
+              {llmInsights.viral.situation && (
+                <div className="col-md-6">
+                  <div className="d-flex align-items-start">
+                    <div className="flex-shrink-0">
+                      <span className="badge bg-soft-info text-info" style={{ whiteSpace: 'nowrap' }}>
+                        {llmInsights.viral.situation.title}
+                      </span>
+                    </div>
+                    <div className="flex-grow-1 ms-3">
+                      <InsightRenderer content={llmInsights.viral.situation.content} />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="d-flex align-items-start">
-                <div className="flex-shrink-0">
-                  <span className="badge bg-soft-success text-success" style={{ minWidth: '80px' }}>성장 방향</span>
+              )}
+
+              {/* 성장 방향 */}
+              {llmInsights.viral.growth && (
+                <div className="col-md-6">
+                  <div className="d-flex align-items-start">
+                    <div className="flex-shrink-0">
+                      <span className="badge bg-soft-warning text-warning" style={{ whiteSpace: 'nowrap' }}>
+                        {llmInsights.viral.growth.title}
+                      </span>
+                    </div>
+                    <div className="flex-grow-1 ms-3">
+                      <InsightRenderer content={llmInsights.viral.growth.content} />
+                    </div>
+                  </div>
                 </div>
-                <div className="flex-grow-1 ms-3">
-                  <ul className="fs-12 text-dark mb-0 ps-3">
-                    <li><strong>병원 네트워크 확대</strong>: 30개 병원 추가 → 병원블로그 268 → 400건 (Q4 2025)</li>
-                    <li><strong>카페 질적 개선</strong>: 단순 발행량보다 진정성 있는 콘텐츠로 전환</li>
-                    <li><strong>카페 점진적 감소</strong>: 1,550 → 1,200건 (Q1 2026), 병원 자발적 콘텐츠 증가</li>
-                    <li><strong>Organic 35% 목표</strong>: 경쟁사 평균(43%)에 근접, 병원 중심 브랜딩 확립 (Q2 2026)</li>
-                  </ul>
-                </div>
-              </div>
+              )}
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )

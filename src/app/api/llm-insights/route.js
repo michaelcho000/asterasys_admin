@@ -2,18 +2,34 @@ import { NextResponse } from 'next/server'
 import fs from 'fs/promises'
 import path from 'path'
 
-const INSIGHTS_FILE = path.join(process.cwd(), 'data/processed/llm-insights.json')
-
-// GET: 인사이트 조회
-export async function GET() {
+// GET: 인사이트 조회 (월별, 상태별)
+export async function GET(request) {
   try {
+    // URL에서 파라미터 추출
+    const { searchParams } = new URL(request.url)
+    const month = searchParams.get('month') || '2025-09' // 기본값: 2025-09
+    const mode = searchParams.get('mode') // 'admin' 또는 null
+
+    // 월별 인사이트 파일 경로
+    const INSIGHTS_FILE = path.join(process.cwd(), `data/processed/llm-insights-${month}.json`)
+
     const data = await fs.readFile(INSIGHTS_FILE, 'utf-8')
     const insights = JSON.parse(data)
+
+    // 일반 사용자: approved 상태만 반환
+    if (mode !== 'admin' && insights.status !== 'approved') {
+      return NextResponse.json(
+        { error: '승인된 인사이트가 없습니다.' },
+        { status: 404 }
+      )
+    }
+
+    // 관리자 모드: 모든 상태 반환
     return NextResponse.json(insights)
   } catch (error) {
     if (error.code === 'ENOENT') {
       return NextResponse.json(
-        { error: '인사이트 파일이 없습니다. 먼저 분석을 실행해주세요.' },
+        { error: `${searchParams.get('month')} 인사이트 파일이 없습니다. 먼저 분석을 실행해주세요.` },
         { status: 404 }
       )
     }

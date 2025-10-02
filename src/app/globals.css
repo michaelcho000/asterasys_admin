@@ -1,0 +1,13 @@
+/* LLM Insight Renderer Styles */
+.insight-content > *:first-child {
+  margin-top: 0 !important;
+}
+
+.insight-content h6 {
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.insight-content h6:first-child {
+  margin-top: 0 !important;
+}
