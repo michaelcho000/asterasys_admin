@@ -3,6 +3,9 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 
+// Force dynamic rendering to fix useSearchParams prerendering error
+export const dynamic = 'force-dynamic'
+
 const InsightsPreviewV2 = () => {
   const searchParams = useSearchParams()
   const month = searchParams.get('month') || '2025-09'
