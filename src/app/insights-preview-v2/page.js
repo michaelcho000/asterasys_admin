@@ -1,12 +1,20 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 // Force dynamic rendering to fix useSearchParams prerendering error
 export const dynamic = 'force-dynamic'
 
-const InsightsPreviewV2 = () => {
+const SuspenseFallback = () => (
+  <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+    <div className="spinner-border text-primary" role="status">
+      <span className="visually-hidden">로딩중...</span>
+    </div>
+  </div>
+)
+
+const InsightsPreviewContent = () => {
   const searchParams = useSearchParams()
   const month = searchParams.get('month') || '2025-09'
 
@@ -377,5 +385,11 @@ const InsightsPreviewV2 = () => {
     </div>
   )
 }
+
+const InsightsPreviewV2 = () => (
+  <Suspense fallback={<SuspenseFallback />}>
+    <InsightsPreviewContent />
+  </Suspense>
+)
 
 export default InsightsPreviewV2
