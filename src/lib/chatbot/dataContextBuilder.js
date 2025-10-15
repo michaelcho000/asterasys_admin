@@ -217,17 +217,32 @@ export class DataContextBuilder {
           try {
             // JSON 인사이트 파일 처리 (현재 월만)
             if (JSON_INSIGHTS[source] && month === this.month) {
-              const path = `${process.cwd()}/data/processed/${JSON_INSIGHTS[source]}-${month}.json`
-
               try {
-                const fs = require('fs')
-                const jsonData = JSON.parse(fs.readFileSync(path, 'utf-8'))
-                console.log(`[RAG] Loaded JSON insight ${source} for ${month}`)
-                return { source, data: jsonData, isInsight: true, month }
+                // API를 통해 JSON 파일 가져오기 (서버리스 환경 대응)
+                const jsonUrl = `${this.baseUrl}/api/data/files/${JSON_INSIGHTS[source]}?month=${month}`
+                const response = await fetch(jsonUrl)
+
+                if (response.ok) {
+                  const jsonData = await response.json()
+                  console.log(`[RAG] Loaded JSON insight ${source} for ${month}`)
+                  return { source, data: jsonData, isInsight: true, month }
+                } else {
+                  console.warn(`[RAG] JSON insight ${source} not found for ${month} via API, trying fs`)
+
+                  // Fallback: fs로 시도 (로컬 개발 환경용)
+                  if (typeof window === 'undefined') {
+                    const fs = require('fs')
+                    const path = require('path')
+                    const filePath = path.join(process.cwd(), 'data/processed', `${JSON_INSIGHTS[source]}-${month}.json`)
+                    const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
+                    console.log(`[RAG] Loaded JSON insight ${source} for ${month} via fs`)
+                    return { source, data: jsonData, isInsight: true, month }
+                  }
+                }
               } catch (err) {
-                console.warn(`[RAG] JSON insight ${source} not found for ${month}, skipping`)
-                return { source, data: null, month }
+                console.warn(`[RAG] JSON insight ${source} not found for ${month}:`, err.message)
               }
+              return { source, data: null, month }
             }
 
             // CSV 데이터 처리

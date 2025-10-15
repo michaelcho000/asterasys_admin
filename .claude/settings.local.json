@@ -44,7 +44,10 @@
       "Bash(git fetch:*)",
       "Bash(git stash:*)",
       "Bash(git reset:*)",
-      "Bash(git diff:*)"
+      "Bash(git diff:*)",
+      "Bash(xargs ls:*)",
+      "Bash(awk:*)",
+      "Bash(npm ls:*)"
     ],
     "deny": [],
     "ask": []
