@@ -44,9 +44,11 @@ const JSON_INSIGHTS = {
 export class DataContextBuilder {
   constructor(month) {
     this.month = month
-    this.baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
-    console.log('[RAG] DataContextBuilder initialized with baseUrl:', this.baseUrl)
-    console.log('[RAG] NEXT_PUBLIC_APP_URL:', process.env.NEXT_PUBLIC_APP_URL)
+    // Vercel serverless 환경에서는 직접 파일 시스템 접근
+    this.useFileSystem = typeof window === 'undefined'
+    console.log('[RAG] DataContextBuilder initialized')
+    console.log('[RAG] - Month:', month)
+    console.log('[RAG] - Use filesystem:', this.useFileSystem)
   }
 
   /**
@@ -220,61 +222,159 @@ export class DataContextBuilder {
             // JSON 인사이트 파일 처리 (현재 월만)
             if (JSON_INSIGHTS[source] && month === this.month) {
               try {
-                // API를 통해 JSON 파일 가져오기 (서버리스 환경 대응)
-                const jsonUrl = `${this.baseUrl}/api/data/files/${JSON_INSIGHTS[source]}?month=${month}`
-                console.log(`[RAG] Fetching JSON insight ${source} from URL:`, jsonUrl)
-                const response = await fetch(jsonUrl)
+                const fs = require('fs')
+                const path = require('path')
 
-                if (response.ok) {
-                  const jsonData = await response.json()
-                  console.log(`[RAG] ✅ Loaded JSON insight ${source} for ${month}`)
-                  return { source, data: jsonData, isInsight: true, month }
-                } else {
-                  console.error(`[RAG] ❌ JSON insight ${source} not found via API:`, {
-                    url: jsonUrl,
-                    status: response.status,
-                    statusText: response.statusText,
-                    baseUrl: this.baseUrl
-                  })
-                  console.warn(`[RAG] Trying fs fallback for ${source}...`)
+                const jsonFileName = source === 'llm_insights'
+                  ? `llm-insights-${month}.json`
+                  : 'organic-viral-analysis.json'
 
-                  // Fallback: fs로 시도 (로컬 개발 환경용)
-                  if (typeof window === 'undefined') {
-                    const fs = require('fs')
-                    const path = require('path')
-                    const filePath = path.join(process.cwd(), 'data/processed', `${JSON_INSIGHTS[source]}-${month}.json`)
-                    const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
-                    console.log(`[RAG] Loaded JSON insight ${source} for ${month} via fs`)
-                    return { source, data: jsonData, isInsight: true, month }
-                  }
+                const jsonFilePath = path.join(process.cwd(), 'public/data/processed', jsonFileName)
+
+                console.log(`[RAG] Loading JSON insight ${source} from:`, jsonFilePath)
+
+                if (!fs.existsSync(jsonFilePath)) {
+                  console.error(`[RAG] ❌ JSON file not found:`, jsonFilePath)
+                  return { source, data: null, month }
                 }
+
+                const jsonContent = fs.readFileSync(jsonFilePath, 'utf8')
+                const jsonData = JSON.parse(jsonContent)
+                console.log(`[RAG] ✅ Loaded JSON insight ${source} for ${month}`)
+                return { source, data: jsonData, isInsight: true, month }
               } catch (err) {
-                console.warn(`[RAG] JSON insight ${source} not found for ${month}:`, err.message)
-              }
-              return { source, data: null, month }
-            }
-
-            // CSV 데이터 처리
-            if (!JSON_INSIGHTS[source]) {
-              const filename = DATA_SOURCES[source]
-              const url = `${this.baseUrl}/api/data/files/${filename}?month=${month}`
-
-              console.log(`[RAG] Fetching CSV ${source} from URL:`, url)
-              const response = await fetch(url)
-
-              if (!response.ok) {
-                console.error(`[RAG] ❌ Failed to fetch ${source} for ${month}:`, {
-                  url,
-                  status: response.status,
-                  statusText: response.statusText,
-                  baseUrl: this.baseUrl
-                })
+                console.error(`[RAG] ❌ Error loading JSON insight ${source}:`, err.message)
                 return { source, data: null, month }
               }
+            }
 
-              const data = await response.json()
-              console.log(`[RAG] ✅ Loaded CSV ${source} for ${month}: ${JSON.stringify(data).length} bytes`)
-              return { source, data, isInsight: false, month }
+            // CSV 데이터 처리 - 직접 파일 읽기
+            if (!JSON_INSIGHTS[source]) {
+              try {
+                const fs = require('fs')
+                const path = require('path')
+
+                const filename = DATA_SOURCES[source]
+                const csvFilePath = path.join(
+                  process.cwd(),
+                  'public/data/raw',
+                  month,
+                  `asterasys_total_data - ${filename}.csv`
+                )
+
+                console.log(`[RAG] Loading CSV ${source} from:`, csvFilePath)
+
+                if (!fs.existsSync(csvFilePath)) {
+                  console.error(`[RAG] ❌ CSV file not found:`, csvFilePath)
+                  return { source, data: null, month }
+                }
+
+                const csvContent = fs.readFileSync(csvFilePath, 'utf8')
+
+                // naver datalab 특별 처리
+                if (filename === 'naver datalab') {
+                  const lines = csvContent.split('\n')
+                  const dataLines = lines.slice(6)
+
+                  if (dataLines.length === 0) {
+                    console.error(`[RAG] ❌ Empty naver datalab file`)
+                    return { source, data: null, month }
+                  }
+
+                  const marketData = []
+                  for (let i = 1; i < dataLines.length; i++) {
+                    const line = dataLines[i].trim()
+                    if (!line) continue
+
+                    const cols = line.split(',')
+                    if (cols.length >= 6) {
+                      marketData.push({
+                        날짜: cols[0],
+                        리프테라: parseFloat(cols[1]) || 0,
+                        쿨페이즈: parseFloat(cols[3]) || 0,
+                        쿨소닉: parseFloat(cols[5]) || 0
+                      })
+                    }
+                  }
+
+                  const data = {
+                    success: true,
+                    filename,
+                    month,
+                    asterasysData: marketData,
+                    marketData,
+                    dataCount: {
+                      asterasys: marketData.length,
+                      market: marketData.length
+                    }
+                  }
+
+                  console.log(`[RAG] ✅ Loaded naver datalab for ${month}:`, marketData.length, 'rows')
+                  return { source, data, isInsight: false, month }
+                }
+
+                // 일반 CSV 처리
+                const lines = csvContent.split('\n').filter((line) => line.trim())
+
+                if (lines.length === 0) {
+                  console.error(`[RAG] ❌ Empty CSV file:`, csvFilePath)
+                  return { source, data: null, month }
+                }
+
+                const headers = lines[0].split(',').map((h) => h.trim())
+                const rows = lines.slice(1).map((line) => {
+                  const values = []
+                  let currentValue = ''
+                  let inQuotes = false
+
+                  for (let i = 0; i < line.length; i++) {
+                    const char = line[i]
+                    if (char === '"') {
+                      inQuotes = !inQuotes
+                    } else if (char === ',' && !inQuotes) {
+                      values.push(currentValue.trim())
+                      currentValue = ''
+                    } else {
+                      currentValue += char
+                    }
+                  }
+                  values.push(currentValue.trim())
+
+                  const row = {}
+                  headers.forEach((header, index) => {
+                    row[header] = values[index] || null
+                  })
+                  return row
+                })
+
+                const asterasysData = rows.filter((row) =>
+                  row.키워드?.includes('쿨페이즈') ||
+                  row.키워드?.includes('리프테라') ||
+                  row.키워드?.includes('쿨소닉') ||
+                  row.기기구분?.includes('쿨페이즈') ||
+                  row.기기구분?.includes('리프테라') ||
+                  row.기기구분?.includes('쿨소닉')
+                )
+
+                const data = {
+                  success: true,
+                  filename,
+                  month,
+                  headers,
+                  asterasysData,
+                  marketData: rows,
+                  dataCount: {
+                    asterasys: asterasysData.length,
+                    market: rows.length
+                  }
+                }
+
+                console.log(`[RAG] ✅ Loaded CSV ${source} for ${month}:`, asterasysData.length, 'asterasys rows,', rows.length, 'total rows')
+                return { source, data, isInsight: false, month }
+              } catch (err) {
+                console.error(`[RAG] ❌ Error loading CSV ${source}:`, err.message)
+                return { source, data: null, month }
+              }
             }
 
             return { source, data: null, month }
@@ -304,18 +404,19 @@ export class DataContextBuilder {
       // Detailed summary of what was loaded
       console.log('='.repeat(80))
       console.log(`[RAG] 📊 Context Build Summary:`)
+      console.log(`[RAG] - Query: "${query}"`)
       console.log(`[RAG] - Requested sources: ${requiredSources.length}`)
       console.log(`[RAG] - Successfully loaded: ${context.sources.length}`)
-      console.log(`[RAG] - Months processed: ${monthsToLoad}`)
-      console.log(`[RAG] - Loaded sources: ${context.sources.join(', ')}`)
-      console.log(`[RAG] - baseUrl used: ${this.baseUrl}`)
+      console.log(`[RAG] - Months processed: ${monthsToLoad} (${months.join(', ')})`)
+      console.log(`[RAG] - Loaded sources: [${context.sources.join(', ')}]`)
 
       if (context.sources.length === 0) {
-        console.error('[RAG] ❌ WARNING: NO DATA SOURCES LOADED! All fetch requests failed!')
-        console.error('[RAG] This likely means baseUrl is incorrect or API endpoints are not accessible')
+        console.error('[RAG] ❌ CRITICAL: NO DATA SOURCES LOADED!')
+        console.error('[RAG] All file reads failed - check file paths and permissions')
       } else if (context.sources.length < requiredSources.length) {
         const failedSources = requiredSources.filter(s => !context.sources.includes(s))
-        console.warn(`[RAG] ⚠️  Partial load: ${failedSources.length} sources failed to load:`, failedSources.join(', '))
+        console.warn(`[RAG] ⚠️  Partial load: ${failedSources.length} sources failed:`)
+        console.warn(`[RAG] Failed: [${failedSources.join(', ')}]`)
       } else {
         console.log('[RAG] ✅ All requested sources loaded successfully!')
       }
