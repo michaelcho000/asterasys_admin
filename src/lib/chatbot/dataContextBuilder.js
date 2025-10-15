@@ -407,34 +407,77 @@ export class DataContextBuilder {
       }
     })
 
-    // 데이터 출처 명시
-    formatted += `\n---\n**데이터 출처**: ${context.sources.join(', ')}\n`
-    formatted += isMultiMonth
-      ? `**분석 기간**: ${context.months[context.months.length - 1]} ~ ${context.months[0]} (${context.monthsToLoad}개월)\n`
-      : `**기준 월**: ${context.month}\n`
-
     return formatted
   }
 
   /**
-   * 테이블 데이터 포맷팅 헬퍼
+   * 테이블 데이터 포맷팅 헬퍼 - 마크다운 테이블 형식
    */
   formatTableData(data, columns) {
     if (!data || (Array.isArray(data) && data.length === 0)) {
       return '데이터 없음\n'
     }
 
-    // Array인 경우
+    // Array인 경우 - 마크다운 테이블 형식
     if (Array.isArray(data)) {
+      // API 응답 구조 확인: { asterasysData, marketData } 형태
+      let items = data
+      if (data.asterasysData && Array.isArray(data.asterasysData)) {
+        items = data.asterasysData
+      } else if (data.marketData && Array.isArray(data.marketData)) {
+        items = data.marketData
+      }
+
+      if (items.length === 0) {
+        return '데이터 없음\n'
+      }
+
+      // 테이블 헤더 생성 (실제 데이터 키 사용)
+      const firstItem = items[0]
+      const headers = Object.keys(firstItem)
+
+      // 마크다운 테이블 헤더
+      let table = `| ${headers.join(' | ')} |\n`
+      table += `| ${headers.map(() => '---').join(' | ')} |\n`
+
+      // 데이터 행 (상위 15개만)
+      items.slice(0, 15).forEach((item) => {
+        const values = headers.map(header => {
+          const value = item[header]
+          // 숫자는 그대로, 문자열은 50자 제한
+          if (typeof value === 'number') {
+            return value.toLocaleString('ko-KR')
+          }
+          if (value === null || value === undefined) {
+            return '-'
+          }
+          const str = String(value)
+          return str.length > 50 ? str.substring(0, 47) + '...' : str
+        })
+        table += `| ${values.join(' | ')} |\n`
+      })
+
+      if (items.length > 15) {
+        table += `\n*외 ${items.length - 15}개 항목 생략*\n`
+      }
+
+      return table
+    }
+
+    // Object인 경우 - 키-값 쌍으로 표시
+    if (typeof data === 'object') {
       let result = ''
-      data.slice(0, 10).forEach((item, idx) => {
-        result += `${idx + 1}. ${JSON.stringify(item).substring(0, 200)}\n`
+      Object.entries(data).slice(0, 20).forEach(([key, value]) => {
+        if (typeof value === 'object' && value !== null) {
+          result += `**${key}**: ${JSON.stringify(value).substring(0, 100)}\n`
+        } else {
+          result += `**${key}**: ${value}\n`
+        }
       })
       return result
     }
 
-    // Object인 경우
-    return JSON.stringify(data, null, 2).substring(0, 1000) + '\n'
+    return String(data).substring(0, 500) + '\n'
   }
 }
 
