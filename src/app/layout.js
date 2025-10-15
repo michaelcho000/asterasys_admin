@@ -7,6 +7,7 @@ import "react-datetime/css/react-datetime.css";
 import NavigationProvider from "@/contentApi/navigationProvider";
 import SettingSideBarProvider from "@/contentApi/settingSideBarProvider";
 import ThemeCustomizer from "@/components/shared/ThemeCustomizer";
+import ClientChatbotWrapper from "@/components/asterasys/AIChatbot/ClientChatbotWrapper";
 
 export const metadata = {
   title: "Asterasys Marketing KPI Dashboard",
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
         <SettingSideBarProvider>
           <NavigationProvider>
             {children}
+            <ClientChatbotWrapper />
           </NavigationProvider>
         </SettingSideBarProvider>
       </body>
