@@ -349,9 +349,9 @@ export class DataContextBuilder {
 
           // 제품별 증감
           formatted += `**제품별 증감:**\n`
-          current.products.forEach((currentProduct, index) => {
-            const previousProduct = previous.products[index]
-            if (previousProduct && previousProduct.name === currentProduct.name) {
+          current.products.forEach((currentProduct) => {
+            const previousProduct = previous.products.find(p => p.name === currentProduct.name)
+            if (previousProduct) {
               const productChange = currentProduct.sales - previousProduct.sales
               const productChangeRate = previousProduct.sales > 0
                 ? ((productChange / previousProduct.sales) * 100).toFixed(1)
