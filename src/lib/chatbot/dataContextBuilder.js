@@ -442,10 +442,8 @@ export class DataContextBuilder {
         console.error('='.repeat(80))
         console.error('[RAG] ❌❌❌ CRITICAL ERROR: NO DATA SOURCES LOADED ❌❌❌')
         console.error('[RAG] Context object:', JSON.stringify(context, null, 2))
-        console.error('[RAG] baseUrl was:', this.baseUrl)
-        console.error('[RAG] NEXT_PUBLIC_APP_URL:', process.env.NEXT_PUBLIC_APP_URL)
         console.error('='.repeat(80))
-        throw new Error('NO DATA SOURCES LOADED - Check baseUrl configuration and fetch URLs in logs above')
+        throw new Error('NO DATA SOURCES LOADED - Check file paths and permissions in logs above')
       }
 
       const isMultiMonth = context.monthsToLoad > 1
