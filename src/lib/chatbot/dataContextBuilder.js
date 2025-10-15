@@ -312,6 +312,58 @@ export class DataContextBuilder {
       formatted += `## 🔄 월별 비교 분석 모드\n`
       formatted += `**로드된 월**: ${context.months.join(' → ')}\n`
       formatted += `**비교 가능**: 전월 대비 증감률, 트렌드 분석, 월별 성장 패턴\n\n`
+
+      // 월별 판매 집계 요약 추가
+      formatted += `## 📊 판매 집계 요약 (Asterasys 제품)\n\n`
+
+      const salesSummaries = []
+      context.months.forEach(month => {
+        const monthData = context.data[month]
+        if (monthData && monthData.sale) {
+          const summary = this.aggregateSalesData(monthData.sale, month)
+          if (summary) {
+            salesSummaries.push(summary)
+          }
+        }
+      })
+
+      if (salesSummaries.length > 0) {
+        salesSummaries.forEach(summary => {
+          formatted += `### ${summary.month}\n`
+          formatted += `**총 판매량**: ${summary.total.toLocaleString('ko-KR')}대\n`
+          summary.products.forEach(product => {
+            formatted += `- ${product.name}: ${product.sales.toLocaleString('ko-KR')}대\n`
+          })
+          formatted += `\n`
+        })
+
+        // 증감률 계산 (2개월 이상인 경우)
+        if (salesSummaries.length >= 2) {
+          const current = salesSummaries[0]
+          const previous = salesSummaries[1]
+          const change = current.total - previous.total
+          const changeRate = ((change / previous.total) * 100).toFixed(1)
+
+          formatted += `### 📈 전월 대비 증감\n`
+          formatted += `**총 판매**: ${current.total.toLocaleString('ko-KR')}대 → ${change > 0 ? '증가' : '감소'} ${Math.abs(change).toLocaleString('ko-KR')}대 (${changeRate > 0 ? '+' : ''}${changeRate}%)\n\n`
+
+          // 제품별 증감
+          formatted += `**제품별 증감:**\n`
+          current.products.forEach((currentProduct, index) => {
+            const previousProduct = previous.products[index]
+            if (previousProduct && previousProduct.name === currentProduct.name) {
+              const productChange = currentProduct.sales - previousProduct.sales
+              const productChangeRate = previousProduct.sales > 0
+                ? ((productChange / previousProduct.sales) * 100).toFixed(1)
+                : 'N/A'
+              formatted += `- ${currentProduct.name}: ${previousProduct.sales.toLocaleString('ko-KR')}대 → ${currentProduct.sales.toLocaleString('ko-KR')}대 (${productChange > 0 ? '+' : ''}${productChange}대, ${productChangeRate !== 'N/A' ? (productChangeRate > 0 ? '+' : '') + productChangeRate + '%' : 'N/A'})\n`
+            }
+          })
+          formatted += `\n`
+        }
+      } else {
+        formatted += `*판매 데이터 없음*\n\n`
+      }
     }
 
     // JSON 인사이트 먼저 표시 (더 중요한 심층 분석)
@@ -413,59 +465,19 @@ export class DataContextBuilder {
   /**
    * 테이블 데이터 포맷팅 헬퍼 - 마크다운 테이블 형식
    */
-  formatTableData(data, columns) {
-    if (!data || (Array.isArray(data) && data.length === 0)) {
+  formatTableData(data, columns, month = null) {
+    if (!data) {
       return '데이터 없음\n'
     }
 
-    // Array인 경우 - 마크다운 테이블 형식
-    if (Array.isArray(data)) {
-      // API 응답 구조 확인: { asterasysData, marketData } 형태
-      let items = data
-      if (data.asterasysData && Array.isArray(data.asterasysData)) {
-        items = data.asterasysData
-      } else if (data.marketData && Array.isArray(data.marketData)) {
-        items = data.marketData
-      }
-
-      if (items.length === 0) {
-        return '데이터 없음\n'
-      }
-
-      // 테이블 헤더 생성 (실제 데이터 키 사용)
-      const firstItem = items[0]
-      const headers = Object.keys(firstItem)
-
-      // 마크다운 테이블 헤더
-      let table = `| ${headers.join(' | ')} |\n`
-      table += `| ${headers.map(() => '---').join(' | ')} |\n`
-
-      // 데이터 행 (상위 15개만)
-      items.slice(0, 15).forEach((item) => {
-        const values = headers.map(header => {
-          const value = item[header]
-          // 숫자는 그대로, 문자열은 50자 제한
-          if (typeof value === 'number') {
-            return value.toLocaleString('ko-KR')
-          }
-          if (value === null || value === undefined) {
-            return '-'
-          }
-          const str = String(value)
-          return str.length > 50 ? str.substring(0, 47) + '...' : str
-        })
-        table += `| ${values.join(' | ')} |\n`
-      })
-
-      if (items.length > 15) {
-        table += `\n*외 ${items.length - 15}개 항목 생략*\n`
-      }
-
-      return table
-    }
-
-    // Object인 경우 - 키-값 쌍으로 표시
-    if (typeof data === 'object') {
+    // API 응답 객체인 경우 asterasysData 추출
+    let items = data
+    if (data.asterasysData && Array.isArray(data.asterasysData)) {
+      items = data.asterasysData
+    } else if (data.marketData && Array.isArray(data.marketData)) {
+      items = data.marketData
+    } else if (!Array.isArray(data)) {
+      // Object인 경우 - 키-값 쌍으로 표시
       let result = ''
       Object.entries(data).slice(0, 20).forEach(([key, value]) => {
         if (typeof value === 'object' && value !== null) {
@@ -477,7 +489,70 @@ export class DataContextBuilder {
       return result
     }
 
-    return String(data).substring(0, 500) + '\n'
+    if (items.length === 0) {
+      return '데이터 없음\n'
+    }
+
+    // 테이블 헤더 생성 (실제 데이터 키 사용)
+    const firstItem = items[0]
+    const headers = Object.keys(firstItem)
+
+    // 마크다운 테이블 헤더
+    let table = `| ${headers.join(' | ')} |\n`
+    table += `| ${headers.map(() => '---').join(' | ')} |\n`
+
+    // 데이터 행 (상위 15개만)
+    items.slice(0, 15).forEach((item) => {
+      const values = headers.map(header => {
+        const value = item[header]
+        // 숫자는 그대로, 문자열은 50자 제한
+        if (typeof value === 'number') {
+          return value.toLocaleString('ko-KR')
+        }
+        if (value === null || value === undefined) {
+          return '-'
+        }
+        const str = String(value)
+        return str.length > 50 ? str.substring(0, 47) + '...' : str
+      })
+      table += `| ${values.join(' | ')} |\n`
+    })
+
+    if (items.length > 15) {
+      table += `\n*외 ${items.length - 15}개 항목 생략*\n`
+    }
+
+    return table
+  }
+
+  /**
+   * 월별 판매 데이터 집계 (Asterasys 제품만)
+   */
+  aggregateSalesData(salesData, month) {
+    if (!salesData || !salesData.asterasysData) {
+      return null
+    }
+
+    const monthNum = month.split('-')[1] // '2025-09' -> '09'
+    const monthName = `${parseInt(monthNum)}월` // '09' -> '9월'
+    const salesColumnName = `${monthName} 판매량`
+
+    let total = 0
+    const products = salesData.asterasysData.map(item => {
+      const salesValue = item[salesColumnName]
+      const sales = salesValue ? parseInt(salesValue) : 0
+      total += sales
+      return {
+        name: item['키워드'],
+        sales: sales
+      }
+    })
+
+    return {
+      month: monthName,
+      total: total,
+      products: products
+    }
   }
 }
 
