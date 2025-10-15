@@ -1,0 +1,151 @@
+{
+  "asterasys": {
+    "organic": 14,
+    "managed": 86,
+    "details": {
+      "organicVolume": 292,
+      "managedVolume": 1834,
+      "cafeVolume": 1550
+    }
+  },
+  "competitor": {
+    "organic": 43,
+    "managed": 57,
+    "details": {
+      "organicVolume": 2015,
+      "managedVolume": 2637,
+      "cafeVolume": 1269
+    }
+  },
+  "gap": -29,
+  "products": {
+    "쿨페이즈": {
+      "organic": {
+        "hospitalBlogs": 54,
+        "hospitalNews": 10,
+        "total": 64
+      },
+      "managed": {
+        "generalBlogs": 78,
+        "corporateNews": 1,
+        "cafe": 598,
+        "total": 677
+      },
+      "totalVolume": 741,
+      "organicPercent": 9,
+      "managedPercent": 91
+    },
+    "리프테라": {
+      "organic": {
+        "hospitalBlogs": 186,
+        "hospitalNews": 3,
+        "total": 189
+      },
+      "managed": {
+        "generalBlogs": 164,
+        "corporateNews": 3,
+        "cafe": 430,
+        "total": 597
+      },
+      "totalVolume": 786,
+      "organicPercent": 24,
+      "managedPercent": 76
+    },
+    "쿨소닉": {
+      "organic": {
+        "hospitalBlogs": 28,
+        "hospitalNews": 11,
+        "total": 39
+      },
+      "managed": {
+        "generalBlogs": 38,
+        "corporateNews": 0,
+        "cafe": 522,
+        "total": 560
+      },
+      "totalVolume": 599,
+      "organicPercent": 7,
+      "managedPercent": 93
+    },
+    "덴서티": {
+      "organic": {
+        "hospitalBlogs": 668,
+        "hospitalNews": 17,
+        "total": 685
+      },
+      "managed": {
+        "generalBlogs": 702,
+        "corporateNews": 13,
+        "cafe": 614,
+        "total": 1329
+      },
+      "totalVolume": 2014,
+      "organicPercent": 34,
+      "managedPercent": 66
+    },
+    "세르프": {
+      "organic": {
+        "hospitalBlogs": 350,
+        "hospitalNews": 19,
+        "total": 369
+      },
+      "managed": {
+        "generalBlogs": 248,
+        "corporateNews": 23,
+        "cafe": 269,
+        "total": 540
+      },
+      "totalVolume": 909,
+      "organicPercent": 41,
+      "managedPercent": 59
+    },
+    "올리지오": {
+      "organic": {
+        "hospitalBlogs": null,
+        "hospitalNews": 15,
+        "total": null
+      },
+      "managed": {
+        "generalBlogs": 984,
+        "corporateNews": 20,
+        "cafe": 201,
+        "total": 1205
+      },
+      "totalVolume": null,
+      "organicPercent": 0,
+      "managedPercent": 100
+    },
+    "볼뉴머": {
+      "organic": {
+        "hospitalBlogs": 458,
+        "hospitalNews": 7,
+        "total": 465
+      },
+      "managed": {
+        "generalBlogs": 282,
+        "corporateNews": 27,
+        "cafe": 75,
+        "total": 384
+      },
+      "totalVolume": 849,
+      "organicPercent": 55,
+      "managedPercent": 45
+    },
+    "텐써마": {
+      "organic": {
+        "hospitalBlogs": 484,
+        "hospitalNews": 12,
+        "total": 496
+      },
+      "managed": {
+        "generalBlogs": 272,
+        "corporateNews": 2,
+        "cafe": 110,
+        "total": 384
+      },
+      "totalVolume": 880,
+      "organicPercent": 56,
+      "managedPercent": 44
+    }
+  }
+}

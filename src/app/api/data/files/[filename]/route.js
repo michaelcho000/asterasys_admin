@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
-import { resolveRequestMonth } from '@/lib/server/requestMonth'
 
 /**
  * 파일명 기반 동적 데이터 API
- * 사용법: /api/data/files/blog_rank 또는 /api/data/files/cafe_rank
- * 실제 CSV 파일에서 직접 데이터 추출하여 반환
+ * 사용법: /api/data/files/blog_rank?month=2025-09 또는 /api/data/files/cafe_rank?month=2025-08
+ * public/data/ 디렉토리에서 CSV/JSON 파일 데이터 추출하여 반환
+ * 배포 환경(Vercel) 호환성을 위해 public 디렉토리 사용
  */
 
 // Vercel 배포를 위한 설정
@@ -16,28 +16,40 @@ export const dynamic = 'force-dynamic';
 export async function GET(request, { params }) {
   try {
     const { filename } = params
-    const monthContext = resolveRequestMonth(request, { required: ['raw'] })
+    const { searchParams } = new URL(request.url)
+    const month = searchParams.get('month') || '2025-09'
 
-    if (monthContext.error) {
-      return NextResponse.json(
-        { error: monthContext.error.message },
-        { status: 400 }
-      )
+    // JSON 인사이트 파일 처리 (llm-insights, organic-viral-analysis)
+    if (filename === 'llm-insights' || filename === 'organic-viral-analysis') {
+      const jsonFileName = filename === 'llm-insights'
+        ? `llm-insights-${month}.json`
+        : 'organic-viral-analysis.json'
+
+      const jsonFilePath = path.join(process.cwd(), 'public/data/processed', jsonFileName)
+
+      if (!fs.existsSync(jsonFilePath)) {
+        return NextResponse.json(
+          {
+            error: 'JSON 파일을 찾을 수 없습니다',
+            filename,
+            month,
+            expectedPath: jsonFilePath
+          },
+          { status: 404 }
+        )
+      }
+
+      const jsonContent = fs.readFileSync(jsonFilePath, 'utf8')
+      const jsonData = JSON.parse(jsonContent)
+
+      return NextResponse.json(jsonData)
     }
 
-    if (!monthContext.ok) {
-      return NextResponse.json(
-        {
-          error: '월별 원본 데이터 폴더를 찾을 수 없습니다',
-          month: monthContext.month,
-          missing: monthContext.missing
-        },
-        { status: 404 }
-      )
-    }
-
+    // CSV 파일 처리
     const csvFilePath = path.join(
-      monthContext.paths.raw,
+      process.cwd(),
+      'public/data/raw',
+      month,
       `asterasys_total_data - ${filename}.csv`
     )
 
@@ -45,7 +57,7 @@ export async function GET(request, { params }) {
       return NextResponse.json(
         {
           error: 'CSV 파일을 찾을 수 없습니다',
-          month: monthContext.month,
+          month,
           filename,
           expectedPath: csvFilePath
         },
@@ -61,7 +73,7 @@ export async function GET(request, { params }) {
 
       if (dataLines.length === 0) {
         return NextResponse.json(
-          { error: '네이버 데이터랩 파일이 비어있습니다', filename, month: monthContext.month },
+          { error: '네이버 데이터랩 파일이 비어있습니다', filename, month },
           { status: 400 }
         )
       }
@@ -87,7 +99,7 @@ export async function GET(request, { params }) {
       return NextResponse.json({
         success: true,
         filename,
-        month: monthContext.month,
+        month,
         headers,
         asterasysData: marketData,
         marketData,
@@ -104,7 +116,7 @@ export async function GET(request, { params }) {
 
     if (lines.length === 0) {
       return NextResponse.json(
-        { error: 'CSV 파일이 비어있습니다', filename, month: monthContext.month },
+        { error: 'CSV 파일이 비어있습니다', filename, month },
         { status: 400 }
       )
     }
@@ -149,7 +161,7 @@ export async function GET(request, { params }) {
     return NextResponse.json({
       success: true,
       filename,
-      month: monthContext.month,
+      month,
       headers,
       asterasysData,
       marketData,
@@ -175,14 +187,13 @@ export async function GET(request, { params }) {
 }
 
 export async function HEAD(request, { params }) {
-  const monthContext = resolveRequestMonth(request, { required: ['raw'] })
-
-  if (!monthContext.ok) {
-    return new NextResponse(null, { status: 404 })
-  }
+  const { searchParams } = new URL(request.url)
+  const month = searchParams.get('month') || '2025-09'
 
   const csvFilePath = path.join(
-    monthContext.paths.raw,
+    process.cwd(),
+    'public/data/raw',
+    month,
     `asterasys_total_data - ${params.filename}.csv`
   )
 
