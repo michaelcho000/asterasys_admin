@@ -151,22 +151,15 @@ const OutdoorAdsTable = () => {
                                         >
                                             매체 위치 {getSortIcon('mediaLocation')}
                                         </th>
-                                        <th 
-                                            className="sortable" 
+                                        <th
+                                            className="sortable"
                                             onClick={() => handleSort('mediaType')}
                                             style={{ cursor: 'pointer' }}
                                         >
                                             매체 유형 {getSortIcon('mediaType')}
                                         </th>
-                                        <th 
-                                            className="sortable" 
-                                            onClick={() => handleSort('displayFormat')}
-                                            style={{ cursor: 'pointer' }}
-                                        >
-                                            표출 형식 {getSortIcon('displayFormat')}
-                                        </th>
-                                        <th 
-                                            className="sortable" 
+                                        <th
+                                            className="sortable"
                                             onClick={() => handleSort('quantity')}
                                             style={{ cursor: 'pointer' }}
                                         >
@@ -242,18 +235,7 @@ const OutdoorAdsTable = () => {
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div className="text-dark fw-medium" style={{ 
-                                                        maxWidth: '120px',
-                                                        wordWrap: 'break-word',
-                                                        wordBreak: 'break-word',
-                                                        whiteSpace: 'pre-wrap',
-                                                        lineHeight: '1.4'
-                                                    }}>
-                                                        {item.displayFormat}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="text-dark fw-medium" style={{ 
+                                                    <div className="text-dark fw-medium" style={{
                                                         maxWidth: '100px',
                                                         wordWrap: 'break-word',
                                                         wordBreak: 'break-word',

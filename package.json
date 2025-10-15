@@ -28,9 +28,11 @@
     "email:dev": "email dev --dir src/emails",
     "stripe:listen": "stripe listen --forward-to localhost:3000/api/webhooks/stripe",
     "process-data": "node scripts/processData.js",
+    "process-month": "node scripts/processMonthData.js",
     "ingest": "npm run process-data",
     "youtube:process": "node scripts/processYoutubeData.cjs",
     "youtube:channels": "node scripts/extractAsterasysChannels.js",
+    "youtube:sales-matching": "node scripts/processYoutubeSalesMatching.js",
     "analyze-insights": "node scripts/analyzeLLMInsights.js",
     "analyze-insights-enhanced": "node scripts/analyzeLLMInsightsEnhanced.js"
   },

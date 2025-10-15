@@ -67,7 +67,6 @@ export async function GET(request) {
       const mediaName = record['매체명'] || record.media_name || ''
       const mediaLocation = record['매체 위치'] || record.media_location || ''
       const mediaType = record['매체 유형'] || record.media_type || ''
-      const displayFormat = record['표출 형식'] || record.display_format || ''
       const quantity = record['수량'] || record.quantity || ''
       const dailyBroadcast = record['1일 송출횟수'] || record.daily_broadcast || ''
       const period = record['기간'] || record.period || ''
@@ -99,7 +98,6 @@ export async function GET(request) {
         mediaName: mediaName,
         mediaLocation: mediaLocation,
         mediaType: mediaType,
-        displayFormat: displayFormat,
         quantity: quantity,
         dailyBroadcast: dailyBroadcast,
         period: period,
