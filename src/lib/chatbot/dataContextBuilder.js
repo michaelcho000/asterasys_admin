@@ -45,6 +45,8 @@ export class DataContextBuilder {
   constructor(month) {
     this.month = month
     this.baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    console.log('[RAG] DataContextBuilder initialized with baseUrl:', this.baseUrl)
+    console.log('[RAG] NEXT_PUBLIC_APP_URL:', process.env.NEXT_PUBLIC_APP_URL)
   }
 
   /**
@@ -220,14 +222,21 @@ export class DataContextBuilder {
               try {
                 // API를 통해 JSON 파일 가져오기 (서버리스 환경 대응)
                 const jsonUrl = `${this.baseUrl}/api/data/files/${JSON_INSIGHTS[source]}?month=${month}`
+                console.log(`[RAG] Fetching JSON insight ${source} from URL:`, jsonUrl)
                 const response = await fetch(jsonUrl)
 
                 if (response.ok) {
                   const jsonData = await response.json()
-                  console.log(`[RAG] Loaded JSON insight ${source} for ${month}`)
+                  console.log(`[RAG] ✅ Loaded JSON insight ${source} for ${month}`)
                   return { source, data: jsonData, isInsight: true, month }
                 } else {
-                  console.warn(`[RAG] JSON insight ${source} not found for ${month} via API, trying fs`)
+                  console.error(`[RAG] ❌ JSON insight ${source} not found via API:`, {
+                    url: jsonUrl,
+                    status: response.status,
+                    statusText: response.statusText,
+                    baseUrl: this.baseUrl
+                  })
+                  console.warn(`[RAG] Trying fs fallback for ${source}...`)
 
                   // Fallback: fs로 시도 (로컬 개발 환경용)
                   if (typeof window === 'undefined') {
@@ -250,15 +259,21 @@ export class DataContextBuilder {
               const filename = DATA_SOURCES[source]
               const url = `${this.baseUrl}/api/data/files/${filename}?month=${month}`
 
+              console.log(`[RAG] Fetching CSV ${source} from URL:`, url)
               const response = await fetch(url)
 
               if (!response.ok) {
-                console.warn(`[RAG] Failed to fetch ${source} for ${month}:`, response.statusText)
+                console.error(`[RAG] ❌ Failed to fetch ${source} for ${month}:`, {
+                  url,
+                  status: response.status,
+                  statusText: response.statusText,
+                  baseUrl: this.baseUrl
+                })
                 return { source, data: null, month }
               }
 
               const data = await response.json()
-              console.log(`[RAG] Loaded CSV ${source} for ${month}: ${JSON.stringify(data).length} bytes`)
+              console.log(`[RAG] ✅ Loaded CSV ${source} for ${month}: ${JSON.stringify(data).length} bytes`)
               return { source, data, isInsight: false, month }
             }
 
@@ -286,11 +301,33 @@ export class DataContextBuilder {
         })
       }
 
-      console.log(`[RAG] Context built: ${context.sources.length} sources × ${monthsToLoad} month(s)`)
+      // Detailed summary of what was loaded
+      console.log('='.repeat(80))
+      console.log(`[RAG] 📊 Context Build Summary:`)
+      console.log(`[RAG] - Requested sources: ${requiredSources.length}`)
+      console.log(`[RAG] - Successfully loaded: ${context.sources.length}`)
+      console.log(`[RAG] - Months processed: ${monthsToLoad}`)
+      console.log(`[RAG] - Loaded sources: ${context.sources.join(', ')}`)
+      console.log(`[RAG] - baseUrl used: ${this.baseUrl}`)
+
+      if (context.sources.length === 0) {
+        console.error('[RAG] ❌ WARNING: NO DATA SOURCES LOADED! All fetch requests failed!')
+        console.error('[RAG] This likely means baseUrl is incorrect or API endpoints are not accessible')
+      } else if (context.sources.length < requiredSources.length) {
+        const failedSources = requiredSources.filter(s => !context.sources.includes(s))
+        console.warn(`[RAG] ⚠️  Partial load: ${failedSources.length} sources failed to load:`, failedSources.join(', '))
+      } else {
+        console.log('[RAG] ✅ All requested sources loaded successfully!')
+      }
+      console.log('='.repeat(80))
+
       return context
 
     } catch (error) {
-      console.error('[RAG] Error building context:', error)
+      console.error('='.repeat(80))
+      console.error('[RAG] ❌ Critical error building context:', error)
+      console.error('[RAG] Error stack:', error.stack)
+      console.error('='.repeat(80))
       return context
     }
   }
@@ -299,11 +336,18 @@ export class DataContextBuilder {
    * 컨텍스트를 Claude가 이해할 수 있는 구조화된 문자열로 변환
    */
   formatContextForClaude(context) {
-    if (context.sources.length === 0) {
-      return '데이터를 불러오는 중 오류가 발생했습니다.'
-    }
+    try {
+      if (!context || !context.sources || context.sources.length === 0) {
+        console.error('='.repeat(80))
+        console.error('[RAG] ❌❌❌ CRITICAL ERROR: NO DATA SOURCES LOADED ❌❌❌')
+        console.error('[RAG] Context object:', JSON.stringify(context, null, 2))
+        console.error('[RAG] baseUrl was:', this.baseUrl)
+        console.error('[RAG] NEXT_PUBLIC_APP_URL:', process.env.NEXT_PUBLIC_APP_URL)
+        console.error('='.repeat(80))
+        throw new Error('NO DATA SOURCES LOADED - Check baseUrl configuration and fetch URLs in logs above')
+      }
 
-    const isMultiMonth = context.monthsToLoad > 1
+      const isMultiMonth = context.monthsToLoad > 1
     let formatted = isMultiMonth
       ? `# 📊 Asterasys 마케팅 데이터 (${context.months.join(', ')})\n\n`
       : `# 📊 Asterasys 마케팅 데이터 (${context.month})\n\n`
@@ -317,15 +361,23 @@ export class DataContextBuilder {
       formatted += `## 📊 판매 집계 요약 (Asterasys 제품)\n\n`
 
       const salesSummaries = []
-      context.months.forEach(month => {
-        const monthData = context.data[month]
-        if (monthData && monthData.sale) {
-          const summary = this.aggregateSalesData(monthData.sale, month)
-          if (summary) {
-            salesSummaries.push(summary)
+      try {
+        context.months.forEach(month => {
+          const monthData = context.data[month]
+          if (monthData && monthData.sale) {
+            try {
+              const summary = this.aggregateSalesData(monthData.sale, month)
+              if (summary) {
+                salesSummaries.push(summary)
+              }
+            } catch (err) {
+              console.warn(`[RAG] Failed to aggregate sales data for ${month}:`, err.message)
+            }
           }
-        }
-      })
+        })
+      } catch (err) {
+        console.error('[RAG] Error in sales aggregation loop:', err)
+      }
 
       if (salesSummaries.length > 0) {
         salesSummaries.forEach(summary => {
@@ -459,7 +511,14 @@ export class DataContextBuilder {
       }
     })
 
-    return formatted
+      return formatted
+    } catch (error) {
+      console.error('='.repeat(80))
+      console.error('[RAG] ❌ formatContextForClaude error:', error)
+      console.error('[RAG] Error stack:', error.stack)
+      console.error('='.repeat(80))
+      throw error // Re-throw to make error visible instead of hiding it
+    }
   }
 
   /**
@@ -529,29 +588,43 @@ export class DataContextBuilder {
    * 월별 판매 데이터 집계 (Asterasys 제품만)
    */
   aggregateSalesData(salesData, month) {
-    if (!salesData || !salesData.asterasysData) {
-      return null
-    }
-
-    const monthNum = month.split('-')[1] // '2025-09' -> '09'
-    const monthName = `${parseInt(monthNum)}월` // '09' -> '9월'
-    const salesColumnName = `${monthName} 판매량`
-
-    let total = 0
-    const products = salesData.asterasysData.map(item => {
-      const salesValue = item[salesColumnName]
-      const sales = salesValue ? parseInt(salesValue) : 0
-      total += sales
-      return {
-        name: item['키워드'],
-        sales: sales
+    try {
+      if (!salesData || !salesData.asterasysData) {
+        return null
       }
-    })
 
-    return {
-      month: monthName,
-      total: total,
-      products: products
+      if (!Array.isArray(salesData.asterasysData) || salesData.asterasysData.length === 0) {
+        return null
+      }
+
+      if (!month || typeof month !== 'string' || !month.includes('-')) {
+        console.warn('[RAG] Invalid month format:', month)
+        return null
+      }
+
+      const monthNum = month.split('-')[1] // '2025-09' -> '09'
+      const monthName = `${parseInt(monthNum)}월` // '09' -> '9월'
+      const salesColumnName = `${monthName} 판매량`
+
+      let total = 0
+      const products = salesData.asterasysData.map(item => {
+        const salesValue = item[salesColumnName]
+        const sales = salesValue ? parseInt(salesValue) : 0
+        total += sales
+        return {
+          name: item['키워드'] || item['제품명'] || 'Unknown',
+          sales: sales
+        }
+      }).filter(p => p.name !== 'Unknown')
+
+      return {
+        month: monthName,
+        total: total,
+        products: products
+      }
+    } catch (error) {
+      console.error('[RAG] aggregateSalesData error:', error)
+      return null
     }
   }
 }
