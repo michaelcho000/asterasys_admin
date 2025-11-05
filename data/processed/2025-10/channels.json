@@ -1,0 +1,1015 @@
+{
+  "blog": {
+    "overview": {
+      "totalPosts": 30348,
+      "totalComments": 0,
+      "avgEngagement": 0,
+      "uniqueProducts": 18
+    },
+    "byType": [
+      {
+        "type": "병원블로그",
+        "totalPosts": 30348,
+        "totalComments": 0,
+        "avgEngagement": 0,
+        "products": 18
+      },
+      {
+        "type": "플레이스블로그",
+        "totalPosts": 0,
+        "totalComments": 0,
+        "avgEngagement": 0,
+        "products": 0
+      },
+      {
+        "type": "일반블로그",
+        "totalPosts": 0,
+        "totalComments": 0,
+        "avgEngagement": 0,
+        "products": 0
+      }
+    ],
+    "topInfluencers": [
+      {
+        "name": "바노바기의원",
+        "url": "https://blog.naver.com/ejwwewqta",
+        "posts": 0,
+        "keyword": "쿨페이즈",
+        "rank": 1
+      },
+      {
+        "name": "피부미용 연세봄봄의원",
+        "url": "https://blog.naver.com/yonseibombom",
+        "posts": 0,
+        "keyword": "쿨페이즈",
+        "rank": 2
+      },
+      {
+        "name": "리부팅의원 Rebooting Clinic",
+        "url": "https://blog.naver.com/niohx3c3v",
+        "posts": 0,
+        "keyword": "쿨페이즈",
+        "rank": 3
+      },
+      {
+        "name": "리즈온의원 부산센텀점",
+        "url": "https://blog.naver.com/lizoncentum2",
+        "posts": 0,
+        "keyword": "쿨페이즈",
+        "rank": 4
+      },
+      {
+        "name": "맑고고운의원수원점",
+        "url": "https://blog.naver.com/pureskin07",
+        "posts": 0,
+        "keyword": "쿨페이즈",
+        "rank": 5
+      },
+      {
+        "name": "부천 강남의원",
+        "url": "https://blog.naver.com/gnclinics",
+        "posts": 0,
+        "keyword": "쿨페이즈",
+        "rank": 6
+      },
+      {
+        "name": "전주필스토리의원",
+        "url": "https://blog.naver.com/ssal5000",
+        "posts": 0,
+        "keyword": "쿨페이즈",
+        "rank": 7
+      },
+      {
+        "name": "SARTINE 사르티네의원",
+        "url": "https://blog.naver.com/dead2079",
+        "posts": 0,
+        "keyword": "쿨페이즈",
+        "rank": 8
+      },
+      {
+        "name": "[유어힐의원] YOUR HEAL",
+        "url": "https://blog.naver.com/hbvu34mes",
+        "posts": 0,
+        "keyword": "쿨페이즈",
+        "rank": 9
+      },
+      {
+        "name": "❤️❤️서울더빛의원❤️❤️",
+        "url": "https://blog.naver.com/vcyial13",
+        "posts": 0,
+        "keyword": "쿨페이즈",
+        "rank": 10
+      }
+    ],
+    "engagement": [
+      {
+        "keyword": "쿨페이즈",
+        "posts": 255,
+        "comments": 0,
+        "engagement": 0,
+        "name": "쿨페이즈",
+        "name_en": "CoolPhase",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "asterasys",
+        "color": "#FF6B6B",
+        "priority": 1
+      },
+      {
+        "keyword": "덴서티",
+        "posts": 524,
+        "comments": 0,
+        "engagement": 0,
+        "name": "덴서티",
+        "name_en": "Density",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#F7DC6F",
+        "priority": 12
+      },
+      {
+        "keyword": "튠페이스",
+        "posts": 344,
+        "comments": 0,
+        "engagement": 0,
+        "name": "튠페이스",
+        "name_en": "TuneFace",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#F8C471",
+        "priority": 15
+      },
+      {
+        "keyword": "올리지오",
+        "posts": 1056,
+        "comments": 0,
+        "engagement": 0,
+        "name": "올리지오",
+        "name_en": "Oligo",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#BB8FCE",
+        "priority": 13
+      },
+      {
+        "keyword": "볼뉴머",
+        "posts": 467,
+        "comments": 0,
+        "engagement": 0,
+        "name": "볼뉴머",
+        "name_en": "Volnumer",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#85C1E9",
+        "priority": 14
+      },
+      {
+        "keyword": "텐써마",
+        "posts": 511,
+        "comments": 0,
+        "engagement": 0,
+        "name": "텐써마",
+        "name_en": "Tenstherm",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#A3E4DB",
+        "priority": 16
+      },
+      {
+        "keyword": "써마지",
+        "posts": 6028,
+        "comments": 0,
+        "engagement": 0,
+        "name": "써마지",
+        "name_en": "Thermage",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#FFA07A",
+        "priority": 10
+      },
+      {
+        "keyword": "세르프",
+        "posts": 557,
+        "comments": 0,
+        "engagement": 0,
+        "name": "세르프",
+        "name_en": "Serf",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#D7BDE2",
+        "priority": 17
+      },
+      {
+        "keyword": "인모드",
+        "posts": 5459,
+        "comments": 0,
+        "engagement": 0,
+        "name": "인모드",
+        "name_en": "InMode",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#98D8C8",
+        "priority": 11
+      },
+      {
+        "keyword": "리프테라",
+        "posts": 218,
+        "comments": 0,
+        "engagement": 0,
+        "name": "리프테라",
+        "name_en": "Liftera",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "asterasys",
+        "color": "#45B7D1",
+        "priority": 3
+      },
+      {
+        "keyword": "쿨소닉",
+        "posts": 116,
+        "comments": 0,
+        "engagement": 0,
+        "name": "쿨소닉",
+        "name_en": "CoolSonic",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "asterasys",
+        "color": "#4ECDC4",
+        "priority": 2
+      },
+      {
+        "keyword": "리니어펌",
+        "posts": 54,
+        "comments": 0,
+        "engagement": 0,
+        "name": "리니어펌",
+        "name_en": "Linear-Firm",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#EBDEF0",
+        "priority": 26
+      },
+      {
+        "keyword": "튠라이너",
+        "posts": 89,
+        "comments": 0,
+        "engagement": 0,
+        "name": "튠라이너",
+        "name_en": "TuneLiner",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#FDEBD0",
+        "priority": 25
+      },
+      {
+        "keyword": "울쎄라",
+        "posts": 8532,
+        "comments": 0,
+        "engagement": 0,
+        "name": "울쎄라",
+        "name_en": "Ulthera",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#FADBD8",
+        "priority": 20
+      },
+      {
+        "keyword": "슈링크",
+        "posts": 5134,
+        "comments": 0,
+        "engagement": 0,
+        "name": "슈링크",
+        "name_en": "Shrink",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#D5F4E6",
+        "priority": 21
+      },
+      {
+        "keyword": "리니어지",
+        "posts": 457,
+        "comments": 0,
+        "engagement": 0,
+        "name": "리니어지",
+        "name_en": "Linear-G",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#FCF3CF",
+        "priority": 22
+      },
+      {
+        "keyword": "브이로",
+        "posts": 313,
+        "comments": 0,
+        "engagement": 0,
+        "name": "브이로",
+        "name_en": "V-RO",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#E8DAEF",
+        "priority": 23
+      },
+      {
+        "keyword": "텐쎄라",
+        "posts": 234,
+        "comments": 0,
+        "engagement": 0,
+        "name": "텐쎄라",
+        "name_en": "Tensera",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#D6EAF8",
+        "priority": 24
+      }
+    ]
+  },
+  "cafe": {
+    "overview": {
+      "totalPosts": 8555,
+      "totalComments": 62335,
+      "totalViews": 548065,
+      "uniqueProducts": 18
+    },
+    "engagement": [
+      {
+        "keyword": "브이로",
+        "posts": 104,
+        "comments": 1060,
+        "engagement": 10.192307692307692,
+        "name": "브이로",
+        "name_en": "V-RO",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#E8DAEF",
+        "priority": 23
+      },
+      {
+        "keyword": "튠페이스",
+        "posts": 217,
+        "comments": 1941,
+        "engagement": 8.944700460829493,
+        "name": "튠페이스",
+        "name_en": "TuneFace",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#F8C471",
+        "priority": 15
+      },
+      {
+        "keyword": "쿨소닉",
+        "posts": 536,
+        "comments": 4758,
+        "engagement": 8.876865671641792,
+        "name": "쿨소닉",
+        "name_en": "CoolSonic",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "asterasys",
+        "color": "#4ECDC4",
+        "priority": 2
+      },
+      {
+        "keyword": "튠라이너",
+        "posts": 78,
+        "comments": 670,
+        "engagement": 8.58974358974359,
+        "name": "튠라이너",
+        "name_en": "TuneLiner",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#FDEBD0",
+        "priority": 25
+      },
+      {
+        "keyword": "텐쎄라",
+        "posts": 34,
+        "comments": 289,
+        "engagement": 8.5,
+        "name": "텐쎄라",
+        "name_en": "Tensera",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#D6EAF8",
+        "priority": 24
+      },
+      {
+        "keyword": "슈링크",
+        "posts": 579,
+        "comments": 4873,
+        "engagement": 8.41623488773748,
+        "name": "슈링크",
+        "name_en": "Shrink",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#D5F4E6",
+        "priority": 21
+      },
+      {
+        "keyword": "볼뉴머",
+        "posts": 72,
+        "comments": 582,
+        "engagement": 8.083333333333334,
+        "name": "볼뉴머",
+        "name_en": "Volnumer",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#85C1E9",
+        "priority": 14
+      },
+      {
+        "keyword": "리프테라",
+        "posts": 482,
+        "comments": 3835,
+        "engagement": 7.95643153526971,
+        "name": "리프테라",
+        "name_en": "Liftera",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "asterasys",
+        "color": "#45B7D1",
+        "priority": 3
+      },
+      {
+        "keyword": "써마지",
+        "posts": 1918,
+        "comments": 15002,
+        "engagement": 7.821689259645464,
+        "name": "써마지",
+        "name_en": "Thermage",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#FFA07A",
+        "priority": 10
+      },
+      {
+        "keyword": "인모드",
+        "posts": 630,
+        "comments": 4853,
+        "engagement": 7.703174603174603,
+        "name": "인모드",
+        "name_en": "InMode",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#98D8C8",
+        "priority": 11
+      },
+      {
+        "keyword": "올리지오",
+        "posts": 163,
+        "comments": 1239,
+        "engagement": 7.601226993865031,
+        "name": "올리지오",
+        "name_en": "Oligo",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#BB8FCE",
+        "priority": 13
+      },
+      {
+        "keyword": "쿨페이즈",
+        "posts": 721,
+        "comments": 5238,
+        "engagement": 7.26490984743412,
+        "name": "쿨페이즈",
+        "name_en": "CoolPhase",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "asterasys",
+        "color": "#FF6B6B",
+        "priority": 1
+      },
+      {
+        "keyword": "세르프",
+        "posts": 220,
+        "comments": 1518,
+        "engagement": 6.9,
+        "name": "세르프",
+        "name_en": "Serf",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#D7BDE2",
+        "priority": 17
+      },
+      {
+        "keyword": "텐써마",
+        "posts": 103,
+        "comments": 685,
+        "engagement": 6.650485436893204,
+        "name": "텐써마",
+        "name_en": "Tenstherm",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#A3E4DB",
+        "priority": 16
+      },
+      {
+        "keyword": "울쎄라",
+        "posts": 1925,
+        "comments": 12444,
+        "engagement": 6.464415584415584,
+        "name": "울쎄라",
+        "name_en": "Ulthera",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#FADBD8",
+        "priority": 20
+      },
+      {
+        "keyword": "덴서티",
+        "posts": 574,
+        "comments": 2909,
+        "engagement": 5.06794425087108,
+        "name": "덴서티",
+        "name_en": "Density",
+        "category": "RF",
+        "category_en": "고주파",
+        "brand": "competitor",
+        "color": "#F7DC6F",
+        "priority": 12
+      },
+      {
+        "keyword": "리니어펌",
+        "posts": 3,
+        "comments": 11,
+        "engagement": 3.6666666666666665,
+        "name": "리니어펌",
+        "name_en": "Linear-Firm",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#EBDEF0",
+        "priority": 26
+      },
+      {
+        "keyword": "리니어지",
+        "posts": 196,
+        "comments": 428,
+        "engagement": 2.183673469387755,
+        "name": "리니어지",
+        "name_en": "Linear-G",
+        "category": "HIFU",
+        "category_en": "초음파",
+        "brand": "competitor",
+        "color": "#FCF3CF",
+        "priority": 22
+      }
+    ],
+    "topPerformers": [
+      {
+        "keyword": "써마지",
+        "group": "고주파",
+        "totalPosts": 1918,
+        "totalComments": 11553,
+        "totalReplies": 3449,
+        "totalViews": 137878,
+        "rank": 1,
+        "source": "cafe_rank"
+      },
+      {
+        "keyword": "울쎄라",
+        "group": "초음파",
+        "totalPosts": 1925,
+        "totalComments": 9608,
+        "totalReplies": 2836,
+        "totalViews": 101480,
+        "rank": 1,
+        "source": "cafe_rank"
+      },
+      {
+        "keyword": "인모드",
+        "group": "고주파",
+        "totalPosts": 630,
+        "totalComments": 3578,
+        "totalReplies": 1275,
+        "totalViews": 49578,
+        "rank": 3,
+        "source": "cafe_rank"
+      },
+      {
+        "keyword": "슈링크",
+        "group": "초음파",
+        "totalPosts": 579,
+        "totalComments": 3362,
+        "totalReplies": 1511,
+        "totalViews": 49323,
+        "rank": 2,
+        "source": "cafe_rank"
+      },
+      {
+        "keyword": "쿨페이즈",
+        "group": "고주파",
+        "totalPosts": 721,
+        "totalComments": 4569,
+        "totalReplies": 669,
+        "totalViews": 39139,
+        "rank": 2,
+        "source": "cafe_rank"
+      },
+      {
+        "keyword": "덴서티",
+        "group": "고주파",
+        "totalPosts": 574,
+        "totalComments": 2301,
+        "totalReplies": 608,
+        "totalViews": 32343,
+        "rank": 4,
+        "source": "cafe_rank"
+      },
+      {
+        "keyword": "세르프",
+        "group": "고주파",
+        "totalPosts": 220,
+        "totalComments": 1118,
+        "totalReplies": 400,
+        "totalViews": 28032,
+        "rank": 5,
+        "source": "cafe_rank"
+      },
+      {
+        "keyword": "쿨소닉",
+        "group": "초음파",
+        "totalPosts": 536,
+        "totalComments": 4253,
+        "totalReplies": 505,
+        "totalViews": 25065,
+        "rank": 3,
+        "source": "cafe_rank"
+      },
+      {
+        "keyword": "리프테라",
+        "group": "초음파",
+        "totalPosts": 482,
+        "totalComments": 3237,
+        "totalReplies": 598,
+        "totalViews": 20482,
+        "rank": 4,
+        "source": "cafe_rank"
+      },
+      {
+        "keyword": "브이로",
+        "group": "초음파",
+        "totalPosts": 104,
+        "totalComments": 868,
+        "totalReplies": 192,
+        "totalViews": 16051,
+        "rank": 6,
+        "source": "cafe_rank"
+      }
+    ]
+  },
+  "news": {
+    "overview": {
+      "totalArticles": 493,
+      "uniqueProducts": 18,
+      "topRanked": 10
+    },
+    "topPerformers": [
+      {
+        "keyword": "써마지",
+        "group": "고주파",
+        "totalPosts": 110,
+        "rank": 1,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "울쎄라",
+        "group": "초음파",
+        "totalPosts": 86,
+        "rank": 1,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "올리지오",
+        "group": "고주파",
+        "totalPosts": 51,
+        "rank": 2,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "볼뉴머",
+        "group": "고주파",
+        "totalPosts": 39,
+        "rank": 3,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "쿨페이즈",
+        "group": "고주파",
+        "totalPosts": 38,
+        "rank": 4,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "덴서티",
+        "group": "고주파",
+        "totalPosts": 29,
+        "rank": 5,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "세르프",
+        "group": "고주파",
+        "totalPosts": 27,
+        "rank": 6,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "슈링크",
+        "group": "초음파",
+        "totalPosts": 27,
+        "rank": 2,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "인모드",
+        "group": "고주파",
+        "totalPosts": 17,
+        "rank": 7,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "쿨소닉",
+        "group": "초음파",
+        "totalPosts": 16,
+        "rank": 3,
+        "source": "news_rank"
+      }
+    ]
+  },
+  "youtube": {
+    "contents": {
+      "totalVideos": 1,
+      "byCategory": [
+        {
+          "category": "쿨소닉",
+          "count": 1,
+          "hospitals": 1
+        }
+      ],
+      "uniqueHospitals": 1
+    },
+    "engagement": {
+      "totalComments": 0,
+      "byCategory": [
+        {
+          "category": "리프테라",
+          "totalComments": 0,
+          "channels": 2
+        },
+        {
+          "category": "쿨페이즈",
+          "totalComments": 0,
+          "channels": 4
+        },
+        {
+          "category": "쿨소닉",
+          "totalComments": 0,
+          "channels": 2
+        }
+      ],
+      "topChannels": [
+        {
+          "category": "리프테라",
+          "channel": "유어힐",
+          "link": "https://youtube.com/shorts/7GYBfSkqysk?si=JaRwJaNsQsPgVK75",
+          "commentCount": 0,
+          "source": "youtube_comments"
+        },
+        {
+          "category": "리프테라",
+          "channel": "도블리",
+          "link": "https://youtube.com/shorts/IFYHkRJ-EH0?si=qd71NflX9URbnAdQ",
+          "commentCount": 0,
+          "source": "youtube_comments"
+        },
+        {
+          "category": "쿨페이즈",
+          "channel": "치유앤미",
+          "link": "https://youtube.com/shorts/JZktjYhpHmE?si=pEAfO3C3AXHyt0BC",
+          "commentCount": 0,
+          "source": "youtube_comments"
+        },
+        {
+          "category": "쿨페이즈",
+          "channel": "도레미피부과",
+          "link": "https://youtube.com/shorts/FTElvXHPnj8?si=ZgXnjin5cGnOkDoY",
+          "commentCount": 0,
+          "source": "youtube_comments"
+        },
+        {
+          "category": "쿨페이즈",
+          "channel": "시그널성형외과",
+          "link": "https://youtube.com/shorts/xVAW1yP_LiA?si=OSiAKT65aw-JAN6v",
+          "commentCount": 0,
+          "source": "youtube_comments"
+        },
+        {
+          "category": "쿨페이즈",
+          "channel": "노블클래식 동탄",
+          "link": "https://youtu.be/fbCL7t7G6t4?si=Emc3KbUIPyAlH9ch",
+          "commentCount": 0,
+          "source": "youtube_comments"
+        },
+        {
+          "category": "쿨소닉",
+          "channel": "삼성맑은피부과",
+          "link": "https://youtube.com/shorts/R3QHfei-YvE?si=t4Dy0It3d_LUvoZ7",
+          "commentCount": 0,
+          "source": "youtube_comments"
+        },
+        {
+          "category": "쿨소닉",
+          "channel": "비본영",
+          "link": "https://youtu.be/hl88ch98waE?si=JMpoJwdC2ot6nL61",
+          "commentCount": 0,
+          "source": "youtube_comments"
+        }
+      ]
+    }
+  },
+  "search": {
+    "overview": {
+      "totalSearchVolume": 498800,
+      "uniqueKeywords": 18,
+      "avgSearchVolume": 27711.11111111111
+    },
+    "topKeywords": [
+      {
+        "keyword": "볼뉴머",
+        "group": "고주파",
+        "monthlySearchVolume": 144940,
+        "searchRank": 1,
+        "source": "traffic"
+      },
+      {
+        "keyword": "슈링크",
+        "group": "초음파",
+        "monthlySearchVolume": 81380,
+        "searchRank": 1,
+        "source": "traffic"
+      },
+      {
+        "keyword": "울쎄라",
+        "group": "초음파",
+        "monthlySearchVolume": 63000,
+        "searchRank": 2,
+        "source": "traffic"
+      },
+      {
+        "keyword": "덴서티",
+        "group": "고주파",
+        "monthlySearchVolume": 59740,
+        "searchRank": 2,
+        "source": "traffic"
+      },
+      {
+        "keyword": "써마지",
+        "group": "고주파",
+        "monthlySearchVolume": 34780,
+        "searchRank": 3,
+        "source": "traffic"
+      },
+      {
+        "keyword": "인모드",
+        "group": "고주파",
+        "monthlySearchVolume": 29470,
+        "searchRank": 4,
+        "source": "traffic"
+      },
+      {
+        "keyword": "세르프",
+        "group": "고주파",
+        "monthlySearchVolume": 18310,
+        "searchRank": 5,
+        "source": "traffic"
+      },
+      {
+        "keyword": "올리지오",
+        "group": "고주파",
+        "monthlySearchVolume": 12860,
+        "searchRank": 6,
+        "source": "traffic"
+      },
+      {
+        "keyword": "리프테라",
+        "group": "초음파",
+        "monthlySearchVolume": 9850,
+        "searchRank": 3,
+        "source": "traffic"
+      },
+      {
+        "keyword": "쿨페이즈",
+        "group": "고주파",
+        "monthlySearchVolume": 9280,
+        "searchRank": 7,
+        "source": "traffic"
+      }
+    ]
+  },
+  "sales": {
+    "overview": {
+      "totalSales": 0,
+      "uniqueProducts": 17,
+      "avgSalesPerProduct": 0
+    },
+    "topProducts": [
+      {
+        "keyword": "리프테라",
+        "group": "초음파",
+        "totalSales": 502,
+        "monthlySales": 0,
+        "source": "sales"
+      },
+      {
+        "keyword": "쿨소닉",
+        "group": "초음파",
+        "totalSales": 54,
+        "monthlySales": 0,
+        "source": "sales"
+      },
+      {
+        "keyword": "슈링크",
+        "group": "초음파",
+        "totalSales": 1989,
+        "monthlySales": 0,
+        "source": "sales"
+      },
+      {
+        "keyword": "리니어펌",
+        "group": "초음파",
+        "totalSales": 402,
+        "monthlySales": 0,
+        "source": "sales"
+      },
+      {
+        "keyword": "리니어지",
+        "group": "초음파",
+        "totalSales": 413,
+        "monthlySales": 0,
+        "source": "sales"
+      },
+      {
+        "keyword": "브이로",
+        "group": "초음파",
+        "totalSales": 443,
+        "monthlySales": 0,
+        "source": "sales"
+      },
+      {
+        "keyword": "텐쎄라",
+        "group": "초음파",
+        "totalSales": 417,
+        "monthlySales": 0,
+        "source": "sales"
+      },
+      {
+        "keyword": "튠라이너",
+        "group": "초음파",
+        "totalSales": 335,
+        "monthlySales": 0,
+        "source": "sales"
+      },
+      {
+        "keyword": "울쎄라",
+        "group": "초음파",
+        "totalSales": 1714,
+        "monthlySales": 0,
+        "source": "sales"
+      },
+      {
+        "keyword": "쿨페이즈",
+        "group": "고주파",
+        "totalSales": 183,
+        "monthlySales": 0,
+        "source": "sales"
+      }
+    ]
+  }
+}
