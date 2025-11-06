@@ -35,6 +35,8 @@
     }
   },
   "generatedAt": "2025-11-06T05:36:36.338Z",
-  "status": "draft",
-  "model": "claude-sonnet-4-5-20250929"
+  "status": "approved",
+  "model": "claude-sonnet-4-5-20250929",
+  "approvedAt": "2025-11-06T05:44:03.645Z",
+  "approvedBy": "admin"
 }
