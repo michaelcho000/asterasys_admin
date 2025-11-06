@@ -33,15 +33,15 @@ export async function GET(request) {
     }
 
     // YouTube 분석 데이터 파일 경로들
-    const csvFilePath = path.join(monthContext.paths.generated, 'youtube_market_share.csv')
+    const csvFilePath = path.join(monthContext.paths.generated, 'youtube_products.csv')
     const insightsFilePath = path.join(monthContext.paths.youtubeProcessed, 'asterasys_youtube_insights.json')
     
     // CSV 파일 존재 확인
     if (!fs.existsSync(csvFilePath)) {
       return NextResponse.json(
-        { 
+        {
           error: 'YouTube 분석 데이터를 찾을 수 없습니다',
-          message: 'scripts/processYouTubeDataNode.js를 먼저 실행해주세요',
+          message: 'npm run youtube:process -- --month=YYYY-MM 을 먼저 실행해주세요',
           month: monthContext.month,
           expectedPath: csvFilePath
         },
@@ -49,53 +49,53 @@ export async function GET(request) {
       )
     }
 
-    // CSV 데이터 파싱
+    // CSV 데이터 파싱 (youtube_products.csv 포맷)
+    // Headers: product,brand,category,videos,views,likes,comments,views_avg,likes_avg,comments_avg,engagement_rate,shorts_ratio,views_median,views_p90,sov_posts,sov_views
     const csvContent = fs.readFileSync(csvFilePath, 'utf8')
     const lines = csvContent.split('\n').filter(line => line.trim())
     const headers = lines[0].split(',')
-    
+
     const rankings = lines.slice(1).map((line, index) => {
       const values = line.split(',')
-      
-      const device = values[0]
-      const category = values[1] 
-      const marketRank = parseInt(values[2])
-      const company = values[3]
-      const isAsterasys = values[4] === 'Y'
-      const videoCount = parseInt(values[5])
-      const videoShare = parseFloat(values[6])
-      const totalViews = parseInt(values[7])
-      const viewShare = parseFloat(values[8])
-      const avgViews = parseInt(values[9])
-      const engagement = parseFloat(values[10])
-      const channels = parseInt(values[11])
-      
+
+      const device = values[0]  // product name
+      const brand = values[1]  // competitor or asterasys
+      const category = values[2]  // RF or HIFU
+      const videoCount = parseInt(values[3])
+      const totalViews = parseInt(values[4])
+      const likes = parseInt(values[5])
+      const comments = parseInt(values[6])
+      const avgViews = parseFloat(values[7])
+      const engagement = parseFloat(values[10])  // engagement_rate
+      const shortsRatio = parseFloat(values[11])
+      const videoShare = parseFloat(values[14])  // sov_posts
+      const viewShare = parseFloat(values[15])  // sov_views
+
+      const isAsterasys = brand === 'asterasys'
+
       // 상태 계산
       let status = '성장필요'
       if (videoCount >= 200) status = '시장지배'
       else if (videoCount >= 100) status = '경쟁우위'
       else if (videoCount >= 50) status = '안정적'
       else if (videoCount >= 10) status = '성장세'
-      
-      // 순위 변동 계산 (시장순위 vs YouTube순위)
-      const rankChange = marketRank - (index + 1)
-      
+
       return {
         rank: index + 1,
         device,
         category,
-        marketRank,
-        company,
+        company: device,  // product name as company for compatibility
         isAsterasys,
         videoCount,
-        videoShare,
+        videoShare: videoShare * 100,  // convert to percentage
         totalViews,
-        viewShare,
-        avgViews,
-        engagement,
-        channels,
-        status,
-        rankChange
+        viewShare: viewShare * 100,  // convert to percentage
+        avgViews: Math.round(avgViews),
+        engagement: engagement * 100,  // convert to percentage
+        likes,
+        comments,
+        shortsRatio: shortsRatio * 100,  // convert to percentage
+        status
       }
     })
 
@@ -167,6 +167,6 @@ export async function HEAD(request) {
     return new NextResponse(null, { status: 404 })
   }
 
-  const csvFilePath = path.join(monthContext.paths.generated, 'youtube_market_share.csv')
+  const csvFilePath = path.join(monthContext.paths.generated, 'youtube_products.csv')
   return new NextResponse(null, { status: fs.existsSync(csvFilePath) ? 200 : 404 })
 }

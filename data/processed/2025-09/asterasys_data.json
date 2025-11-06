@@ -1,0 +1,2673 @@
+{
+  "blog": [
+    {
+      "keyword": "쿨페이즈",
+      "blogType": "병원블로그",
+      "totalCount": 54,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 132,
+      "category": "고주파",
+      "rank": 9,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "blogType": "플레이스블로그",
+      "totalCount": 0,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "blogType": "일반블로그",
+      "totalCount": 78,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogType": "병원블로그",
+      "totalCount": 668,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 1424,
+      "category": "고주파",
+      "rank": 4,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogType": "플레이스블로그",
+      "totalCount": 54,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogType": "일반블로그",
+      "totalCount": 702,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogType": "병원블로그",
+      "totalCount": 194,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 530,
+      "category": "고주파",
+      "rank": 8,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogType": "플레이스블로그",
+      "totalCount": 30,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogType": "일반블로그",
+      "totalCount": 306,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogType": "병원블로그",
+      "totalCount": 1364,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 2418,
+      "category": "고주파",
+      "rank": 3,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogType": "플레이스블로그",
+      "totalCount": 70,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogType": "일반블로그",
+      "totalCount": 984,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogType": "병원블로그",
+      "totalCount": 458,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 758,
+      "category": "고주파",
+      "rank": 6,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogType": "플레이스블로그",
+      "totalCount": 18,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogType": "일반블로그",
+      "totalCount": 282,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogType": "병원블로그",
+      "totalCount": 484,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 768,
+      "category": "고주파",
+      "rank": 5,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogType": "플레이스블로그",
+      "totalCount": 12,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogType": "일반블로그",
+      "totalCount": 272,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogType": "병원블로그",
+      "totalCount": 3832,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 14476,
+      "category": "고주파",
+      "rank": 1,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogType": "플레이스블로그",
+      "totalCount": 2568,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogType": "일반블로그",
+      "totalCount": 8076,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogType": "병원블로그",
+      "totalCount": 350,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 614,
+      "category": "고주파",
+      "rank": 7,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogType": "플레이스블로그",
+      "totalCount": 16,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogType": "일반블로그",
+      "totalCount": 248,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogType": "병원블로그",
+      "totalCount": 3876,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 10944,
+      "category": "고주파",
+      "rank": 2,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogType": "플레이스블로그",
+      "totalCount": 764,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogType": "일반블로그",
+      "totalCount": 6304,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogType": "병원블로그",
+      "totalCount": 186,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 358,
+      "category": "초음파",
+      "rank": 6,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogType": "플레이스블로그",
+      "totalCount": 8,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogType": "일반블로그",
+      "totalCount": 164,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogType": "병원블로그",
+      "totalCount": 28,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 68,
+      "category": "초음파",
+      "rank": 9,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogType": "플레이스블로그",
+      "totalCount": 2,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogType": "일반블로그",
+      "totalCount": 38,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogType": "병원블로그",
+      "totalCount": 38,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 76,
+      "category": "초음파",
+      "rank": 8,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogType": "플레이스블로그",
+      "totalCount": 0,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogType": "일반블로그",
+      "totalCount": 38,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogType": "병원블로그",
+      "totalCount": 56,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 160,
+      "category": "초음파",
+      "rank": 7,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogType": "플레이스블로그",
+      "totalCount": 0,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogType": "일반블로그",
+      "totalCount": 104,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogType": "병원블로그",
+      "totalCount": 5544,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 17718,
+      "category": "초음파",
+      "rank": 1,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogType": "플레이스블로그",
+      "totalCount": 3186,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogType": "일반블로그",
+      "totalCount": 8988,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogType": "병원블로그",
+      "totalCount": 2912,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 10704,
+      "category": "초음파",
+      "rank": 2,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogType": "플레이스블로그",
+      "totalCount": 1624,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogType": "일반블로그",
+      "totalCount": 6168,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogType": "병원블로그",
+      "totalCount": 226,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 588,
+      "category": "초음파",
+      "rank": 3,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogType": "플레이스블로그",
+      "totalCount": 18,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogType": "일반블로그",
+      "totalCount": 344,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogType": "병원블로그",
+      "totalCount": 148,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 438,
+      "category": "초음파",
+      "rank": 5,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogType": "플레이스블로그",
+      "totalCount": 6,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogType": "일반블로그",
+      "totalCount": 284,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogType": "병원블로그",
+      "totalCount": 328,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 450,
+      "category": "초음파",
+      "rank": 4,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogType": "플레이스블로그",
+      "totalCount": 4,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogType": "일반블로그",
+      "totalCount": 118,
+      "totalComments": 0,
+      "totalReplies": 0,
+      "totalPosts": 0,
+      "category": "",
+      "rank": 0,
+      "source": "blog_rank"
+    }
+  ],
+  "cafe": [
+    {
+      "keyword": "써마지",
+      "group": "고주파",
+      "totalPosts": 1702,
+      "totalComments": 9819,
+      "totalReplies": 3010,
+      "totalViews": 116467,
+      "rank": 1,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "인모드",
+      "group": "고주파",
+      "totalPosts": 835,
+      "totalComments": 4139,
+      "totalReplies": 1616,
+      "totalViews": 56540,
+      "rank": 2,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "group": "고주파",
+      "totalPosts": 614,
+      "totalComments": 2017,
+      "totalReplies": 323,
+      "totalViews": 40090,
+      "rank": 3,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "group": "고주파",
+      "totalPosts": 598,
+      "totalComments": 3706,
+      "totalReplies": 530,
+      "totalViews": 25936,
+      "rank": 4,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "세르프",
+      "group": "고주파",
+      "totalPosts": 269,
+      "totalComments": 1256,
+      "totalReplies": 362,
+      "totalViews": 22863,
+      "rank": 5,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "group": "고주파",
+      "totalPosts": 201,
+      "totalComments": 872,
+      "totalReplies": 311,
+      "totalViews": 12128,
+      "rank": 6,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "group": "고주파",
+      "totalPosts": 157,
+      "totalComments": 1391,
+      "totalReplies": 279,
+      "totalViews": 9278,
+      "rank": 7,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "group": "고주파",
+      "totalPosts": 110,
+      "totalComments": 522,
+      "totalReplies": 208,
+      "totalViews": 16609,
+      "rank": 8,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "group": "고주파",
+      "totalPosts": 75,
+      "totalComments": 328,
+      "totalReplies": 141,
+      "totalViews": 11828,
+      "rank": 9,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "group": "초음파",
+      "totalPosts": 2369,
+      "totalComments": 11451,
+      "totalReplies": 3395,
+      "totalViews": 111433,
+      "rank": 1,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "group": "초음파",
+      "totalPosts": 707,
+      "totalComments": 3808,
+      "totalReplies": 1599,
+      "totalViews": 54620,
+      "rank": 2,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "group": "초음파",
+      "totalPosts": 522,
+      "totalComments": 3616,
+      "totalReplies": 553,
+      "totalViews": 21461,
+      "rank": 3,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "group": "초음파",
+      "totalPosts": 430,
+      "totalComments": 2946,
+      "totalReplies": 567,
+      "totalViews": 21102,
+      "rank": 4,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "group": "초음파",
+      "totalPosts": 265,
+      "totalComments": 463,
+      "totalReplies": 80,
+      "totalViews": 16811,
+      "rank": 5,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "브이로",
+      "group": "초음파",
+      "totalPosts": 108,
+      "totalComments": 670,
+      "totalReplies": 205,
+      "totalViews": 12078,
+      "rank": 6,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "group": "초음파",
+      "totalPosts": 52,
+      "totalComments": 267,
+      "totalReplies": 86,
+      "totalViews": 2614,
+      "rank": 7,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "group": "초음파",
+      "totalPosts": 51,
+      "totalComments": 269,
+      "totalReplies": 78,
+      "totalViews": 2253,
+      "rank": 8,
+      "source": "cafe_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "group": "초음파",
+      "totalPosts": 4,
+      "totalComments": 14,
+      "totalReplies": 14,
+      "totalViews": 47,
+      "rank": 9,
+      "source": "cafe_rank"
+    }
+  ],
+  "traffic": [
+    {
+      "keyword": "써마지",
+      "group": "고주파",
+      "monthlySearchVolume": 81010,
+      "searchRank": 3,
+      "source": "traffic"
+    },
+    {
+      "keyword": "인모드",
+      "group": "고주파",
+      "monthlySearchVolume": 63960,
+      "searchRank": 4,
+      "source": "traffic"
+    },
+    {
+      "keyword": "덴서티",
+      "group": "고주파",
+      "monthlySearchVolume": 86510,
+      "searchRank": 2,
+      "source": "traffic"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "group": "고주파",
+      "monthlySearchVolume": 9980,
+      "searchRank": 9,
+      "source": "traffic"
+    },
+    {
+      "keyword": "올리지오",
+      "group": "고주파",
+      "monthlySearchVolume": 33300,
+      "searchRank": 5,
+      "source": "traffic"
+    },
+    {
+      "keyword": "튠페이스",
+      "group": "고주파",
+      "monthlySearchVolume": 17090,
+      "searchRank": 7,
+      "source": "traffic"
+    },
+    {
+      "keyword": "세르프",
+      "group": "고주파",
+      "monthlySearchVolume": 30660,
+      "searchRank": 6,
+      "source": "traffic"
+    },
+    {
+      "keyword": "텐써마",
+      "group": "고주파",
+      "monthlySearchVolume": 16310,
+      "searchRank": 8,
+      "source": "traffic"
+    },
+    {
+      "keyword": "볼뉴머",
+      "group": "고주파",
+      "monthlySearchVolume": 153900,
+      "searchRank": 1,
+      "source": "traffic"
+    },
+    {
+      "keyword": "울쎄라",
+      "group": "초음파",
+      "monthlySearchVolume": 161060,
+      "searchRank": 1,
+      "source": "traffic"
+    },
+    {
+      "keyword": "슈링크",
+      "group": "초음파",
+      "monthlySearchVolume": 128120,
+      "searchRank": 2,
+      "source": "traffic"
+    },
+    {
+      "keyword": "쿨소닉",
+      "group": "초음파",
+      "monthlySearchVolume": 11990,
+      "searchRank": 4,
+      "source": "traffic"
+    },
+    {
+      "keyword": "리프테라",
+      "group": "초음파",
+      "monthlySearchVolume": 26250,
+      "searchRank": 3,
+      "source": "traffic"
+    },
+    {
+      "keyword": "리니어지",
+      "group": "초음파",
+      "monthlySearchVolume": 7730,
+      "searchRank": 5,
+      "source": "traffic"
+    },
+    {
+      "keyword": "브이로",
+      "group": "초음파",
+      "monthlySearchVolume": 7360,
+      "searchRank": 6,
+      "source": "traffic"
+    },
+    {
+      "keyword": "텐쎄라",
+      "group": "초음파",
+      "monthlySearchVolume": 1730,
+      "searchRank": 8,
+      "source": "traffic"
+    },
+    {
+      "keyword": "튠라이너",
+      "group": "초음파",
+      "monthlySearchVolume": 5220,
+      "searchRank": 7,
+      "source": "traffic"
+    },
+    {
+      "keyword": "리니어펌",
+      "group": "초음파",
+      "monthlySearchVolume": 1660,
+      "searchRank": 9,
+      "source": "traffic"
+    }
+  ],
+  "sales": [
+    {
+      "keyword": "리프테라",
+      "group": "초음파",
+      "totalSales": 498,
+      "monthlySales": 3,
+      "source": "sales"
+    },
+    {
+      "keyword": "쿨소닉",
+      "group": "초음파",
+      "totalSales": 40,
+      "monthlySales": 9,
+      "source": "sales"
+    },
+    {
+      "keyword": "슈링크",
+      "group": "초음파",
+      "totalSales": 1988,
+      "monthlySales": 254,
+      "source": "sales"
+    },
+    {
+      "keyword": "리니어펌",
+      "group": "초음파",
+      "totalSales": 402,
+      "monthlySales": 0,
+      "source": "sales"
+    },
+    {
+      "keyword": "리니어지",
+      "group": "초음파",
+      "totalSales": 406,
+      "monthlySales": 4,
+      "source": "sales"
+    },
+    {
+      "keyword": "브이로",
+      "group": "초음파",
+      "totalSales": 443,
+      "monthlySales": 0,
+      "source": "sales"
+    },
+    {
+      "keyword": "텐쎄라",
+      "group": "초음파",
+      "totalSales": 417,
+      "monthlySales": 0,
+      "source": "sales"
+    },
+    {
+      "keyword": "튠라이너",
+      "group": "초음파",
+      "totalSales": 335,
+      "monthlySales": 0,
+      "source": "sales"
+    },
+    {
+      "keyword": "울쎄라",
+      "group": "초음파",
+      "totalSales": 1656,
+      "monthlySales": 0,
+      "source": "sales"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "group": "고주파",
+      "totalSales": 174,
+      "monthlySales": 5,
+      "source": "sales"
+    },
+    {
+      "keyword": "튠페이스",
+      "group": "고주파",
+      "totalSales": 335,
+      "monthlySales": 0,
+      "source": "sales"
+    },
+    {
+      "keyword": "볼뉴머",
+      "group": "고주파",
+      "totalSales": 567,
+      "monthlySales": 16,
+      "source": "sales"
+    },
+    {
+      "keyword": "덴서티",
+      "group": "고주파",
+      "totalSales": 522,
+      "monthlySales": 13,
+      "source": "sales"
+    },
+    {
+      "keyword": "올리지오",
+      "group": "고주파",
+      "totalSales": 1222,
+      "monthlySales": 2,
+      "source": "sales"
+    },
+    {
+      "keyword": "텐써마",
+      "group": "고주파",
+      "totalSales": 589,
+      "monthlySales": 7,
+      "source": "sales"
+    },
+    {
+      "keyword": "세르프",
+      "group": "고주파",
+      "totalSales": 434,
+      "monthlySales": 19,
+      "source": "sales"
+    },
+    {
+      "keyword": "써마지",
+      "group": "고주파",
+      "totalSales": 1083,
+      "monthlySales": 0,
+      "source": "sales"
+    }
+  ],
+  "news": [
+    {
+      "keyword": "써마지",
+      "group": "고주파",
+      "totalPosts": 108,
+      "rank": 1,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "세르프",
+      "group": "고주파",
+      "totalPosts": 44,
+      "rank": 2,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "group": "고주파",
+      "totalPosts": 38,
+      "rank": 3,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "group": "고주파",
+      "totalPosts": 38,
+      "rank": 3,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "인모드",
+      "group": "고주파",
+      "totalPosts": 36,
+      "rank": 5,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "group": "고주파",
+      "totalPosts": 30,
+      "rank": 6,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "group": "고주파",
+      "totalPosts": 16,
+      "rank": 7,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "group": "고주파",
+      "totalPosts": 15,
+      "rank": 8,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "group": "고주파",
+      "totalPosts": 12,
+      "rank": 9,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "group": "초음파",
+      "totalPosts": 200,
+      "rank": 1,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "group": "초음파",
+      "totalPosts": 161,
+      "rank": 2,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "group": "초음파",
+      "totalPosts": 19,
+      "rank": 3,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "group": "초음파",
+      "totalPosts": 11,
+      "rank": 4,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "브이로",
+      "group": "초음파",
+      "totalPosts": 8,
+      "rank": 5,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "group": "초음파",
+      "totalPosts": 6,
+      "rank": 6,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "group": "초음파",
+      "totalPosts": 6,
+      "rank": 6,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "group": "초음파",
+      "totalPosts": 4,
+      "rank": 8,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "group": "초음파",
+      "totalPosts": 0,
+      "rank": 9,
+      "source": "news_rank"
+    }
+  ],
+  "blogUsers": [
+    {
+      "keyword": "쿨페이즈",
+      "blogName": "뉴리즈의원",
+      "url": "https://blog.naver.com/min8c",
+      "totalPosts": 3,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "blogName": "더블에이의원",
+      "url": "https://blog.naver.com/shiningspringdayz",
+      "totalPosts": 3,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "blogName": "치유앤미성형외과",
+      "url": "https://blog.naver.com/chiyuandme",
+      "totalPosts": 2,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "blogName": "피부미용 연세봄봄의원",
+      "url": "https://blog.naver.com/yonseibombom",
+      "totalPosts": 2,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "blogName": "Be Born Young [비본영의원]",
+      "url": "https://blog.naver.com/s5gageqiy",
+      "totalPosts": 2,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "blogName": "[유어힐의원] YOUR HEAL",
+      "url": "https://blog.naver.com/hbvu34mes",
+      "totalPosts": 1,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "blogName": "대구 다온피부과",
+      "url": "https://blog.naver.com/cfghdrtfuhrtf",
+      "totalPosts": 1,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "blogName": "디테일의원 수원점",
+      "url": "https://blog.naver.com/coruscation368",
+      "totalPosts": 1,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "blogName": "리즈온클리닉 부산",
+      "url": "https://blog.naver.com/lizonbusan",
+      "totalPosts": 1,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "blogName": "리즈온클리닉 센텀점",
+      "url": "https://blog.naver.com/lizoncentum-",
+      "totalPosts": 1,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogName": "메디컬 웰니스 저널",
+      "url": "https://blog.naver.com/lew147350",
+      "totalPosts": 27,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/khyun27155",
+      "totalPosts": 23,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogName": "닥터에버스",
+      "url": "https://blog.naver.com/doldorimung",
+      "totalPosts": 18,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogName": "메디컬트렌드뉴스",
+      "url": "https://blog.naver.com/jbpqciey984961",
+      "totalPosts": 14,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogName": "피부에 휴식을 드리는 편안한 공간, 청담레스트의원",
+      "url": "https://blog.naver.com/xywbqf51002",
+      "totalPosts": 14,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogName": "얼루어성형외과의원",
+      "url": "https://blog.naver.com/susandonaldson",
+      "totalPosts": 9,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogName": "여의공감성형외과",
+      "url": "https://blog.naver.com/hddcjp5yc",
+      "totalPosts": 9,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogName": "클린톡스의원",
+      "url": "https://blog.naver.com/goldenzebra202",
+      "totalPosts": 9,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogName": "아름다운성형외과의원",
+      "url": "https://blog.naver.com/nellfeldman",
+      "totalPosts": 8,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "blogName": "건강 닥터 피부 칼럼",
+      "url": "https://blog.naver.com/reefstore",
+      "totalPosts": 7,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogName": "아름다움을 전하는 리샤인의원",
+      "url": "https://blog.naver.com/reveal8228",
+      "totalPosts": 10,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogName": "청담리투의원",
+      "url": "https://blog.naver.com/aexpqebai",
+      "totalPosts": 7,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogName": "플래티넘 클리닉",
+      "url": "https://blog.naver.com/alchandoctor",
+      "totalPosts": 4,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogName": "송도피부과파크뷰의원",
+      "url": "https://blog.naver.com/rat3427",
+      "totalPosts": 3,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogName": "엘레브의원",
+      "url": "https://blog.naver.com/elevclinic",
+      "totalPosts": 3,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogName": "15년 경험의 디테일, 결과로 증명합니다º 세인트의원",
+      "url": "https://blog.naver.com/icehi0303",
+      "totalPosts": 2,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogName": "도진우 원장 - 제이디클리닉 (강남신사점)",
+      "url": "https://blog.naver.com/jdclinicsinsa",
+      "totalPosts": 2,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogName": "세라미크의원",
+      "url": "https://blog.naver.com/best_sseul",
+      "totalPosts": 2,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogName": "스킨메디피부과 공식블로그",
+      "url": "https://blog.naver.com/skin-medi",
+      "totalPosts": 2,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "blogName": "윤지현원장의 피부 이야기",
+      "url": "https://blog.naver.com/gjuni114",
+      "totalPosts": 2,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogName": "닥터에버스",
+      "url": "https://blog.naver.com/everscd06",
+      "totalPosts": 59,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/magicnum07",
+      "totalPosts": 59,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogName": "범계역 8번출구 건너편 라마르프리미어의원",
+      "url": "https://blog.naver.com/employ1705",
+      "totalPosts": 52,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogName": "미클리닉 인포박스",
+      "url": "https://blog.naver.com/ausualoyq81",
+      "totalPosts": 19,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogName": "미클리닉 뷰티박스",
+      "url": "https://blog.naver.com/jsamericen98",
+      "totalPosts": 15,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogName": "미클리닉 피부관리",
+      "url": "https://blog.naver.com/fcopyoai44",
+      "totalPosts": 14,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogName": "오로지 나를 위한 시간을, 미뉴얼클리닉에서",
+      "url": "https://blog.naver.com/tgeduc9326",
+      "totalPosts": 11,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogName": "닥터에버스 의원",
+      "url": "https://blog.naver.com/drevers777",
+      "totalPosts": 10,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogName": "아름다운 미클리닉",
+      "url": "https://blog.naver.com/xhasshapee84",
+      "totalPosts": 10,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "blogName": "진료에 진심인 의사들, 미뉴얼클리닉",
+      "url": "https://blog.naver.com/come14131",
+      "totalPosts": 10,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogName": "닥터에버스",
+      "url": "https://blog.naver.com/kwonoh7876",
+      "totalPosts": 50,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/pjypjy112",
+      "totalPosts": 43,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogName": "닥터에버스의원 천호점",
+      "url": "https://blog.naver.com/erica0039",
+      "totalPosts": 10,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogName": "닥터에버스 의원",
+      "url": "https://blog.naver.com/eunparis21",
+      "totalPosts": 7,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogName": "★검단라벨의원 공식블로그★",
+      "url": "https://blog.naver.com/m1n2b320",
+      "totalPosts": 4,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogName": "닥터에버스의원(?´?`?)",
+      "url": "https://blog.naver.com/rmaeksgmltjd",
+      "totalPosts": 3,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogName": "닥터에버스의원?˘?˘?",
+      "url": "https://blog.naver.com/tpqpffm",
+      "totalPosts": 3,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogName": "닥터제이앤비의원_김범석 대표원장",
+      "url": "https://blog.naver.com/crojjl667",
+      "totalPosts": 3,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogName": "리쥬앤힐 대표원장 김동은의 피부이야기",
+      "url": "https://blog.naver.com/rejuandheal",
+      "totalPosts": 3,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "blogName": "피부과 박태현 원장",
+      "url": "https://blog.naver.com/ysmgp",
+      "totalPosts": 3,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogName": "닥터에버스",
+      "url": "https://blog.naver.com/everscd09",
+      "totalPosts": 39,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/dr_evers444444",
+      "totalPosts": 28,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogName": "닥터에버스 의원",
+      "url": "https://blog.naver.com/eversnu01",
+      "totalPosts": 7,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogName": "미클리닉 인포박스",
+      "url": "https://blog.naver.com/tsmokeeyx61",
+      "totalPosts": 6,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogName": "아름다운 미클리닉",
+      "url": "https://blog.naver.com/elackoyj70",
+      "totalPosts": 6,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogName": "가장 아름다은 나를 위한, 다은의원",
+      "url": "https://blog.naver.com/odd14338",
+      "totalPosts": 4,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogName": "닥터에버스의원 천호점",
+      "url": "https://blog.naver.com/goms0716",
+      "totalPosts": 4,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogName": "미의원에서 이뻐지기",
+      "url": "https://blog.naver.com/vwiniid72",
+      "totalPosts": 4,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogName": "미클리닉 동안관리",
+      "url": "https://blog.naver.com/tmontheak46",
+      "totalPosts": 4,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "blogName": "??셀레스의원??",
+      "url": "https://blog.naver.com/fvkj87vdp77",
+      "totalPosts": 3,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogName": "울쎄라&써마지 마스터 스타피부과",
+      "url": "https://blog.naver.com/imperial1788",
+      "totalPosts": 37,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/dukhyunshin0807",
+      "totalPosts": 32,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogName": "미클리닉 인포박스",
+      "url": "https://blog.naver.com/pmenarmyw47",
+      "totalPosts": 25,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogName": "celliclinic님의 블로그",
+      "url": "https://blog.naver.com/celliclinic",
+      "totalPosts": 23,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogName": "미클리닉 피부관리",
+      "url": "https://blog.naver.com/fcopyoai44",
+      "totalPosts": 18,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogName": "미클리닉 뷰티박스",
+      "url": "https://blog.naver.com/xshortblindu90",
+      "totalPosts": 14,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogName": "아름다운 미클리닉",
+      "url": "https://blog.naver.com/elackoyj70",
+      "totalPosts": 14,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogName": "?강남 셀린의원 이야기?",
+      "url": "https://blog.naver.com/iltqnp284",
+      "totalPosts": 11,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogName": "미클리닉 동안관리",
+      "url": "https://blog.naver.com/wclockaay25",
+      "totalPosts": 11,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "써마지",
+      "blogName": "중고 의료장비 매입,판매합니다 하이원메디칼",
+      "url": "https://blog.naver.com/highone72",
+      "totalPosts": 11,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogName": "미클리닉 피부관리",
+      "url": "https://blog.naver.com/fcopyoai44",
+      "totalPosts": 11,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogName": "미클리닉 인포박스",
+      "url": "https://blog.naver.com/tsmokeeyx61",
+      "totalPosts": 8,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogName": "아름다운 미클리닉",
+      "url": "https://blog.naver.com/tareabrushv86",
+      "totalPosts": 6,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogName": "미클리닉 뷰티박스",
+      "url": "https://blog.naver.com/bslowscenet75",
+      "totalPosts": 5,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogName": "김도훈 원장 시술일지",
+      "url": "https://blog.naver.com/victoryedu08",
+      "totalPosts": 4,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogName": "미의원에서 이뻐지기",
+      "url": "https://blog.naver.com/opianouii93",
+      "totalPosts": 4,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogName": "미클리닉 동안관리",
+      "url": "https://blog.naver.com/tpipeyev49",
+      "totalPosts": 4,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogName": "아름다움의 차이, 차이의원입니다.",
+      "url": "https://blog.naver.com/chai-clinic",
+      "totalPosts": 4,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogName": "?당신을 빛나게 하는, 청담엔샤인의원?",
+      "url": "https://blog.naver.com/trust14707",
+      "totalPosts": 3,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "세르프",
+      "blogName": "25년차 대표원장 직접 진료 | 드림페이스의원",
+      "url": "https://blog.naver.com/bore885",
+      "totalPosts": 3,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/corsus975",
+      "totalPosts": 49,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogName": "범계역 8번출구 건너편 라마르프리미어의원",
+      "url": "https://blog.naver.com/employ1705",
+      "totalPosts": 47,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogName": "닥터에버스",
+      "url": "https://blog.naver.com/everscd09",
+      "totalPosts": 38,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogName": "신사역_피팅의원",
+      "url": "https://blog.naver.com/ftclinic9997",
+      "totalPosts": 16,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogName": "중고 의료장비 매입,판매합니다 하이원메디칼",
+      "url": "https://blog.naver.com/highone72",
+      "totalPosts": 13,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogName": "피팅의원",
+      "url": "https://blog.naver.com/ftclinic9997_",
+      "totalPosts": 12,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogName": "♥세가지소원성형외과의원 강남점♥",
+      "url": "https://blog.naver.com/absurd11284",
+      "totalPosts": 11,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogName": "미클리닉 피부관리",
+      "url": "https://blog.naver.com/pmenuoac60",
+      "totalPosts": 11,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogName": "제이앤지피부과, 환자의 미소를 위해",
+      "url": "https://blog.naver.com/wasse27180",
+      "totalPosts": 11,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "인모드",
+      "blogName": "?리프팅·색소 중점 분당동안의원?",
+      "url": "https://blog.naver.com/okesec53",
+      "totalPosts": 10,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogName": "닥터에버스",
+      "url": "https://blog.naver.com/doldorimung",
+      "totalPosts": 17,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/dreversca24",
+      "totalPosts": 11,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogName": "닥터에버스 의원",
+      "url": "https://blog.naver.com/eunparis21",
+      "totalPosts": 3,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogName": "닥터에버스의원 천호점",
+      "url": "https://blog.naver.com/erica0039",
+      "totalPosts": 3,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogName": "부천피부과 뷰티힐 의원",
+      "url": "https://blog.naver.com/jgs7377-",
+      "totalPosts": 3,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogName": "바노바기의원",
+      "url": "https://blog.naver.com/lrve989",
+      "totalPosts": 2,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogName": "연세이브클리닉",
+      "url": "https://blog.naver.com/yonseieve",
+      "totalPosts": 2,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogName": "예쁨주의쁨의원 부천",
+      "url": "https://blog.naver.com/ints1949",
+      "totalPosts": 2,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogName": "★루비의원",
+      "url": "https://blog.naver.com/dltmdgk777",
+      "totalPosts": 1,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "blogName": "?? 메이드유의원 부평점",
+      "url": "https://blog.naver.com/goxiud5602",
+      "totalPosts": 1,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogName": "SARTINE 사르티네의원",
+      "url": "https://blog.naver.com/dead2079",
+      "totalPosts": 3,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogName": "미도의원: 보톡스·필러·리프팅·피부·제모",
+      "url": "https://blog.naver.com/midoclinic",
+      "totalPosts": 2,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogName": "비본영의원",
+      "url": "https://blog.naver.com/tribe5503",
+      "totalPosts": 2,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogName": "아름다움과 회복이 공존하는 공간, BTQ CLINIC",
+      "url": "https://blog.naver.com/btqclinic1",
+      "totalPosts": 2,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogName": "[사르티네의원]SARTINE★",
+      "url": "https://blog.naver.com/enmsc0gjj",
+      "totalPosts": 1,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogName": "다시봄날의원 오송점",
+      "url": "https://blog.naver.com/springdayclinic_31",
+      "totalPosts": 1,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogName": "리네이처의원",
+      "url": "https://blog.naver.com/renaturesajik",
+      "totalPosts": 1,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogName": "힐링의원 닥터스 공식 블로그",
+      "url": "https://blog.naver.com/sjhealing888",
+      "totalPosts": 1,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "blogName": "OnlyShine Clinic :: 온리빛",
+      "url": "https://blog.naver.com/onlyshineclinic_",
+      "totalPosts": 1,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogName": "유앤영피부과 노원점",
+      "url": "https://blog.naver.com/babyfaceyny",
+      "totalPosts": 2,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogName": ":::닥터화이트피부과:::",
+      "url": "https://blog.naver.com/doctorwhite3",
+      "totalPosts": 1,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogName": "강남신사 청아연클리닉",
+      "url": "https://blog.naver.com/angolh6",
+      "totalPosts": 1,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogName": "광교미러의원 공식 블로그",
+      "url": "https://blog.naver.com/mirror0274",
+      "totalPosts": 1,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogName": "다시봄날의원가정청라",
+      "url": "https://blog.naver.com/springdayclinic12",
+      "totalPosts": 1,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogName": "다시봄날의원오산",
+      "url": "https://blog.naver.com/springdayclinic1",
+      "totalPosts": 1,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogName": "닥터 빈의 피부&비만이야기",
+      "url": "https://blog.naver.com/glock18c",
+      "totalPosts": 1,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogName": "대구 미쁨의원",
+      "url": "https://blog.naver.com/mppm201906",
+      "totalPosts": 1,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogName": "대전 미하이의원 유성",
+      "url": "https://blog.naver.com/mihi_ys8833",
+      "totalPosts": 1,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "blogName": "더 맑은 피부과 * 한의원",
+      "url": "https://blog.naver.com/8332175",
+      "totalPosts": 1,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogName": "에이블룸클리닉",
+      "url": "https://blog.naver.com/kid192197",
+      "totalPosts": 2,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogName": "잠실 피부과?아름다움을 써내려가다, 에피소드 의원",
+      "url": "https://blog.naver.com/write_your_episode",
+      "totalPosts": 2,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogName": "?닉스의원 수원점?",
+      "url": "https://blog.naver.com/vczranhlxo",
+      "totalPosts": 1,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogName": "?부천 포커스성형외과의원?",
+      "url": "https://blog.naver.com/bucheonbeauty",
+      "totalPosts": 1,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogName": "?오라클피부과의원 잠실점?",
+      "url": "https://blog.naver.com/jsoracle1",
+      "totalPosts": 1,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogName": "권원장이 직접 작성하는 피부 칼럼",
+      "url": "https://blog.naver.com/hjavvj7695",
+      "totalPosts": 1,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogName": "김현옥 대표원장의 안티 에이징 칼럼",
+      "url": "https://blog.naver.com/bias4376",
+      "totalPosts": 1,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogName": "넬의원",
+      "url": "https://blog.naver.com/nell1717",
+      "totalPosts": 1,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogName": "더리턴피부과의원",
+      "url": "https://blog.naver.com/hjkjhw9478",
+      "totalPosts": 1,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "blogName": "리즈온클리닉 홍대",
+      "url": "https://blog.naver.com/lizonhongdae",
+      "totalPosts": 1,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogName": "미클리닉 피부관리",
+      "url": "https://blog.naver.com/rreadychecke84",
+      "totalPosts": 24,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogName": "맑고 투명한 피부의 비밀, 여름의원",
+      "url": "https://blog.naver.com/zanlmm3817",
+      "totalPosts": 20,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogName": "범계역 8번출구 건너편 라마르프리미어의원",
+      "url": "https://blog.naver.com/employ1705",
+      "totalPosts": 18,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/dr_evers444444",
+      "totalPosts": 16,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogName": "미클리닉 인포박스",
+      "url": "https://blog.naver.com/ecamepayl17",
+      "totalPosts": 16,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogName": "아름다운 미클리닉",
+      "url": "https://blog.naver.com/xhasshapee84",
+      "totalPosts": 16,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogName": "본연의 아름다움, 제너리스의원",
+      "url": "https://blog.naver.com/urimri",
+      "totalPosts": 14,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogName": "미클리닉 동안관리",
+      "url": "https://blog.naver.com/gnoiseeug74",
+      "totalPosts": 13,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogName": "celliclinic님의 블로그",
+      "url": "https://blog.naver.com/celliclinic",
+      "totalPosts": 13,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "blogName": "닥터에버스",
+      "url": "https://blog.naver.com/dreversca20",
+      "totalPosts": 10,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogName": "미클리닉 피부관리",
+      "url": "https://blog.naver.com/ojobuor92",
+      "totalPosts": 23,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogName": "celliclinic님의 블로그",
+      "url": "https://blog.naver.com/celliclinic",
+      "totalPosts": 18,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogName": "미클리닉 인포박스",
+      "url": "https://blog.naver.com/ucutprioru97",
+      "totalPosts": 17,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogName": "범계역 8번출구 건너편 라마르프리미어의원",
+      "url": "https://blog.naver.com/employ1705",
+      "totalPosts": 17,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogName": "맑은선의원",
+      "url": "https://blog.naver.com/clearline4",
+      "totalPosts": 14,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogName": "아름다운 미클리닉",
+      "url": "https://blog.naver.com/xhasshapee84",
+      "totalPosts": 14,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogName": "셀리데이의원",
+      "url": "https://blog.naver.com/celliclinic_",
+      "totalPosts": 13,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogName": "오앤의원",
+      "url": "https://blog.naver.com/dones18",
+      "totalPosts": 13,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogName": "미의원에서 이뻐지기",
+      "url": "https://blog.naver.com/ogoodyeo31",
+      "totalPosts": 11,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "blogName": "미클리닉 동안관리",
+      "url": "https://blog.naver.com/bbateuk42",
+      "totalPosts": 11,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogName": "메디컬트렌드뉴스",
+      "url": "https://blog.naver.com/jbpqciey984961",
+      "totalPosts": 8,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/07jinlove07",
+      "totalPosts": 7,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogName": "얼루어성형외과의원",
+      "url": "https://blog.naver.com/susandonaldson",
+      "totalPosts": 6,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogName": "여의공감성형외과",
+      "url": "https://blog.naver.com/hddcjp5yc",
+      "totalPosts": 6,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogName": "클린톡스의원",
+      "url": "https://blog.naver.com/goldenzebra202",
+      "totalPosts": 6,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogName": "닥터에버스",
+      "url": "https://blog.naver.com/leetjdms22",
+      "totalPosts": 5,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogName": "아름다운성형외과의원",
+      "url": "https://blog.naver.com/nellfeldman",
+      "totalPosts": 5,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogName": "광교미러의원 공식 블로그",
+      "url": "https://blog.naver.com/mirror0274",
+      "totalPosts": 2,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogName": "광주 미하이의원 공식블로그",
+      "url": "https://blog.naver.com/mihigj",
+      "totalPosts": 2,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "blogName": "대표원장과 상담부터 시술까지",
+      "url": "https://blog.naver.com/dyk071103",
+      "totalPosts": 2,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogName": "◆대연류피부과◆",
+      "url": "https://blog.naver.com/y3ak25s33",
+      "totalPosts": 4,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogName": "?[라벨르의원]?",
+      "url": "https://blog.naver.com/gfhjrtdfhfd",
+      "totalPosts": 3,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogName": "16년 피부과 진료 정상우 대표원장 미앤지의원",
+      "url": "https://blog.naver.com/knightdr77",
+      "totalPosts": 2,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogName": "닥터수의 즐거운 피부이야기",
+      "url": "https://blog.naver.com/lindsay0626",
+      "totalPosts": 2,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogName": "더블유피부과 블로그",
+      "url": "https://blog.naver.com/w365-medical",
+      "totalPosts": 2,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogName": "더윤피부과의원 | 당신의 피부를 위한, 특별한 공간",
+      "url": "https://blog.naver.com/theyoonclinic",
+      "totalPosts": 2,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogName": "예뻐지는 노하우, 센텀엘클리닉",
+      "url": "https://blog.naver.com/elcl0920",
+      "totalPosts": 2,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogName": "??서울대출신, 용산휴먼피부과",
+      "url": "https://blog.naver.com/jhlove3545",
+      "totalPosts": 1,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogName": "?[라벨르의원]?",
+      "url": "https://blog.naver.com/fgcjhdfjufsdew",
+      "totalPosts": 1,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "브이로",
+      "blogName": "? 대전 럭스피부과의원 ?",
+      "url": "https://blog.naver.com/luxderma",
+      "totalPosts": 1,
+      "rank": 10,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogName": "닥터에버스",
+      "url": "https://blog.naver.com/youniss82",
+      "totalPosts": 18,
+      "rank": 1,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogName": "닥터에버스의원",
+      "url": "https://blog.naver.com/magicnum07",
+      "totalPosts": 18,
+      "rank": 2,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogName": "오로지 나를 위한 시간을, 미뉴얼클리닉에서",
+      "url": "https://blog.naver.com/tgeduc9326",
+      "totalPosts": 10,
+      "rank": 3,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogName": "진료에 진심인 의사들, 미뉴얼클리닉",
+      "url": "https://blog.naver.com/come14131",
+      "totalPosts": 9,
+      "rank": 4,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogName": "since2013, 명동 단아클리닉",
+      "url": "https://blog.naver.com/drug4103",
+      "totalPosts": 7,
+      "rank": 5,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogName": "검단예쁨의원ㅣ 맞춤 시술의 기준을 세우는 곳",
+      "url": "https://blog.naver.com/withme0329",
+      "totalPosts": 6,
+      "rank": 6,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogName": "닥터에버스 의원",
+      "url": "https://blog.naver.com/dreverssd03",
+      "totalPosts": 5,
+      "rank": 7,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogName": "닥터에버스의원 천호점",
+      "url": "https://blog.naver.com/erica0039",
+      "totalPosts": 5,
+      "rank": 8,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogName": "가장 아름다은 나를 위한, 다은의원",
+      "url": "https://blog.naver.com/odd14338",
+      "totalPosts": 4,
+      "rank": 9,
+      "source": "blog_user_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "blogName": "당신의 피부를 가장 잘 아는 더예쁨의원 배곧본점",
+      "url": "https://blog.naver.com/artificial6244",
+      "totalPosts": 3,
+      "rank": 10,
+      "source": "blog_user_rank"
+    }
+  ],
+  "youtubeContents": [],
+  "youtubeComments": [
+    {
+      "category": "쿨페이즈",
+      "channel": "치유앤미",
+      "link": "https://youtube.com/shorts/TJbExN4p_cg?si=I2egJSsI72QoP_74",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    },
+    {
+      "category": "쿨페이즈",
+      "channel": "에너지원",
+      "link": "https://youtu.be/xO2dDjdsNYY?si=1rEvCxiOYfSbaShi",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    },
+    {
+      "category": "쿨페이즈",
+      "channel": "온리빛",
+      "link": "https://youtube.com/shorts/D93WGce7G24?si=Gr1nRIkp_0eh36SI",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    },
+    {
+      "category": "쿨페이즈",
+      "channel": "온리빛",
+      "link": "https://youtu.be/Jej5xnQGqfk?si=lif8tMxwcMohqBGZ",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    },
+    {
+      "category": "쿨페이즈",
+      "channel": "뉴리즈",
+      "link": "https://youtube.com/shorts/GspSEaiosBE?si=gyzkTcs0aiAvGbak",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    },
+    {
+      "category": "쿨페이즈",
+      "channel": "치유앤미",
+      "link": "https://youtube.com/shorts/TJbExN4p_cg?si=_5JyIvETnvnCXZNi",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    },
+    {
+      "category": "쿨소닉",
+      "channel": "온리빛",
+      "link": "https://youtube.com/shorts/D93WGce7G24?si=Gr1nRIkp_0eh36SI",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    },
+    {
+      "category": "쿨소닉",
+      "channel": "온리빛",
+      "link": "https://youtu.be/Jej5xnQGqfk?si=lif8tMxwcMohqBGZ",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    },
+    {
+      "category": "쿨소닉",
+      "channel": "미도의원",
+      "link": "https://youtu.be/m0vR410od-s?si=rJEXky0T8kEMopX9",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    },
+    {
+      "category": "쿨소닉",
+      "channel": "엔킴의원",
+      "link": "https://youtu.be/w6ev0iJksz4?si=Qz_dcSQrklL_hs4I",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    },
+    {
+      "category": "쿨소닉",
+      "channel": "미엘르인청담",
+      "link": "https://youtu.be/gMq9eMa0azc?si=UM4L42B9-CpBzAN2",
+      "commentCount": 0,
+      "source": "youtube_comments"
+    }
+  ],
+  "processedAt": "2025-11-06T03:09:08.126Z",
+  "dataMonth": "2025-09"
+}

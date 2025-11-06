@@ -514,21 +514,21 @@
       "keyword": "리프테라",
       "group": "초음파",
       "totalSales": 502,
-      "monthlySales": 0,
+      "monthlySales": 4,
       "source": "sales"
     },
     {
       "keyword": "쿨소닉",
       "group": "초음파",
       "totalSales": 54,
-      "monthlySales": 0,
+      "monthlySales": 14,
       "source": "sales"
     },
     {
       "keyword": "슈링크",
       "group": "초음파",
       "totalSales": 1989,
-      "monthlySales": 0,
+      "monthlySales": 1,
       "source": "sales"
     },
     {
@@ -542,7 +542,7 @@
       "keyword": "리니어지",
       "group": "초음파",
       "totalSales": 413,
-      "monthlySales": 0,
+      "monthlySales": 7,
       "source": "sales"
     },
     {
@@ -570,14 +570,14 @@
       "keyword": "울쎄라",
       "group": "초음파",
       "totalSales": 1714,
-      "monthlySales": 0,
+      "monthlySales": 58,
       "source": "sales"
     },
     {
       "keyword": "쿨페이즈",
       "group": "고주파",
       "totalSales": 183,
-      "monthlySales": 0,
+      "monthlySales": 9,
       "source": "sales"
     },
     {
@@ -591,42 +591,42 @@
       "keyword": "볼뉴머",
       "group": "고주파",
       "totalSales": 568,
-      "monthlySales": 0,
+      "monthlySales": 1,
       "source": "sales"
     },
     {
       "keyword": "덴서티",
       "group": "고주파",
       "totalSales": 540,
-      "monthlySales": 0,
+      "monthlySales": 18,
       "source": "sales"
     },
     {
       "keyword": "올리지오",
       "group": "고주파",
       "totalSales": 1223,
-      "monthlySales": 0,
+      "monthlySales": 1,
       "source": "sales"
     },
     {
       "keyword": "텐써마",
       "group": "고주파",
       "totalSales": 603,
-      "monthlySales": 0,
+      "monthlySales": 14,
       "source": "sales"
     },
     {
       "keyword": "세르프",
       "group": "고주파",
       "totalSales": 445,
-      "monthlySales": 0,
+      "monthlySales": 11,
       "source": "sales"
     },
     {
       "keyword": "써마지",
       "group": "고주파",
       "totalSales": 1144,
-      "monthlySales": 0,
+      "monthlySales": 61,
       "source": "sales"
     }
   ],
@@ -2267,6 +2267,6 @@
       "source": "youtube_comments"
     }
   ],
-  "processedAt": "2025-11-05T09:53:28.922Z",
+  "processedAt": "2025-11-06T02:33:55.367Z",
   "dataMonth": "2025-10"
 }

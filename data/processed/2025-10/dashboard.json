@@ -515,21 +515,21 @@
         "keyword": "리프테라",
         "group": "초음파",
         "totalSales": 502,
-        "monthlySales": 0,
+        "monthlySales": 4,
         "source": "sales"
       },
       {
         "keyword": "쿨소닉",
         "group": "초음파",
         "totalSales": 54,
-        "monthlySales": 0,
+        "monthlySales": 14,
         "source": "sales"
       },
       {
         "keyword": "슈링크",
         "group": "초음파",
         "totalSales": 1989,
-        "monthlySales": 0,
+        "monthlySales": 1,
         "source": "sales"
       },
       {
@@ -543,7 +543,7 @@
         "keyword": "리니어지",
         "group": "초음파",
         "totalSales": 413,
-        "monthlySales": 0,
+        "monthlySales": 7,
         "source": "sales"
       },
       {
@@ -571,14 +571,14 @@
         "keyword": "울쎄라",
         "group": "초음파",
         "totalSales": 1714,
-        "monthlySales": 0,
+        "monthlySales": 58,
         "source": "sales"
       },
       {
         "keyword": "쿨페이즈",
         "group": "고주파",
         "totalSales": 183,
-        "monthlySales": 0,
+        "monthlySales": 9,
         "source": "sales"
       },
       {
@@ -592,42 +592,42 @@
         "keyword": "볼뉴머",
         "group": "고주파",
         "totalSales": 568,
-        "monthlySales": 0,
+        "monthlySales": 1,
         "source": "sales"
       },
       {
         "keyword": "덴서티",
         "group": "고주파",
         "totalSales": 540,
-        "monthlySales": 0,
+        "monthlySales": 18,
         "source": "sales"
       },
       {
         "keyword": "올리지오",
         "group": "고주파",
         "totalSales": 1223,
-        "monthlySales": 0,
+        "monthlySales": 1,
         "source": "sales"
       },
       {
         "keyword": "텐써마",
         "group": "고주파",
         "totalSales": 603,
-        "monthlySales": 0,
+        "monthlySales": 14,
         "source": "sales"
       },
       {
         "keyword": "세르프",
         "group": "고주파",
         "totalSales": 445,
-        "monthlySales": 0,
+        "monthlySales": 11,
         "source": "sales"
       },
       {
         "keyword": "써마지",
         "group": "고주파",
         "totalSales": 1144,
-        "monthlySales": 0,
+        "monthlySales": 61,
         "source": "sales"
       }
     ],
@@ -2268,17 +2268,17 @@
         "source": "youtube_comments"
       }
     ],
-    "processedAt": "2025-11-05T09:53:28.922Z",
+    "processedAt": "2025-11-06T02:33:55.367Z",
     "dataMonth": "2025-10"
   },
   "kpis": {
     "overview": {
       "totalMarketPosts": 39396,
-      "totalMarketSales": 0,
+      "totalMarketSales": 199,
       "totalSearchVolume": 498800,
       "avgEngagement": 2.368131742133577,
       "asterasysMarketShare": 6.069144075540664,
-      "asterasysSalesShare": 0
+      "asterasysSalesShare": 13.5678391959799
     },
     "categories": {
       "rf": {
@@ -2287,11 +2287,11 @@
         "totalPosts": 20152,
         "totalComments": 33967,
         "totalViews": 326332,
-        "totalSales": 0,
+        "totalSales": 115,
         "totalSearch": 324940,
         "engagement": 1.6855398967844382,
         "marketShare": 51.15240125901107,
-        "salesShare": 0
+        "salesShare": 57.78894472361809
       },
       "hifu": {
         "category": "HIFU",
@@ -2299,11 +2299,11 @@
         "totalPosts": 19244,
         "totalComments": 28368,
         "totalViews": 221733,
-        "totalSales": 0,
+        "totalSales": 84,
         "totalSearch": 173860,
         "engagement": 1.4741218041987112,
         "marketShare": 48.847598740988936,
-        "salesShare": 0
+        "salesShare": 42.211055276381906
       }
     },
     "brand": {
@@ -2313,11 +2313,11 @@
         "totalPosts": 2391,
         "totalComments": 13831,
         "totalViews": 84686,
-        "totalSales": 0,
+        "totalSales": 27,
         "totalSearch": 25690,
         "engagement": 5.784608950230029,
         "marketShare": 6.069144075540664,
-        "salesShare": 0
+        "salesShare": 13.5678391959799
       },
       "competitors": {
         "brand": "Competitors",
@@ -2325,15 +2325,15 @@
         "totalPosts": 37005,
         "totalComments": 48504,
         "totalViews": 463379,
-        "totalSales": 0,
+        "totalSales": 172,
         "totalSearch": 473110,
         "engagement": 1.310741791649777,
         "marketShare": 93.93085592445934,
-        "salesShare": 0
+        "salesShare": 86.4321608040201
       },
       "total": {
         "posts": 39396,
-        "sales": 0
+        "sales": 199
       }
     },
     "topProducts": {
@@ -2730,7 +2730,7 @@
         "priority": 20
       }
     ],
-    "processedAt": "2025-11-05T09:53:28.925Z"
+    "processedAt": "2025-11-06T02:33:55.371Z"
   },
   "channels": {
     "blog": {
@@ -3678,21 +3678,21 @@
           "keyword": "리프테라",
           "group": "초음파",
           "totalSales": 502,
-          "monthlySales": 0,
+          "monthlySales": 4,
           "source": "sales"
         },
         {
           "keyword": "쿨소닉",
           "group": "초음파",
           "totalSales": 54,
-          "monthlySales": 0,
+          "monthlySales": 14,
           "source": "sales"
         },
         {
           "keyword": "슈링크",
           "group": "초음파",
           "totalSales": 1989,
-          "monthlySales": 0,
+          "monthlySales": 1,
           "source": "sales"
         },
         {
@@ -3706,7 +3706,7 @@
           "keyword": "리니어지",
           "group": "초음파",
           "totalSales": 413,
-          "monthlySales": 0,
+          "monthlySales": 7,
           "source": "sales"
         },
         {
@@ -3734,21 +3734,21 @@
           "keyword": "울쎄라",
           "group": "초음파",
           "totalSales": 1714,
-          "monthlySales": 0,
+          "monthlySales": 58,
           "source": "sales"
         },
         {
           "keyword": "쿨페이즈",
           "group": "고주파",
           "totalSales": 183,
-          "monthlySales": 0,
+          "monthlySales": 9,
           "source": "sales"
         }
       ]
     }
   },
   "meta": {
-    "processedAt": "2025-11-05T09:53:28.926Z",
+    "processedAt": "2025-11-06T02:33:55.372Z",
     "dataMonth": "2025-10",
     "version": "1.0.0"
   }

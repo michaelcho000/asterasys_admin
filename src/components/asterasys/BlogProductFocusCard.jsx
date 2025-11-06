@@ -73,11 +73,17 @@ function enrichBlogTypes(blogTypes, totalPosts, monthlySales) {
   if (!Array.isArray(blogTypes)) return []
   return blogTypes
     .filter((entry) => entry.posts > 0)
-    .map((entry) => ({
-      ...entry,
-      share: totalPosts ? (entry.posts / totalPosts) * 100 : 0,
-      salesPerPost: entry.posts && monthlySales ? (monthlySales / totalPosts * entry.share / 100).toFixed(1) : 0
-    }))
+    .map((entry) => {
+      const share = totalPosts ? (entry.posts / totalPosts) * 100 : 0
+      const salesPerPost = entry.posts && monthlySales && totalPosts
+        ? (monthlySales / totalPosts * share / 100).toFixed(1)
+        : 0
+      return {
+        ...entry,
+        share,
+        salesPerPost
+      }
+    })
     .sort((a, b) => b.posts - a.posts)
 }
 

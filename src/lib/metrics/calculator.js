@@ -195,7 +195,7 @@ export class MetricsCalculator {
         // Sales data
         const salesData = this.data.sales.filter(item => item.keyword === product);
         salesData.forEach(item => {
-          totalSales += item.sales || 0;
+          totalSales += item.monthlySales || 0;
         });
 
         // Search data
@@ -267,7 +267,7 @@ export class MetricsCalculator {
         // Sales data
         const salesData = this.data.sales.filter(item => item.keyword === product);
         salesData.forEach(item => {
-          totalSales += item.sales || 0;
+          totalSales += item.monthlySales || 0;
         });
 
         // Search data
