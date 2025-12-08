@@ -26,11 +26,12 @@ export class CSVParser {
       const filePath = path.join(this.dataPath, filename)
 
       if (!fs.existsSync(filePath)) {
-        throw new Error(`월별 CSV 파일을 찾을 수 없습니다: ${filePath}`)
+        console.warn(`⚠️  CSV 파일 없음 (건너뜀): ${filename}`)
+        return [];
       }
 
       const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' });
-      
+
       const records = parse(fileContent, {
         columns: true,
         skip_empty_lines: true,

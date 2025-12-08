@@ -1,0 +1,4 @@
+{
+  "candidates": [],
+  "criteria": "hospital_clinic & top ER ∩ top avg_views"
+}

@@ -226,11 +226,17 @@ const KPICalculations = {
 
     if (salesData.length > 0) {
       const firstItem = salesData[0];
-      const monthColumns = Object.keys(firstItem).filter(key => key.includes('월 판매량'));
-      if (monthColumns.length > 0) {
-        monthlyColumnName = monthColumns[0];
-        // "8월 판매량" -> "8월" 추출
-        monthLabel = monthlyColumnName.replace(' 판매량', '');
+      // "월간 판매량" 컬럼 우선 체크, 없으면 "X월 판매량" 형식 체크
+      if (firstItem['월간 판매량'] !== undefined) {
+        monthlyColumnName = '월간 판매량';
+        monthLabel = '월간';
+      } else {
+        const monthColumns = Object.keys(firstItem).filter(key => key.includes('월 판매량'));
+        if (monthColumns.length > 0) {
+          monthlyColumnName = monthColumns[0];
+          // "8월 판매량" -> "8월" 추출
+          monthLabel = monthlyColumnName.replace(' 판매량', '');
+        }
       }
     }
 
@@ -252,9 +258,14 @@ const KPICalculations = {
       let prevMonthlyColumnName = null;
       if (prevSalesData.length > 0) {
         const firstItem = prevSalesData[0];
-        const monthColumns = Object.keys(firstItem).filter(key => key.includes('월 판매량'));
-        if (monthColumns.length > 0) {
-          prevMonthlyColumnName = monthColumns[0];
+        // "월간 판매량" 컬럼 우선 체크
+        if (firstItem['월간 판매량'] !== undefined) {
+          prevMonthlyColumnName = '월간 판매량';
+        } else {
+          const monthColumns = Object.keys(firstItem).filter(key => key.includes('월 판매량'));
+          if (monthColumns.length > 0) {
+            prevMonthlyColumnName = monthColumns[0];
+          }
         }
       }
 

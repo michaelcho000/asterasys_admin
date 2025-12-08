@@ -91,10 +91,10 @@ const LatestLeads = ({title}) => {
             const newsScore = parseInt(newsItem['총 발행량']) || 0
             const searchScore = parseInt(trafficItem['월간 검색량']?.replace(/,/g, '') || 0)
             
-            // 판매량 처리: 데이터가 있는 경우만 숫자로, 없으면 null
-            const monthlyRawValue = salesItem ? (salesItem[monthlySalesColumn] ?? salesItem['8월 판매량']) : null
+            // 판매량 처리: "월간 판매량" 컬럼 우선, 없으면 "X월 판매량" 형식 체크
+            const monthlyRawValue = salesItem ? (salesItem['월간 판매량'] ?? salesItem[monthlySalesColumn] ?? salesItem['8월 판매량']) : null
             const hasSalesData = salesItem && (salesItem['총 판매량'] || monthlyRawValue)
-            const totalSales = hasSalesData ? (parseInt(salesItem['총 판매량']?.replace(/,/g, '') || 0)) : null
+            const totalSales = hasSalesData ? (parseInt(String(salesItem['총 판매량'] || 0).replace(/,/g, '')) || 0) : null
             const monthlySales = hasSalesData ? (parseInt(String(monthlyRawValue || 0).replace(/,/g, '')) || 0) : null
 
             // 종합 점수 계산 (판매량 있는 경우만 포함)

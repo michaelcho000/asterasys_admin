@@ -1,0 +1,96 @@
+{
+  "totals": {
+    "videos": 408,
+    "views": 1156015,
+    "likes": 11350,
+    "comments": 0
+  },
+  "products": 18,
+  "brands": [
+    {
+      "brand": "competitor",
+      "sov_posts": 0.9656862745098039,
+      "sov_views": 0.9913668940281917
+    },
+    {
+      "brand": "asterasys",
+      "sov_posts": 0.03431372549019608,
+      "sov_views": 0.008633105971808325
+    }
+  ],
+  "weekly": [
+    {
+      "week": "2025-W45",
+      "uploads": 34,
+      "views": 54249,
+      "likes": 1291,
+      "comments": 0,
+      "er": 0.023797673689837602,
+      "shorts_ratio": 0.7352941176470589
+    },
+    {
+      "week": "2025-W46",
+      "uploads": 102,
+      "views": 424674,
+      "likes": 5761,
+      "comments": 0,
+      "er": 0.013565699807381662,
+      "shorts_ratio": 0.7941176470588235
+    },
+    {
+      "week": "2025-W47",
+      "uploads": 70,
+      "views": 288219,
+      "likes": 2467,
+      "comments": 0,
+      "er": 0.008559463463546817,
+      "shorts_ratio": 0.7571428571428571
+    },
+    {
+      "week": "2025-W48",
+      "uploads": 100,
+      "views": 267312,
+      "likes": 1233,
+      "comments": 0,
+      "er": 0.004612587538157659,
+      "shorts_ratio": 0.76
+    },
+    {
+      "week": "2025-W49",
+      "uploads": 83,
+      "views": 112009,
+      "likes": 567,
+      "comments": 0,
+      "er": 0.005062093224651591,
+      "shorts_ratio": 0.7108433734939759
+    },
+    {
+      "week": "2025-W50",
+      "uploads": 19,
+      "views": 9552,
+      "likes": 31,
+      "comments": 0,
+      "er": 0.003245393634840871,
+      "shorts_ratio": 0.7894736842105263
+    }
+  ],
+  "topChannels": [
+    {
+      "channelId": "-",
+      "channelName": "뮤토엘TV",
+      "type": "creator",
+      "uploads": 408,
+      "views": 1156015,
+      "likes": 11350,
+      "comments": 0,
+      "avg_views": 2833.3700980392155,
+      "er": 0.009818211701405259,
+      "shorts_ratio": 0.7573529411764706,
+      "median_views": 516.5,
+      "p90_views": 3330.0000000000014,
+      "avg_subscribers": 18729.492647058825
+    }
+  ],
+  "topHospitalClinicChannels": [],
+  "processedAt": "2025-12-08T09:28:23.677Z"
+}

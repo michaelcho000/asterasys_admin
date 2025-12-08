@@ -94,9 +94,10 @@ const AsteraysProductPortfolio = () => {
                         if (!value) return 0
                         return parseInt(String(value).replace(/,/g, '')) || 0
                     }
-                    
+
+                    // 월간 판매량 컬럼 사용 (CSV 헤더: "월간 판매량")
                     const currentMonthSales = parseNumber(
-                        salesItem[monthlySalesColumn] ?? salesItem['8월 판매량'] ?? 0
+                        salesItem['월간 판매량'] ?? salesItem[monthlySalesColumn] ?? salesItem['8월 판매량'] ?? 0
                     )
 
                     return {

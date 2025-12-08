@@ -79,12 +79,12 @@ const DynamicAsterasysKPI = () => {
             },
             {
                 id: 3,
-                title: "총 판매량",
-                total_number: sale.reduce((sum, item) => sum + (parseInt(item.판매량?.replace(/,/g, '')) || 0), 0).toString(),
+                title: "월간 판매량",
+                total_number: sale.reduce((sum, item) => sum + (parseInt(item['월간 판매량']?.toString().replace(/,/g, '')) || 0), 0).toString(),
                 progress: "100%",
-                progress_info: sale.map(item => `${item.키워드}: ${item.판매량}대`).join(' | '),
+                progress_info: sale.map(item => `${item.키워드}: ${item['월간 판매량']}대`).join(' | '),
                 context: `파일: sale.csv • ${sale.length}개 제품`,
-                icon: "feather-shopping-cart", 
+                icon: "feather-shopping-cart",
                 color: "warning"
             },
             {
