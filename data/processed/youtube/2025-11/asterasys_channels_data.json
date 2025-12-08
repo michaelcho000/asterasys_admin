@@ -1,0 +1,152 @@
+{
+  "쿨소닉": {
+    "totalStats": {
+      "totalVideos": 8,
+      "totalViews": 6366,
+      "totalLikes": 37,
+      "totalComments": 0,
+      "shortsCount": 0,
+      "regularCount": 8,
+      "shortsRatio": 0
+    },
+    "topChannels": [
+      {
+        "channelName": "피부과전문의_샘닥",
+        "channelUrl": "https://www.youtube.com/@dodderm_ys",
+        "totalViews": 3153,
+        "videoCount": 1,
+        "bestVideo": {
+          "title": "울쎄라 하고 싶었는데 아파서 못하셨던 분들 필수 시청! [쿨소닉 CoolSoniq]",
+          "url": "https://www.youtube.com/watch?v=bWOwLs58xqA",
+          "views": 3153,
+          "likes": 18,
+          "comments": 0,
+          "date": "2025-12-01T08:49:55.000Z"
+        }
+      },
+      {
+        "channelName": "중력의사 미도남쟈",
+        "channelUrl": "https://www.youtube.com/@daegu_mido",
+        "totalViews": 3002,
+        "videoCount": 6,
+        "bestVideo": {
+          "title": "1일 2리프팅 하면 어떻게 될까?🤔 쿨소닉 + 온다 리프팅! #온다리프팅 #쿨소닉 #대구쿨소닉 #대구리프팅 #대구피부과 #대구미도의원 #미도의원 #리프팅맛집",
+          "url": "https://www.youtube.com/shorts/ZiqaN3Ga-74",
+          "views": 1324,
+          "likes": 3,
+          "comments": 0,
+          "date": "2025-11-18T02:27:41.000Z"
+        }
+      },
+      {
+        "channelName": "10초시술",
+        "channelUrl": "https://www.youtube.com/@tenbeauty",
+        "totalViews": 211,
+        "videoCount": 1,
+        "bestVideo": {
+          "title": "브이라인 얼굴을 원한다면 #쿨소닉리프팅",
+          "url": "https://www.youtube.com/shorts/3frKRXnX0qg",
+          "views": 211,
+          "likes": 0,
+          "comments": 0,
+          "date": "2025-11-28T06:14:35.000Z"
+        }
+      }
+    ]
+  },
+  "쿨페이즈": {
+    "totalStats": {
+      "totalVideos": 6,
+      "totalViews": 3614,
+      "totalLikes": 9,
+      "totalComments": 0,
+      "shortsCount": 0,
+      "regularCount": 6,
+      "shortsRatio": 0
+    },
+    "topChannels": [
+      {
+        "channelName": "예뻐지는 공간",
+        "channelUrl": "https://www.youtube.com/@clinic-j",
+        "totalViews": 1748,
+        "videoCount": 1,
+        "bestVideo": {
+          "title": "모노폴라 고주파 쿨페이즈 작동원리 - 탄력 리프팅을 위한 고주파 시술",
+          "url": "https://www.youtube.com/shorts/b7Wm-h7SdAc",
+          "views": 1748,
+          "likes": 1,
+          "comments": 0,
+          "date": "2025-11-30T06:54:20.000Z"
+        }
+      },
+      {
+        "channelName": "양정길",
+        "channelUrl": "https://www.youtube.com/@yangjunggil-jb",
+        "totalViews": 610,
+        "videoCount": 2,
+        "bestVideo": {
+          "title": "쿨페이즈, 쿨소닉은 뭐가 특별할까?",
+          "url": "https://www.youtube.com/shorts/p6H3p3q1Erw",
+          "views": 405,
+          "likes": 0,
+          "comments": 0,
+          "date": "2025-11-25T11:16:50.000Z"
+        }
+      },
+      {
+        "channelName": "탱탱실닥터 장원장",
+        "channelUrl": "https://www.youtube.com/@doctorkyle1210",
+        "totalViews": 584,
+        "videoCount": 1,
+        "bestVideo": {
+          "title": "울쎄라 써마지 보다 강력하지만 안아픈 쿨페이즈 리프팅 시술 #리프팅 #쿨페이즈 #울쎄라 #써마지",
+          "url": "https://www.youtube.com/shorts/_d4h7vLK37Q",
+          "views": 584,
+          "likes": 5,
+          "comments": 0,
+          "date": "2025-11-07T06:23:54.000Z"
+        }
+      },
+      {
+        "channelName": "피부언니, 피부과 전문의 임지수",
+        "channelUrl": "https://www.youtube.com/@%EC%84%9C%EC%9A%B8%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%8A%A4%ED%94%BC%EB%B6%80%EA%B3%BC",
+        "totalViews": 518,
+        "videoCount": 1,
+        "bestVideo": {
+          "title": "쿨소닉, 쿨페이즈!! 도대체 뭐야?",
+          "url": "https://www.youtube.com/shorts/QYIasQ2KADg",
+          "views": 518,
+          "likes": 0,
+          "comments": 0,
+          "date": "2025-12-08T01:22:19.000Z"
+        }
+      },
+      {
+        "channelName": "뉴리즈피부톡",
+        "channelUrl": "https://www.youtube.com/@newrizzclinic",
+        "totalViews": 154,
+        "videoCount": 1,
+        "bestVideo": {
+          "title": "탄력·윤곽·모공까지! 요즘 대세는 쿨페이즈",
+          "url": "https://www.youtube.com/shorts/JtqO8jzLzKc",
+          "views": 154,
+          "likes": 2,
+          "comments": 0,
+          "date": "2025-12-08T06:35:46.000Z"
+        }
+      }
+    ]
+  },
+  "리프테라": {
+    "totalStats": {
+      "totalVideos": 0,
+      "totalViews": 0,
+      "totalLikes": 0,
+      "totalComments": 0,
+      "shortsCount": 0,
+      "regularCount": 0,
+      "shortsRatio": 0
+    },
+    "topChannels": []
+  }
+}
