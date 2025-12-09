@@ -686,11 +686,82 @@
   },
   "news": {
     "overview": {
-      "totalArticles": 0,
-      "uniqueProducts": 0,
-      "topRanked": 0
+      "totalArticles": 647,
+      "uniqueProducts": 18,
+      "topRanked": 10
     },
-    "topPerformers": []
+    "topPerformers": [
+      {
+        "keyword": "슈링크",
+        "group": "초음파",
+        "totalPosts": 100,
+        "rank": 1,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "울쎄라",
+        "group": "초음파",
+        "totalPosts": 93,
+        "rank": 2,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "써마지",
+        "group": "고주파",
+        "totalPosts": 87,
+        "rank": 1,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "볼뉴머",
+        "group": "고주파",
+        "totalPosts": 87,
+        "rank": 2,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "올리지오",
+        "group": "고주파",
+        "totalPosts": 70,
+        "rank": 3,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "덴서티",
+        "group": "고주파",
+        "totalPosts": 54,
+        "rank": 4,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "세르프",
+        "group": "고주파",
+        "totalPosts": 25,
+        "rank": 5,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "쿨페이즈",
+        "group": "고주파",
+        "totalPosts": 22,
+        "rank": 6,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "튠페이스",
+        "group": "고주파",
+        "totalPosts": 21,
+        "rank": 7,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "리니어지",
+        "group": "초음파",
+        "totalPosts": 21,
+        "rank": 3,
+        "source": "news_rank"
+      }
+    ]
   },
   "youtube": {
     "contents": {

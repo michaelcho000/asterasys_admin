@@ -631,7 +631,134 @@
         "source": "sales"
       }
     ],
-    "news": [],
+    "news": [
+      {
+        "keyword": "슈링크",
+        "group": "초음파",
+        "totalPosts": 100,
+        "rank": 1,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "울쎄라",
+        "group": "초음파",
+        "totalPosts": 93,
+        "rank": 2,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "써마지",
+        "group": "고주파",
+        "totalPosts": 87,
+        "rank": 1,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "볼뉴머",
+        "group": "고주파",
+        "totalPosts": 87,
+        "rank": 2,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "올리지오",
+        "group": "고주파",
+        "totalPosts": 70,
+        "rank": 3,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "덴서티",
+        "group": "고주파",
+        "totalPosts": 54,
+        "rank": 4,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "세르프",
+        "group": "고주파",
+        "totalPosts": 25,
+        "rank": 5,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "쿨페이즈",
+        "group": "고주파",
+        "totalPosts": 22,
+        "rank": 6,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "튠페이스",
+        "group": "고주파",
+        "totalPosts": 21,
+        "rank": 7,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "리니어지",
+        "group": "초음파",
+        "totalPosts": 21,
+        "rank": 3,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "인모드",
+        "group": "고주파",
+        "totalPosts": 17,
+        "rank": 8,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "브이로",
+        "group": "초음파",
+        "totalPosts": 12,
+        "rank": 4,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "텐써마",
+        "group": "고주파",
+        "totalPosts": 11,
+        "rank": 9,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "쿨소닉",
+        "group": "초음파",
+        "totalPosts": 11,
+        "rank": 5,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "리프테라",
+        "group": "초음파",
+        "totalPosts": 8,
+        "rank": 6,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "텐쎄라",
+        "group": "초음파",
+        "totalPosts": 4,
+        "rank": 7,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "튠라이너",
+        "group": "초음파",
+        "totalPosts": 3,
+        "rank": 8,
+        "source": "news_rank"
+      },
+      {
+        "keyword": "리니어펌",
+        "group": "초음파",
+        "totalPosts": 1,
+        "rank": 9,
+        "source": "news_rank"
+      }
+    ],
     "blogUsers": [
       {
         "keyword": "쿨페이즈",
@@ -2218,41 +2345,41 @@
         "source": "youtube_comments"
       }
     ],
-    "processedAt": "2025-12-08T09:35:41.393Z",
+    "processedAt": "2025-12-09T02:45:34.775Z",
     "dataMonth": "2025-11"
   },
   "kpis": {
     "overview": {
-      "totalMarketPosts": 67461,
+      "totalMarketPosts": 68108,
       "totalMarketSales": 208,
       "totalSearchVolume": 518630,
       "avgEngagement": 2.704357360842595,
-      "asterasysMarketShare": 4.485554616741524,
+      "asterasysMarketShare": 4.503142068479474,
       "asterasysSalesShare": 8.653846153846153
     },
     "categories": {
       "rf": {
         "category": "RF",
         "productCount": 9,
-        "totalPosts": 32968,
+        "totalPosts": 33362,
         "totalComments": 47541,
         "totalViews": 474785,
         "totalSales": 91,
         "totalSearch": 335500,
-        "engagement": 1.4420347003154574,
-        "marketShare": 48.869717318154194,
+        "engagement": 1.4250044961333252,
+        "marketShare": 48.983966641216895,
         "salesShare": 43.75
       },
       "hifu": {
         "category": "HIFU",
         "productCount": 9,
-        "totalPosts": 34493,
+        "totalPosts": 34746,
         "totalComments": 41744,
         "totalViews": 333452,
         "totalSales": 117,
         "totalSearch": 183130,
-        "engagement": 1.210216565679993,
-        "marketShare": 51.130282681845806,
+        "engagement": 1.2014044782133195,
+        "marketShare": 51.016033358783105,
         "salesShare": 56.25
       }
     },
@@ -2260,29 +2387,29 @@
       "asterasys": {
         "brand": "Asterasys",
         "productCount": 3,
-        "totalPosts": 3026,
+        "totalPosts": 3067,
         "totalComments": 19308,
         "totalViews": 124298,
         "totalSales": 18,
         "totalSearch": 24330,
-        "engagement": 6.380700594844679,
-        "marketShare": 4.485554616741524,
+        "engagement": 6.295402673622433,
+        "marketShare": 4.503142068479474,
         "salesShare": 8.653846153846153
       },
       "competitors": {
         "brand": "Competitors",
         "productCount": 15,
-        "totalPosts": 64435,
+        "totalPosts": 65041,
         "totalComments": 69977,
         "totalViews": 683939,
         "totalSales": 190,
         "totalSearch": 494300,
-        "engagement": 1.0860091565143168,
-        "marketShare": 95.51444538325848,
+        "engagement": 1.0758905920880675,
+        "marketShare": 95.49685793152052,
         "salesShare": 91.34615384615384
       },
       "total": {
-        "posts": 67461,
+        "posts": 68108,
         "sales": 208
       }
     },
@@ -2291,7 +2418,7 @@
         {
           "keyword": "울쎄라",
           "posts": 17226,
-          "sov": 25.534753413083116,
+          "sov": 25.292183003465084,
           "name": "울쎄라",
           "name_en": "Ulthera",
           "category": "HIFU",
@@ -2305,7 +2432,7 @@
         {
           "keyword": "써마지",
           "posts": 11447,
-          "sov": 16.96832243814945,
+          "sov": 16.807129852587067,
           "name": "써마지",
           "name_en": "Thermage",
           "category": "RF",
@@ -2319,7 +2446,7 @@
         {
           "keyword": "인모드",
           "posts": 10891,
-          "sov": 16.144142541616638,
+          "sov": 15.990779350443413,
           "name": "인모드",
           "name_en": "InMode",
           "category": "RF",
@@ -2333,7 +2460,7 @@
         {
           "keyword": "슈링크",
           "posts": 10102,
-          "sov": 14.974577904270618,
+          "sov": 14.832325130674812,
           "name": "슈링크",
           "name_en": "Shrink",
           "category": "HIFU",
@@ -2347,7 +2474,7 @@
         {
           "keyword": "올리지오",
           "posts": 1160,
-          "sov": 1.7195120143490314,
+          "sov": 1.7031773066306453,
           "name": "올리지오",
           "name_en": "Oligo",
           "category": "RF",
@@ -2363,7 +2490,7 @@
         {
           "keyword": "울쎄라",
           "posts": 17226,
-          "sov": 25.534753413083116,
+          "sov": 25.292183003465084,
           "name": "울쎄라",
           "name_en": "Ulthera",
           "category": "HIFU",
@@ -2377,7 +2504,7 @@
         {
           "keyword": "써마지",
           "posts": 11447,
-          "sov": 16.96832243814945,
+          "sov": 16.807129852587067,
           "name": "써마지",
           "name_en": "Thermage",
           "category": "RF",
@@ -2391,7 +2518,7 @@
         {
           "keyword": "인모드",
           "posts": 10891,
-          "sov": 16.144142541616638,
+          "sov": 15.990779350443413,
           "name": "인모드",
           "name_en": "InMode",
           "category": "RF",
@@ -2405,7 +2532,7 @@
         {
           "keyword": "슈링크",
           "posts": 10102,
-          "sov": 14.974577904270618,
+          "sov": 14.832325130674812,
           "name": "슈링크",
           "name_en": "Shrink",
           "category": "HIFU",
@@ -2419,7 +2546,7 @@
         {
           "keyword": "올리지오",
           "posts": 1160,
-          "sov": 1.7195120143490314,
+          "sov": 1.7031773066306453,
           "name": "올리지오",
           "name_en": "Oligo",
           "category": "RF",
@@ -2435,7 +2562,7 @@
         {
           "keyword": "볼뉴머",
           "posts": 516,
-          "sov": 0.764886378796638,
+          "sov": 0.7576202501908733,
           "name": "볼뉴머",
           "name_en": "Volnumer",
           "category": "RF",
@@ -2449,7 +2576,7 @@
         {
           "keyword": "슈링크",
           "posts": 10102,
-          "sov": 14.974577904270618,
+          "sov": 14.832325130674812,
           "name": "슈링크",
           "name_en": "Shrink",
           "category": "HIFU",
@@ -2463,7 +2590,7 @@
         {
           "keyword": "덴서티",
           "posts": 587,
-          "sov": 0.8701323727783461,
+          "sov": 0.8618664474070593,
           "name": "덴서티",
           "name_en": "Density",
           "category": "RF",
@@ -2477,7 +2604,7 @@
         {
           "keyword": "울쎄라",
           "posts": 17226,
-          "sov": 25.534753413083116,
+          "sov": 25.292183003465084,
           "name": "울쎄라",
           "name_en": "Ulthera",
           "category": "HIFU",
@@ -2491,7 +2618,7 @@
         {
           "keyword": "써마지",
           "posts": 11447,
-          "sov": 16.96832243814945,
+          "sov": 16.807129852587067,
           "name": "써마지",
           "name_en": "Thermage",
           "category": "RF",
@@ -2507,7 +2634,7 @@
         {
           "keyword": "쿨페이즈",
           "posts": 262,
-          "sov": 0.38837254117193637,
+          "sov": 0.38468315029071476,
           "name": "쿨페이즈",
           "name_en": "CoolPhase",
           "category": "RF",
@@ -2521,7 +2648,7 @@
         {
           "keyword": "리프테라",
           "posts": 216,
-          "sov": 0.3201849957753368,
+          "sov": 0.31714336054501674,
           "name": "리프테라",
           "name_en": "Liftera",
           "category": "HIFU",
@@ -2535,7 +2662,7 @@
         {
           "keyword": "쿨소닉",
           "posts": 103,
-          "sov": 0.15268080817064675,
+          "sov": 0.15123039877841077,
           "name": "쿨소닉",
           "name_en": "CoolSonic",
           "category": "HIFU",
@@ -2680,7 +2807,7 @@
         "priority": 24
       }
     ],
-    "processedAt": "2025-12-08T09:35:41.398Z"
+    "processedAt": "2025-12-09T02:45:34.782Z"
   },
   "channels": {
     "blog": {
@@ -3370,11 +3497,82 @@
     },
     "news": {
       "overview": {
-        "totalArticles": 0,
-        "uniqueProducts": 0,
-        "topRanked": 0
+        "totalArticles": 647,
+        "uniqueProducts": 18,
+        "topRanked": 10
       },
-      "topPerformers": []
+      "topPerformers": [
+        {
+          "keyword": "슈링크",
+          "group": "초음파",
+          "totalPosts": 100,
+          "rank": 1,
+          "source": "news_rank"
+        },
+        {
+          "keyword": "울쎄라",
+          "group": "초음파",
+          "totalPosts": 93,
+          "rank": 2,
+          "source": "news_rank"
+        },
+        {
+          "keyword": "써마지",
+          "group": "고주파",
+          "totalPosts": 87,
+          "rank": 1,
+          "source": "news_rank"
+        },
+        {
+          "keyword": "볼뉴머",
+          "group": "고주파",
+          "totalPosts": 87,
+          "rank": 2,
+          "source": "news_rank"
+        },
+        {
+          "keyword": "올리지오",
+          "group": "고주파",
+          "totalPosts": 70,
+          "rank": 3,
+          "source": "news_rank"
+        },
+        {
+          "keyword": "덴서티",
+          "group": "고주파",
+          "totalPosts": 54,
+          "rank": 4,
+          "source": "news_rank"
+        },
+        {
+          "keyword": "세르프",
+          "group": "고주파",
+          "totalPosts": 25,
+          "rank": 5,
+          "source": "news_rank"
+        },
+        {
+          "keyword": "쿨페이즈",
+          "group": "고주파",
+          "totalPosts": 22,
+          "rank": 6,
+          "source": "news_rank"
+        },
+        {
+          "keyword": "튠페이스",
+          "group": "고주파",
+          "totalPosts": 21,
+          "rank": 7,
+          "source": "news_rank"
+        },
+        {
+          "keyword": "리니어지",
+          "group": "초음파",
+          "totalPosts": 21,
+          "rank": 3,
+          "source": "news_rank"
+        }
+      ]
     },
     "youtube": {
       "contents": {
@@ -3613,7 +3811,7 @@
     }
   },
   "meta": {
-    "processedAt": "2025-12-08T09:35:41.398Z",
+    "processedAt": "2025-12-09T02:45:34.783Z",
     "dataMonth": "2025-11",
     "version": "1.0.0"
   }

@@ -630,7 +630,134 @@
       "source": "sales"
     }
   ],
-  "news": [],
+  "news": [
+    {
+      "keyword": "써마지",
+      "group": "고주파",
+      "totalPosts": 87,
+      "rank": 1,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "볼뉴머",
+      "group": "고주파",
+      "totalPosts": 87,
+      "rank": 2,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "올리지오",
+      "group": "고주파",
+      "totalPosts": 70,
+      "rank": 3,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "덴서티",
+      "group": "고주파",
+      "totalPosts": 54,
+      "rank": 4,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "세르프",
+      "group": "고주파",
+      "totalPosts": 25,
+      "rank": 5,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "쿨페이즈",
+      "group": "고주파",
+      "totalPosts": 22,
+      "rank": 6,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "튠페이스",
+      "group": "고주파",
+      "totalPosts": 21,
+      "rank": 7,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "인모드",
+      "group": "고주파",
+      "totalPosts": 17,
+      "rank": 8,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "텐써마",
+      "group": "고주파",
+      "totalPosts": 11,
+      "rank": 9,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "슈링크",
+      "group": "초음파",
+      "totalPosts": 100,
+      "rank": 1,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "울쎄라",
+      "group": "초음파",
+      "totalPosts": 93,
+      "rank": 2,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "리니어지",
+      "group": "초음파",
+      "totalPosts": 21,
+      "rank": 3,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "브이로",
+      "group": "초음파",
+      "totalPosts": 12,
+      "rank": 4,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "쿨소닉",
+      "group": "초음파",
+      "totalPosts": 11,
+      "rank": 5,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "리프테라",
+      "group": "초음파",
+      "totalPosts": 8,
+      "rank": 6,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "텐쎄라",
+      "group": "초음파",
+      "totalPosts": 4,
+      "rank": 7,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "튠라이너",
+      "group": "초음파",
+      "totalPosts": 3,
+      "rank": 8,
+      "source": "news_rank"
+    },
+    {
+      "keyword": "리니어펌",
+      "group": "초음파",
+      "totalPosts": 1,
+      "rank": 9,
+      "source": "news_rank"
+    }
+  ],
   "blogUsers": [
     {
       "keyword": "쿨페이즈",
@@ -2217,6 +2344,6 @@
       "source": "youtube_comments"
     }
   ],
-  "processedAt": "2025-12-08T09:35:41.393Z",
+  "processedAt": "2025-12-09T02:45:34.775Z",
   "dataMonth": "2025-11"
 }
