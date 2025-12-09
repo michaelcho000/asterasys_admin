@@ -43,21 +43,35 @@ export async function GET(request) {
 // PUT: 인사이트 업데이트 (승인/수정)
 export async function PUT(request) {
   try {
+    const { searchParams } = new URL(request.url)
+    const month = searchParams.get('month') || '2025-11'
+
     const updatedInsights = await request.json()
 
     // 업데이트 시간 갱신
     updatedInsights.updatedAt = new Date().toISOString()
 
-    // 파일 저장
+    // 월별 파일 경로
+    const INSIGHTS_FILE = path.join(process.cwd(), `data/processed/llm-insights-${month}.json`)
+    const PUBLIC_FILE = path.join(process.cwd(), `public/data/processed/llm-insights-${month}.json`)
+
+    // 파일 저장 (data 폴더)
     await fs.writeFile(
       INSIGHTS_FILE,
       JSON.stringify(updatedInsights, null, 2),
       'utf-8'
     )
 
+    // public 폴더에도 저장
+    await fs.writeFile(
+      PUBLIC_FILE,
+      JSON.stringify(updatedInsights, null, 2),
+      'utf-8'
+    )
+
     return NextResponse.json({
       success: true,
-      message: '인사이트가 업데이트되었습니다.'
+      message: `${month} 인사이트가 업데이트되었습니다.`
     })
   } catch (error) {
     return NextResponse.json(

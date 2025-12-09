@@ -5,23 +5,34 @@ import dynamic from 'next/dynamic'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
+// 사용 가능한 월 목록
+const AVAILABLE_MONTHS = ['2025-11', '2025-10', '2025-09', '2025-08']
+
 const InsightsPreviewPage = () => {
   const [insights, setInsights] = useState(null)
   const [loading, setLoading] = useState(true)
   const [editMode, setEditMode] = useState({})
   const [editedContent, setEditedContent] = useState({})
+  const [selectedMonth, setSelectedMonth] = useState('2025-11')
 
   useEffect(() => {
-    loadInsights()
-  }, [])
+    loadInsights(selectedMonth)
+  }, [selectedMonth])
 
-  const loadInsights = async () => {
+  const loadInsights = async (month) => {
+    setLoading(true)
     try {
-      const response = await fetch('/api/llm-insights')
+      const response = await fetch(`/api/llm-insights?month=${month}&mode=admin`)
       const data = await response.json()
-      setInsights(data)
+      if (data.error) {
+        console.error('인사이트 로드 실패:', data.error)
+        setInsights(null)
+      } else {
+        setInsights(data)
+      }
     } catch (error) {
       console.error('인사이트 로드 실패:', error)
+      setInsights(null)
     } finally {
       setLoading(false)
     }
@@ -61,13 +72,13 @@ const InsightsPreviewPage = () => {
     }
 
     try {
-      await fetch('/api/llm-insights', {
+      await fetch(`/api/llm-insights?month=${selectedMonth}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...insights, status: 'approved' })
       })
       alert('승인 완료! 실제 페이지에 반영되었습니다.')
-      loadInsights()
+      loadInsights(selectedMonth)
     } catch (error) {
       alert('승인 실패: ' + error.message)
     }
@@ -80,9 +91,9 @@ const InsightsPreviewPage = () => {
 
     setLoading(true)
     try {
-      await fetch('/api/llm-insights/reanalyze', { method: 'POST' })
+      await fetch(`/api/llm-insights/reanalyze?month=${selectedMonth}`, { method: 'POST' })
       alert('재분석 완료!')
-      loadInsights()
+      loadInsights(selectedMonth)
     } catch (error) {
       alert('재분석 실패: ' + error.message)
     }
@@ -129,7 +140,19 @@ const InsightsPreviewPage = () => {
           <div className="card-body">
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                <h1 className="mb-2">LLM 인사이트 검수</h1>
+                <div className="d-flex align-items-center mb-2">
+                  <h1 className="mb-0 me-3">LLM 인사이트 검수</h1>
+                  <select
+                    className="form-select"
+                    style={{ width: 'auto' }}
+                    value={selectedMonth}
+                    onChange={(e) => setSelectedMonth(e.target.value)}
+                  >
+                    {AVAILABLE_MONTHS.map(month => (
+                      <option key={month} value={month}>{month}</option>
+                    ))}
+                  </select>
+                </div>
                 <p className="text-muted mb-0">
                   분석일: {new Date(insights.generatedAt).toLocaleString('ko-KR')} |
                   모델: {insights.model} |
@@ -154,41 +177,81 @@ const InsightsPreviewPage = () => {
           </div>
         </div>
 
-        {/* 요약 */}
-        {insights.summary && (
-          <div className="row mb-4">
-            <div className="col-md-6">
-              <div className="card">
-                <div className="card-header">
-                  <h5 className="card-title mb-0">핵심 발견사항</h5>
-                </div>
-                <div className="card-body">
-                  <ul className="mb-0">
-                    {insights.summary.keyFindings?.map((finding, i) => (
-                      <li key={i} className="mb-2">{finding}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+        {/* Viral 분석 섹션 */}
+        {insights.viral && (
+          <div className="card mb-4">
+            <div className="card-header bg-primary text-white">
+              <h5 className="card-title mb-0">📊 바이럴 분석</h5>
             </div>
-            <div className="col-md-6">
-              <div className="card">
-                <div className="card-header">
-                  <h5 className="card-title mb-0">실행 권장사항</h5>
-                </div>
-                <div className="card-body">
-                  <ul className="mb-0">
-                    {insights.summary.recommendations?.map((rec, i) => (
-                      <li key={i} className="mb-2">{rec}</li>
-                    ))}
-                  </ul>
-                </div>
+            <div className="card-body">
+              <div className="row">
+                {Object.entries(insights.viral).map(([key, section]) => (
+                  <div key={key} className="col-md-6 mb-4">
+                    <div className="card h-100 border">
+                      <div className="card-header bg-light">
+                        <h6 className="mb-0">{section.title}</h6>
+                      </div>
+                      <div className="card-body">
+                        <div
+                          className="markdown-content"
+                          dangerouslySetInnerHTML={{
+                            __html: section.content
+                              ?.replace(/\n/g, '<br/>')
+                              .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                              .replace(/## (.*?)(<br\/>|$)/g, '<h6 class="mt-3 mb-2 text-primary">$1</h6>')
+                              .replace(/- (.*?)(<br\/>|$)/g, '<li>$1</li>')
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         )}
 
-        {/* 섹션별 인사이트 */}
+        {/* 채널별 인사이트 */}
+        {insights.channels && (
+          <div className="card mb-4">
+            <div className="card-header bg-success text-white">
+              <h5 className="card-title mb-0">📢 채널별 인사이트</h5>
+            </div>
+            <div className="card-body">
+              <div className="row">
+                {Object.entries(insights.channels).map(([channel, data]) => {
+                  const channelNames = {
+                    cafe: '☕ 카페',
+                    blog: '📝 블로그',
+                    news: '📰 뉴스',
+                    youtube: '🎬 유튜브'
+                  }
+                  return (
+                    <div key={channel} className="col-md-6 mb-4">
+                      <div className="card h-100 border">
+                        <div className="card-header bg-light">
+                          <h6 className="mb-0">{channelNames[channel] || channel}</h6>
+                        </div>
+                        <div className="card-body">
+                          <div
+                            className="markdown-content"
+                            dangerouslySetInnerHTML={{
+                              __html: data.insight
+                                ?.replace(/\n/g, '<br/>')
+                                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 레거시 섹션 지원 */}
         {insights.sections?.map((section, sectionIndex) => (
           <div key={section.id} className="card mb-4">
             <div className="card-header">

@@ -7,7 +7,7 @@ import './insights-review.css'
 
 function InsightsReviewContent() {
   const searchParams = useSearchParams()
-  const monthParam = searchParams.get('month') || '2025-09'
+  const monthParam = searchParams.get('month') || '2025-11'
 
   const [activeTab, setActiveTab] = useState('data')
   const [month, setMonth] = useState(monthParam)
@@ -120,8 +120,8 @@ function InsightsReviewContent() {
 
     try {
       setLoading(true)
-      // 재분석 스크립트 실행
-      const res = await fetch('/api/llm-insights/reanalyze', {
+      // 재분석 스크립트 실행 (월 파라미터 전달)
+      const res = await fetch(`/api/llm-insights/reanalyze?month=${month}`, {
         method: 'POST'
       })
 
@@ -246,9 +246,10 @@ function InsightsReviewContent() {
             onChange={(e) => setMonth(e.target.value)}
             style={{ width: '150px' }}
           >
-            <option value="2025-08">2025년 8월</option>
-            <option value="2025-09">2025년 9월</option>
+            <option value="2025-11">2025년 11월</option>
             <option value="2025-10">2025년 10월</option>
+            <option value="2025-09">2025년 9월</option>
+            <option value="2025-08">2025년 8월</option>
           </select>
           {insights?.status === 'approved' && (
             <button className="btn btn-success" disabled>

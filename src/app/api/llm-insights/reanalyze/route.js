@@ -5,19 +5,22 @@ import { promisify } from 'util'
 const execPromise = promisify(exec)
 
 // POST: 재분석 실행
-export async function POST() {
+export async function POST(request) {
   try {
-    console.log('🔄 재분석 시작...')
+    const { searchParams } = new URL(request.url)
+    const month = searchParams.get('month') || '2025-11'
 
-    // Node 스크립트 실행
-    const { stdout, stderr } = await execPromise('node scripts/analyzeLLMInsights.js')
+    console.log(`🔄 ${month} 재분석 시작...`)
+
+    // Node 스크립트 실행 (월 파라미터 전달)
+    const { stdout, stderr } = await execPromise(`node scripts/analyzeLLMInsights.js ${month}`)
 
     console.log('stdout:', stdout)
     if (stderr) console.error('stderr:', stderr)
 
     return NextResponse.json({
       success: true,
-      message: '재분석이 완료되었습니다.',
+      message: `${month} 재분석이 완료되었습니다.`,
       output: stdout
     })
   } catch (error) {
