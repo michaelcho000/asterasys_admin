@@ -2345,7 +2345,7 @@
         "source": "youtube_comments"
       }
     ],
-    "processedAt": "2025-12-09T03:17:19.138Z",
+    "processedAt": "2025-12-09T03:19:54.282Z",
     "dataMonth": "2025-11"
   },
   "kpis": {
@@ -2807,7 +2807,7 @@
         "priority": 24
       }
     ],
-    "processedAt": "2025-12-09T03:17:19.143Z"
+    "processedAt": "2025-12-09T03:19:54.287Z"
   },
   "channels": {
     "blog": {
@@ -3811,7 +3811,7 @@
     }
   },
   "meta": {
-    "processedAt": "2025-12-09T03:17:19.144Z",
+    "processedAt": "2025-12-09T03:19:54.289Z",
     "dataMonth": "2025-11",
     "version": "1.0.0"
   }
